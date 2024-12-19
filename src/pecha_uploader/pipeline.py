@@ -3,6 +3,7 @@ This module processes text files, parses JSON content,
 and uploads structured data to various APIs for further processing.
 """
 import json
+import os
 
 from pecha_uploader.category.upload import post_category
 from pecha_uploader.config import BASEPATH
@@ -10,6 +11,34 @@ from pecha_uploader.index.upload import post_index
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
+
+
+def add_texts(text_type):
+    """
+    Add all text files in `/jsondata/texts`.
+    """
+    text_list = os.listdir(f"{BASEPATH}/jsondata/texts/{text_type}")
+    try:  # Added text save to `success.txt`
+        with open(f"{BASEPATH}/jsondata/texts/success.txt", encoding="utf-8") as f:
+            uploaded_text_list = f.read().split("\n")
+    except Exception as e:
+        print("read text error :", e)
+        uploaded_text_list = []
+
+    count = 0
+    for data in text_list:
+        count += 1
+        print(f"{count}/{len(text_list)}")
+        if data in uploaded_text_list:
+            continue
+        elif data == "success.txt":
+            continue
+        text_upload_succeed = add_by_file(data, text_type)
+        # 有錯誤先終止
+        if not text_upload_succeed:
+            print("=== [Failed] ===")
+            return
+        print(f"=== [Finished] {data} ===")
 
 
 def add_by_file(text_name: str, text_type: str):
