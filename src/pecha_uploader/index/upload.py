@@ -53,9 +53,9 @@ def post_index(index: str, category_list: List[str], nodes: Dict):
         res = response.read().decode("utf-8")
         print(res)
         if "error" in res and "already exists." not in res:
-            return False
-        return True
+            return {"status": False, "error": res}
+        return {"status": True}
     except HTTPError as e:
         print("Error code: ", e.code)
         print(e.read())
-        return False
+        return {"status": False, "error": e}

@@ -17,11 +17,11 @@ def get_category(category_name: str):
         res = response.read().decode("utf-8")
         print(res)
         if "error" not in res:
-            return True
+            return {"status": True}
         elif "already exists" in res["error"]:
-            return True
-        return False
+            return {"status": True}
+        return {"status": False, "error": res}
     except HTTPError as e:
         print("[categories] Error code: ", e.code)
         print(e.read())
-        return False
+        return {"status": False, "error": res}

@@ -37,10 +37,10 @@ def post_category(en_category_list: List[str], bo_category_list: List[str]):
         res = response.read().decode("utf-8")
         print("categories response: ", res)
         if "error" not in res:
-            return True
+            return {"status": True}
         elif "already exists" in res:
-            return True
-        return False
+            return {"status": True}
+        return {"status": False, "error": res}
     except HTTPError as e:
         print("Error code: ", e)
-        return False
+        return {"status": False, "error": e}
