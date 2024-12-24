@@ -8,6 +8,8 @@ import os
 from pecha_uploader.category.upload import post_category
 from pecha_uploader.config import BASEPATH
 from pecha_uploader.index.upload import post_index
+from pecha_uploader.links.create_ref_json import commentaryToRoot
+from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
@@ -34,7 +36,7 @@ def add_texts(text_type):
         elif data == "success.txt":
             continue
         text_upload_succeed = add_by_file(data, text_type)
-        # 有錯誤先終止
+
         if not text_upload_succeed:
             print("=== [Failed] ===")
             return
@@ -89,6 +91,7 @@ def add_by_file(text_name: str, text_type: str):
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
             )
+            print("\nterm : ", response)
             if not response["status"]:
                 if "term_conflict" in response:
                     error = response["term_conflict"]
@@ -100,6 +103,7 @@ def add_by_file(text_name: str, text_type: str):
             category_response = post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i]
             )
+            print("categories: ", category_response)
             if not category_response["status"]:
                 error = category_response["error"]
                 log_error("Category", text_name, f"{error}")
@@ -109,25 +113,30 @@ def add_by_file(text_name: str, text_type: str):
             "============================( post_index )================================"
         )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
+
+        # serialized_schema = serialize_schema(schema)
+        # j = json.dumps(schema, indent=4, ensure_ascii=False)
+        # print(j)
         index_response = post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0]
         )
+        print("index : ", index_response)
         if not index_response["status"]:
             error = index_response["error"]
             log_error("Index", text_name, f"{error}")
             return False
 
         print(
-            "=============================( post_text )================================="
+            "===============================( post_text )=================================="
         )
         text_index_key = payload["bookKey"]
 
-        for book in payload["textHe"]:
-            if not process_text(book, "he", text_index_key):
-                return False
-
         for book in payload["textEn"]:
             if not process_text(book, "en", text_index_key):
+                return False
+
+        for book in payload["textHe"]:
+            if not process_text(book, "he", text_index_key):
                 return False
 
     except Exception as e:
@@ -159,24 +168,38 @@ def process_text(book: dict, lang: str, text_index_key: str):
         # Complex text
         if isinstance(book["content"], dict):
             result = generate_chapters(book["content"], book["language"])
+            # j = json.dumps(result, indent=4, ensure_ascii=False
+            # print(j)
+            is_succeed = False
+            errors = []
             for key, value in result.items():
                 text["text"] = value
                 text_response = post_text(key, text)
-                if value and not text_response["status"]:
+                print("response", text_response)
+                if not text_response["status"]:
                     error = text_response["error"]
+                    errors.append(error)
                     log_error("Text", key, f"{error}")
-                    return False
+                    is_succeed = False
+                else:
+                    is_succeed = True
+
+            if is_succeed:
+                log_error("Text", text_index_key, f"{errors}")
+
+            return is_succeed
 
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            text_response = post_text(key, text)
+            text_response = post_text(text_index_key, text)
+            print("response", text_response)
             if not text_response["status"]:
                 error = text_response["error"]
                 log_error("Text", text_index_key, f"{error}")
                 return False
-
-    return True
+            else:
+                return True
 
 
 def log_error(api_name: str, text_name: str, message: str):
@@ -193,6 +216,85 @@ def log_error(api_name: str, text_name: str, message: str):
         `{BASEPATH}/pecha_uploader/texts/`.
     """
     with open(
-        f"{BASEPATH}/pecha_uploader/texts/errors.txt", mode="a", encoding="utf-8"
+        f"{BASEPATH}/jsondata/texts/errors.txt", mode="a", encoding="utf-8"
     ) as error_file:  # noqa
         error_file.write(f"({api_name})--->{text_name}: {message}\n\n")
+
+
+def add_refs():
+    """
+    Add all ref files in `/jsondata/links`.
+    """
+    print("============ add_refs ============")
+    file_list = os.listdir(f"{BASEPATH}/jsondata/links")
+    try:  # Added refs save to `success.txt`
+        with open(f"{BASEPATH}/jsondata/links/success.txt", encoding="utf-8") as f:
+            ref_success_list = f.read().split("\n")
+    except Exception as e:
+        print("Ref error : ", e)
+        ref_success_list = []
+    failed_list = []
+    print(ref_success_list)
+    for file in file_list:
+        if file in ref_success_list:
+            continue
+        elif file == "success.txt":
+            continue
+        elif file == "errors.txt":
+            continue
+
+        with open(f"{BASEPATH}/jsondata/links/{file}", encoding="utf-8") as f:
+            content = f.read().strip()
+            if not content:
+                raise ValueError("File is empty")
+            try:
+                ref_list = json.loads(content)
+            except Exception as e:
+                raise ValueError(f"Invalid JSON: {e}")
+            # remove_links(ref_list[0]["refs"][1])
+        for ref in ref_list:
+            # Separate refs since the API only support adding 2 refs at the same time.
+            for i in range(0, len(ref["refs"]) - 1):
+                for j in range(i + 1, len(ref["refs"])):
+                    link_response = post_link(
+                        [ref["refs"][i], ref["refs"][j]], ref["type"]
+                    )
+
+                    # Failed
+                    if not link_response["status"]:
+                        failed_list.append(link_response["res"])
+        with open(
+            f"{BASEPATH}/jsondata/links/success.txt", mode="a", encoding="utf-8"
+        ) as f:
+            f.write(file + "\n")
+        print(f"=== [Finished] {file} ===")
+    with open(
+        f"{BASEPATH}/jsondata/links/errors.txt", mode="w+", encoding="utf-8"
+    ) as f:
+        json.dump(failed_list, f, indent=4, ensure_ascii=False)
+
+
+# ----------------Main------------------
+
+
+def main():
+    """
+    Add all files in `/jsondata`
+    """
+    print("============================= texts =================================")
+    if not os.path.exists(f"{BASEPATH}/jsondata/texts"):
+        os.mkdir(f"{BASEPATH}/jsondata/texts/baseText")
+        os.mkdir(f"{BASEPATH}/jsondata/texts/commentaryText")
+
+    commentaryToRoot("commentaryText")
+    add_texts("baseText")
+    add_texts("commentaryText")
+
+    print("============================== refs ==================================")
+    if not os.path.exists(f"{BASEPATH}/jsondata/links"):
+        os.mkdir(f"{BASEPATH}/jsondata/links")
+    add_refs()
+
+
+if __name__ == "__main__":
+    main()

@@ -46,10 +46,9 @@ def post_text(text_name: str, text_content: Dict):
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            print(f"\n{res}\n")
             return {"status": True}
 
-        return False
+        return {"status": False, "error": res}
     except HTTPError as e:
         print("Error code: ", e)
         return {"status": False, "error": e}

@@ -1,7 +1,8 @@
 import json
-import urllib
 from typing import List
 from urllib.error import HTTPError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
 
@@ -28,19 +29,18 @@ def post_category(en_category_list: List[str], bo_category_list: List[str]):
     input_json = json.dumps(category)
     values = {"json": input_json, "apikey": PECHA_API_KEY}
 
-    data = urllib.parse.urlencode(values)
+    data = urlencode(values)
     binary_data = data.encode("ascii")
-    req = urllib.request.Request(url, binary_data, headers=headers)
+    req = Request(url, binary_data, headers=headers)
 
     try:
-        response = urllib.request.urlopen(req)
+        response = urlopen(req)
         res = response.read().decode("utf-8")
-        print("categories response: ", res)
         if "error" not in res:
             return {"status": True}
         elif "already exists" in res:
             return {"status": True}
-        return {"status": False, "error": res}
+        return {"status": True, "error": res}
     except HTTPError as e:
-        print("Error code: ", e)
+        print("Error code: ", e, list(map(lambda x: x["name"], en_category_list))[-1])
         return {"status": False, "error": e}

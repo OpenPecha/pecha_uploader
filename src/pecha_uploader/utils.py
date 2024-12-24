@@ -2,18 +2,16 @@ import re
 from typing import Dict, List, Union
 
 
-def generate_schema(
-    en_book: List[Dict], bo_book: List[Dict], en_key: str = "", bo_key: str = ""
-) -> List:
-    """This function generate index schema for both complex and simple text"""
+def generate_schema(enbook: Dict, bobook: Dict, en_key: str = "", bo_key: str = ""):
+
     nodes = []
     # generate schema node for complex text
-    if "content" in bo_book:
-        botext = bo_book["content"]
-        entext = en_book["content"]
+    if "content" in bobook:
+        botext = bobook["content"]
+        entext = enbook["content"]
     else:
-        botext = bo_book
-        entext = en_book
+        botext = bobook
+        entext = enbook
 
     if isinstance(entext, dict):
         for (enkey, envalue), (bokey, bovalue) in zip(entext.items(), botext.items()):
@@ -26,7 +24,7 @@ def generate_schema(
                 child_nodes = generate_schema(
                     envalue, bovalue, en_full_key, bo_full_key
                 )
-                # if only data is present
+                # if data is only
                 if not has_children:
                     data_node = create_data_node(
                         en_full_key, bo_full_key, envalue["data"], bovalue["data"]
@@ -47,7 +45,7 @@ def generate_schema(
                 data_node = create_data_node(enkey, "གནས་བབས", envalue, bovalue)
                 nodes.append(data_node)
     if isinstance(entext, list):
-        data_node = create_data_node(en_book["title"], bo_book["title"], entext, botext)
+        data_node = create_data_node(enbook["title"], bobook["title"], entext, botext)
         nodes.append(data_node)
     return nodes
 
@@ -76,7 +74,7 @@ def create_data_node(
         "nodeType": "JaggedArrayNode",
         "depth": text_depth,
         "addressTypes": list(map(lambda x: "Integer", sections[:text_depth])),
-        "sections": sections[:text_depth],
+        "sectionNames": sections[:text_depth],
         "titles": [
             {"lang": "he", "text": bo_key, "primary": True},
             {"lang": "en", "text": en_key, "primary": True},
@@ -129,7 +127,7 @@ def generate_chapters(
     language: str,
     current_key: str = "",
     parent_keys: List[str] = None,
-) -> Dict:
+):
     """generate text content"""
     result = {}
     if parent_keys is None:

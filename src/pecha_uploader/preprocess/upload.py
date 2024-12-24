@@ -39,7 +39,7 @@ def post_term(term_en: str, term_bo: str):
             and "A Term with the title" in res
             and "in it already exists" in res
         ):
-            return {"status": False, "term_conflict": res}
+            return {"status": True, "term_conflict": res}
         return {"status": True}
     except HTTPError as e:
         print("[term] Error code: ", e.code)

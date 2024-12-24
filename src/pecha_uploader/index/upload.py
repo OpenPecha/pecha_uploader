@@ -6,7 +6,7 @@ from urllib.error import HTTPError
 from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
 
 
-def post_index(index: str, category_list: List[str], nodes: Dict):
+def post_index(index_str: str, category_list: List[str], nodes: Dict):
     """ "
     Post index value for article settings.
         `index`: str, article title,
@@ -18,7 +18,9 @@ def post_index(index: str, category_list: List[str], nodes: Dict):
                 "primary": True (You must have a primary title for each language)
             }
     """
-    url = baseURL + "api/v2/raw/index/" + urllib.parse.quote(index.replace(" ", "_"))
+    url = (
+        baseURL + "api/v2/raw/index/" + urllib.parse.quote(index_str.replace(" ", "_"))
+    )
 
     # "titles" : titleLIST,
     # "key" : index,
@@ -29,7 +31,7 @@ def post_index(index: str, category_list: List[str], nodes: Dict):
     # "addressTypes" : ["Integer", "Integer"],
 
     index = {"title": "", "categories": [], "schema": {}}
-    index["title"] = index
+    index["title"] = index_str
     index["categories"] = list(map(lambda x: x["name"], category_list))
     index["schema"] = nodes
 
@@ -37,10 +39,11 @@ def post_index(index: str, category_list: List[str], nodes: Dict):
     if "base_text_mapping" in category_list[-1].keys():
         index["base_text_titles"] = category_list[-1]["base_text_titles"]
         index["base_text_mapping"] = category_list[-1]["base_text_mapping"]
-        index["collective_title"] = index
+        index["collective_title"] = index_str
         index["dependence"] = category_list[-1]["link"]
 
     input_json = json.dumps(index, indent=4, ensure_ascii=False)
+
     values = {
         "json": input_json,
         "apikey": PECHA_API_KEY,
@@ -51,11 +54,9 @@ def post_index(index: str, category_list: List[str], nodes: Dict):
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        print(res)
         if "error" in res and "already exists." not in res:
             return {"status": False, "error": res}
         return {"status": True}
     except HTTPError as e:
-        print("Error code: ", e.code)
-        print(e.read())
-        return {"status": False, "error": e}
+        print("Error code: ", e.code, e.read())
+        return {"status": False, "error": e.read()}
