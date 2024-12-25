@@ -9,14 +9,12 @@
 </h1>
 
 ## _Project Name_
-_The project name should match its code's capability so that new users can easily understand what it does._
+_Pecha Uploader_
 
 ## Owner(s)
 
 _Change to the owner(s) of the new repo. (This template's owners are:)_
-- [@ngawangtrinley](https://github.com/ngawangtrinley)
-- [@mikkokotila](https://github.com/mikkokotila)
-- [@evanyerburgh](https://github.com/evanyerburgh)
+- [@sandup](https://github.com/lobsam)
 
 
 ## Table of contents
@@ -56,16 +54,16 @@ Get started with _Project Name_ by _(write the first step a user needs to start 
 
 
 ### Install _Project Name_
-1. _Write the step here._ 
+1. _Write the step here._
 
-    _Explanatory text here_ 
-    
+    _Explanatory text here_
+
     _(Optional: Include a code sample or screenshot that helps your users complete this step.)_
 
 2. _Write the step here._
- 
-    a. _Substep 1_ 
-    
+
+    a. _Substep 1_
+
     b. _Substep 2_
 
 
