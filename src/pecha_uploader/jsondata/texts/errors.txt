@@ -17,3 +17,138 @@
 (Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
 
 (Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, ཐོག་མར་གཞི་ལམ་འབྲས་བུའི་རྣམ་བཞག་མདོར་བསྡུས་ཏེ་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, A brief presentation of the ground path and result"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ལྷུན་གྲུབ་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that spontaneous presence is the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, མ་ངེས་པ་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The indefinite is asserted as the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ངེས་པ་དོན་གྱི་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that the definitive is the basis of the meaning"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ཅིར་ཡང་བསྒྱུར་བཏུབ་པ་གཞིར་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The basis is asserted to be that which can be transformed into anything"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ཅིར་ཡང་ཁས་བླང་དུ་བཏུབ་པ་གཞིར་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The basis is asserted to be that which can be asserted as anything"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, སྣ་ཚོགས་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that the diversity is the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་མེད་ཀྱི་འདོད་པ་གཅིག: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, One faultless assertion"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གྲོལ་ཚུལ་དངོས།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, Actual mode of liberation"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གྲོལ་ནས་གཞན་དོན་མཛད་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, How after being liberated he benefited others"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, འཁྲུལ་ཚུལ་སྤྱིར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, The general presentation of the mode of delusion"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, དེ་བྱེ་བྲག་སོ་སོར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, The specific explanation of each of these"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, འདོད་ཆགས་ཀུན་རྟོག་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How Desire and Conceptual Thoughts Are Liberated into Timeless Awareness"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ཞེ་སྡང་གསལ་བའི་ཡེ་ཤེས་སམ། མེ་ལོང་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How is hatred liberated as the wisdom of clarity or mirror like wisdom"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ང་རྒྱལ་མཉམ་ཉིད་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How pride is liberated into the wisdom of equality"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ཕྲག་དོག་དང་འགྲན་སེམས་བྱ་བ་ལྷུན་གྲུབ་ཀྱི་ཡེ་ཤེས་སུ་གྲོལ་བར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, The teaching that jealousy and competitiveness are liberated as spontaneous wisdom"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, གཏི་མུག་རྟོག་མེད་ཆོས་དབྱིངས་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How is delusion freed as the nonconceptual wisdom of the dharmadhatu"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, འབྲས་བུ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, fruit"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, རྫོགས་ཆེན་གྱི་ལམ་ལ་བརྟན་པ་ཐོབ་པའི་རྣལ་འབྱོར་པས་བསམ་པས་ཇི་ལྟར་སྨོན་པ་དང་སྦྱོར་བ་ཚིག་ཉན་ཀློག་བྱས་པའི་ཕན་ཡོན་དངོས།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, l actual benefits of listening to and reading the words of the Great Perfection as they are intended applied and recited by a yogin who has attained stability on the path of the Great Perfection"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, དུས་གནད་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, The Key Points of Time"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, data"}
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, ཐོག་མར་གཞི་ལམ་འབྲས་བུའི་རྣམ་བཞག་མདོར་བསྡུས་ཏེ་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, A brief presentation of the ground path and result"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ལྷུན་གྲུབ་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that spontaneous presence is the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, མ་ངེས་པ་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The indefinite is asserted as the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ངེས་པ་དོན་གྱི་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that the definitive is the basis of the meaning"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ཅིར་ཡང་བསྒྱུར་བཏུབ་པ་གཞིར་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The basis is asserted to be that which can be transformed into anything"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, ཅིར་ཡང་ཁས་བླང་དུ་བཏུབ་པ་གཞིར་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The basis is asserted to be that which can be asserted as anything"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, སྣ་ཚོགས་གཞི་རུ་འདོད་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, The assertion that the diversity is the basis"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་ཅན་གྱི་འདོད་པ་དྲུག, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, Six flawed assertions, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, སྐྱོན་མེད་ཀྱི་འདོད་པ་གཅིག: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, One faultless assertion"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞིའི་གནས་ལུགས་ཉིད་རྒྱས་པར་འཆད་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The extensive explanation of the abiding nature of the ground, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གྲོལ་ཚུལ་དངོས།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, Actual mode of liberation"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གྲོལ་ནས་གཞན་དོན་མཛད་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, How after being liberated he benefited others"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, དེ་ངོ་ཤེས་ལམ་དུ་བྱས་པས་ཀུན་ཏུ་བཟང་པོའི་གྲོལ་ཚུལ་བསྟན་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, The way of liberation of Samantabhadra through recognizing that and taking it as the path, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, འཁྲུལ་ཚུལ་སྤྱིར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, The general presentation of the mode of delusion"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, དེ་བྱེ་བྲག་སོ་སོར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, The specific explanation of each of these"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གཞི་དོན་མ་ཤེས་པ་ལས་སེམས་ཅན་འཁོར་བར་འཁྲུལ་ཚུལ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, How sentient beings are deluded in cyclic existence due to not knowing the meaning of the ground, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གཞི།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Basis, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, འདོད་ཆགས་ཀུན་རྟོག་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How Desire and Conceptual Thoughts Are Liberated into Timeless Awareness"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ཞེ་སྡང་གསལ་བའི་ཡེ་ཤེས་སམ། མེ་ལོང་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How is hatred liberated as the wisdom of clarity or mirror like wisdom"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ང་རྒྱལ་མཉམ་ཉིད་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How pride is liberated into the wisdom of equality"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, ཕྲག་དོག་དང་འགྲན་སེམས་བྱ་བ་ལྷུན་གྲུབ་ཀྱི་ཡེ་ཤེས་སུ་གྲོལ་བར་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, The teaching that jealousy and competitiveness are liberated as spontaneous wisdom"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, གཏི་མུག་རྟོག་མེད་ཆོས་དབྱིངས་ཡེ་ཤེས་སུ་གྲོལ་ཚུལ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, How is delusion freed as the nonconceptual wisdom of the dharmadhatu"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, ལམ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, Path, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, འབྲས་བུ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, fruit"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, དེ་ཉིད་སོ་སོར་ཕྱེ་སྟེ་རྒྱས་པར་འཆད་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The detailed explanation of the divisions of reality, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, རྫོགས་ཆེན་གྱི་ལམ་ལ་བརྟན་པ་ཐོབ་པའི་རྣལ་འབྱོར་པས་བསམ་པས་ཇི་ལྟར་སྨོན་པ་དང་སྦྱོར་བ་ཚིག་ཉན་ཀློག་བྱས་པའི་ཕན་ཡོན་དངོས།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, l actual benefits of listening to and reading the words of the Great Perfection as they are intended applied and recited by a yogin who has attained stability on the path of the Great Perfection"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, དུས་གནད་བསྟན་པ།: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, The Key Points of Time"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, སྨོན་ལམ་ཀློག་པ་དང་ཐོས་པའི་ཕན་ཡོན་བསྟན་པ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, The Benefits Of Reading And Hearing The Prayer Of Aspiration, data"}
+
+(Text)--->བྱང་གཏེར་དགོངས་པ་ཟང་ཐལ་གྱི་རྒྱུད་ཆེན་ལས་བྱུང་བའི་ཀུན་བཟང་སྨོན་ལམ་གྱི་རྣམ་བཤད། ཀུན་བཟང་ཉེ་ལམ་འོད་སྣང་གསལ་བའི་སྒྲོན་མ།, གནས་བབས: {"error": "Failed to parse sections for ref Prayer of Kuntuzangpo, data"}
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []
+
+(Text)--->The short path of Samantabhadra the lamp that illuminates with light: []

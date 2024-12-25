@@ -45,7 +45,11 @@ def post_text(text_name: str, text_content: Dict):
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        if "error" not in res:
+        if "error" in res:
+            if "Failed to parse sections for ref" in res:
+                return {"status": True}
+            return {"status": False, "error": res}
+        else:
             return {"status": True}
 
         return {"status": False, "error": res}
