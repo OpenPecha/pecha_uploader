@@ -4,6 +4,7 @@ and uploads structured data to various APIs for further processing.
 """
 import json
 import os
+from pathlib import Path
 
 from pecha_uploader.category.upload import post_category
 from pecha_uploader.config import BASEPATH
@@ -15,11 +16,8 @@ from pecha_uploader.text.upload import post_text
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
 
 
-def add_texts(text_type):
-    """
-    Add all text files in `/jsondata/texts`.
-    """
-    text_list = os.listdir(f"{BASEPATH}/jsondata/texts/{text_type}")
+def add_texts(input_file: Path):
+
     try:  # Added text save to `success.txt`
         with open(f"{BASEPATH}/jsondata/texts/success.txt", encoding="utf-8") as f:
             uploaded_text_list = f.read().split("\n")
@@ -27,35 +25,25 @@ def add_texts(text_type):
         print("read text error :", e)
         uploaded_text_list = []
 
-    count = 0
-    for data in text_list:
-        count += 1
-        print(f"{count}/{len(text_list)}")
-        if data in uploaded_text_list:
-            continue
-        elif data == "success.txt":
-            continue
-        text_upload_succeed = add_by_file(data, text_type)
+    if input_file.name not in uploaded_text_list:
+        text_upload_succeed = add_by_file(input_file)
 
         if not text_upload_succeed:
             print("=== [Failed] ===")
             return
-        print(f"=== [Finished] {data} ===")
+        print(f"=== [Finished] {input_file.name} ===")
 
 
-def add_by_file(text_name: str, text_type: str):
+def add_by_file(input_file: Path):
     """
     Read a text file and add.
     """
-    file = f"{BASEPATH}/jsondata/texts/{text_type}/{text_name}"
-
-    print(f"=========================={text_name}===========================")
 
     try:
-        with open(file, encoding="utf-8") as f:
+        with open(input_file, encoding="utf-8") as f:
             data = json.load(f)
     except Exception as e:
-        log_error("file", text_name, f"Error opening file: {e}")
+        log_error("file", input_file.name, f"Error opening file: {e}")
         return False
 
     payload = {
@@ -81,7 +69,7 @@ def add_by_file(text_name: str, text_type: str):
                 for book in data[lang]["books"]:
                     payload["textHe"].append(book)
     except Exception as e:
-        log_error("Payload", text_name, f"Error parsing data: {e}")
+        log_error("Payload", input_file.name, f"Error parsing data: {e}")
         return False
 
     try:
@@ -95,9 +83,9 @@ def add_by_file(text_name: str, text_type: str):
             if not response["status"]:
                 if "term_conflict" in response:
                     error = response["term_conflict"]
-                    log_error("Term", text_name, f"{error}")
+                    log_error("Term", input_file.name, f"{error}")
                 else:
-                    log_error("Term", text_name, f"{response}")
+                    log_error("Term", input_file.name, f"{response}")
                 return False
 
             category_response = post_category(
@@ -106,7 +94,7 @@ def add_by_file(text_name: str, text_type: str):
             print("categories: ", category_response)
             if not category_response["status"]:
                 error = category_response["error"]
-                log_error("Category", text_name, f"{error}")
+                log_error("Category", input_file.name, f"{error}")
                 return False
 
         print(
@@ -123,7 +111,7 @@ def add_by_file(text_name: str, text_type: str):
         print("index : ", index_response)
         if not index_response["status"]:
             error = index_response["error"]
-            log_error("Index", text_name, f"{error}")
+            log_error("Index", input_file.name, f"{error}")
             return False
 
         print(
@@ -146,7 +134,7 @@ def add_by_file(text_name: str, text_type: str):
     with open(
         f"{BASEPATH}/jsondata/texts/success.txt", mode="a", encoding="utf-8"
     ) as f:
-        f.write(f"{text_name}\n")
+        f.write(f"{input_file.name}\n")
 
     return True
 
