@@ -1,4 +1,18 @@
 import os
+from pathlib import Path
+
+
+def _mkdir_if_not(path: Path):
+    """Create a directory if it does not exist"""
+    if not path.exists():
+        path.mkdir(exist_ok=True, parents=True)
+    return path
+
+
+BASE_PATH = _mkdir_if_not(Path.home() / ".pecha_uploader")
+TEXT_PATH = _mkdir_if_not(BASE_PATH / "texts")
+LINK_PATH = _mkdir_if_not(BASE_PATH / "links")
+
 
 PECHA_API_KEY = os.getenv("PECHA_API_KEY")
 if not PECHA_API_KEY:
