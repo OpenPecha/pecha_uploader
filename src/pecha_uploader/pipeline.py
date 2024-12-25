@@ -262,27 +262,16 @@ def add_refs():
         json.dump(failed_list, f, indent=4, ensure_ascii=False)
 
 
-# ----------------Main------------------
-
-
-def main():
+def upload_root(input_file: Path):
     """
-    Add all files in `/jsondata`
+    Upload root text to the API.
     """
-    print("============================= texts =================================")
-    if not os.path.exists(f"{BASEPATH}/jsondata/texts"):
-        os.mkdir(f"{BASEPATH}/jsondata/texts/baseText")
-        os.mkdir(f"{BASEPATH}/jsondata/texts/commentaryText")
-
-    commentaryToRoot("commentaryText")
-    add_texts("baseText")
-    add_texts("commentaryText")
-
-    print("============================== refs ==================================")
-    if not os.path.exists(f"{BASEPATH}/jsondata/links"):
-        os.mkdir(f"{BASEPATH}/jsondata/links")
-    add_refs()
+    add_texts(input_file)
 
 
-if __name__ == "__main__":
-    main()
+def upload_commentary(input_file: Path):
+    """
+    Upload commentary text to the API.
+    """
+    commentaryToRoot(input_file)
+    add_texts(input_file)
