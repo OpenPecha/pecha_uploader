@@ -1,7 +1,7 @@
 import json
-import os
 import re
 from collections import defaultdict
+from pathlib import Path
 from typing import Any, Dict, List
 
 from pecha_uploader.config import BASEPATH
@@ -9,21 +9,14 @@ from pecha_uploader.config import BASEPATH
 # -----------------------------------commentary link from jsonfile----------------------------------------
 
 
-def commentaryToRoot(text_type: str):
-    for root, dirs, files in os.walk(f"{BASEPATH}/jsondata/texts/{text_type}"):
-        for file in files:
-            if file.endswith(".json"):
-                try:
-                    if file.endswith(".json"):
-                        with open(
-                            f"{BASEPATH}/jsondata/texts/{text_type}/{file}",
-                            encoding="utf-8",
-                        ) as f:
-                            data = json.load(f)
-                            create_links(data)
-                except Exception as e:
-                    print("[Error] opening file: ", e)
-                    return
+def commentaryToRoot(commentary_file: Path):
+    """
+    Create link for commentary json file based on its mapped root json file.
+    """
+    assert commentary_file.endswith(".json"), "File must be a json file"
+    with open(commentary_file, encoding="utf-8") as f:
+        data = json.load(f)
+        create_links(data)
 
 
 def link_mapper(title: str, contents: List, root_detail: Dict):
