@@ -31,13 +31,16 @@ from pecha_uploader.utils import (
 )
 
 
-def add_texts(input_file: Path):
+def add_texts(input_file: Path, overwrite: bool):
 
-    uploaded_text_list = (
-        TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
-        if TEXT_SUCCESS_LOG.exists()
-        else []
-    )
+    if overwrite:
+        uploaded_text_list = []
+    else:
+        uploaded_text_list = (
+            TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+            if TEXT_SUCCESS_LOG.exists()
+            else []
+        )
 
     if input_file.name not in uploaded_text_list:
         text_upload_succeed = add_by_file(input_file)
@@ -234,14 +237,14 @@ def add_refs():
         # print(f"=== [Finished] {file} ===")
 
 
-def upload_root(input_file: Path):
+def upload_root(input_file: Path, overwrite: bool = False):
     """
     Upload root text to the API.
     """
-    add_texts(input_file)
+    add_texts(input_file, overwrite)
 
 
-def upload_commentary(input_file: Path):
+def upload_commentary(input_file: Path, overwrite: bool = False):
     """
     Upload commentary text to the API.
     """
@@ -249,6 +252,6 @@ def upload_commentary(input_file: Path):
     # create link json
     commentaryToRoot(input_file)
     # upload commentary json
-    add_texts(input_file)
+    add_texts(input_file, overwrite)
     # upload link json for commentary
     add_refs()
