@@ -21,5 +21,4 @@ def get_category(category_name: str):
             return {"status": True}
         return {"status": False, "error": res}
     except HTTPError as e:
-        print("[categories] Error code: ", e.code)
-        return {"status": False, "error": res}
+        return {"status": False, "error": e}

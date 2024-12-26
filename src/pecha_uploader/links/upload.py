@@ -40,5 +40,4 @@ def post_link(ref_list: List[str], type_str: str):
             return {"status": False, "res": res}
         return {"status": True, "res": res}
     except (HTTPError) as e:
-        print("Error code: ", e.code)
         return {"status": False, "res": e.read()}

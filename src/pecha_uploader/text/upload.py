@@ -54,5 +54,4 @@ def post_text(text_name: str, text_content: Dict):
 
         return {"status": False, "error": res}
     except HTTPError as e:
-        print("Error code: ", e)
         return {"status": False, "error": e}

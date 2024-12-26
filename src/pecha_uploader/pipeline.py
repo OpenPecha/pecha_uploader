@@ -43,9 +43,10 @@ def add_texts(input_file: Path):
         text_upload_succeed = add_by_file(input_file)
 
         if not text_upload_succeed:
-            print("=== [Failed] ===")
-            return
-        print(f"=== [Finished] {input_file.name} ===")
+            log_error(TEXT_ERROR_LOG, input_file.name, "file not uploaded")
+            log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+        else:
+            log_success(TEXT_SUCCESS_LOG, input_file.name)
 
 
 def add_by_file(input_file: Path):
@@ -57,7 +58,8 @@ def add_by_file(input_file: Path):
         with open(input_file, encoding="utf-8") as f:
             data = json.load(f)
     except Exception as e:
-        print("Error : ", e)
+        log_error(TEXT_ERROR_LOG, input_file.name, f"{e}")
+        log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
         return False
 
     payload = {
@@ -69,22 +71,18 @@ def add_by_file(input_file: Path):
         "bookDepth": 0,
     }
 
-    try:
-        for lang in data:
-            if lang == "source":
-                for i in range(len(data[lang]["categories"])):
-                    payload["categoryEn"].append(data[lang]["categories"][: i + 1])
-                for book in data[lang]["books"]:
-                    payload["bookKey"] = payload["categoryEn"][-1][-1]["name"]
-                    payload["textEn"].append(book)
-            elif lang == "target":
-                for i in range(len(data[lang]["categories"])):
-                    payload["categoryHe"].append(data[lang]["categories"][: i + 1])
-                for book in data[lang]["books"]:
-                    payload["textHe"].append(book)
-    except Exception as e:
-        print(f"Error parsing data: {e}")
-        return False
+    for lang in data:
+        if lang == "source":
+            for i in range(len(data[lang]["categories"])):
+                payload["categoryEn"].append(data[lang]["categories"][: i + 1])
+            for book in data[lang]["books"]:
+                payload["bookKey"] = payload["categoryEn"][-1][-1]["name"]
+                payload["textEn"].append(book)
+        elif lang == "target":
+            for i in range(len(data[lang]["categories"])):
+                payload["categoryHe"].append(data[lang]["categories"][: i + 1])
+            for book in data[lang]["books"]:
+                payload["textHe"].append(book)
 
     try:
         # print("===========================( post_category )===========================")
@@ -140,7 +138,8 @@ def add_by_file(input_file: Path):
                 return False
 
     except Exception as e:
-        print("Error : ", e)
+        log_error(TEXT_ERROR_LOG, input_file.name, f"{e}")
+        log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
         return False
 
     log_success(TEXT_SUCCESS_LOG, input_file.name)
