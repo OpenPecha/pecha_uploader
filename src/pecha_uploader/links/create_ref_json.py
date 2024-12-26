@@ -4,7 +4,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List
 
-from pecha_uploader.config import LINK_PATH
+from pecha_uploader.config import LINK_JSON_PATH
 
 
 def commentaryToRoot(commentary_file: Path):
@@ -62,7 +62,9 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                                 refs = {}
     if links:
         commentary_title = title.strip()
-        with open(LINK_PATH / commentary_title[-30:], "w", encoding="utf-8") as file:
+        with open(
+            LINK_JSON_PATH / f"{commentary_title[-30:]}.json", "w", encoding="utf-8"
+        ) as file:
             json.dump(links, file, indent=4, ensure_ascii=False)
 
 
