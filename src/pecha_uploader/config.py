@@ -35,19 +35,30 @@ BASEPATH = os.path.dirname(os.path.abspath(__file__))  # path to `Pecha.org/tool
 baseURL = "http://127.0.0.1:8000/"
 
 
-def log_error(file_name: str, text_name: str, message: str):
+def log_error(file_name: Path, text_name: str, message: str):
     """Log error to file"""
+    if not file_name.exists():
+        make_empty_file(file_name)
+
     with open(file_name, "a", encoding="utf-8") as log_file:
         log_file.write(f"{text_name} : {message}\n\n")
 
 
-def log_error_id(file_name: str, text_name: str):
+def log_error_id(file_name: Path, text_name: str):
     """Log error with id to file"""
+    if not file_name.exists():
+        make_empty_file(file_name)
     with open(file_name, "a", encoding="utf-8") as log_file:
         log_file.write(f"{text_name}")
 
 
-def log_success(file_name: str, text_name: str):
+def log_success(file_name: Path, text_name: str):
     """Log success to file"""
+    if not file_name.exists():
+        make_empty_file(file_name)
     with open(file_name, "a", encoding="utf-8") as log_file:
         log_file.write(f"{text_name}")
+
+
+def make_empty_file(file_name: Path):
+    file_name.write_text("", encoding="utf-8")

@@ -33,7 +33,11 @@ from pecha_uploader.utils import (
 
 def add_texts(input_file: Path):
 
-    uploaded_text_list = TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+    uploaded_text_list = (
+        TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+        if TEXT_SUCCESS_LOG.exists()
+        else []
+    )
 
     if input_file.name not in uploaded_text_list:
         text_upload_succeed = add_by_file(input_file)
@@ -83,13 +87,12 @@ def add_by_file(input_file: Path):
         return False
 
     try:
-        print("===========================( post_category )===========================")
+        # print("===========================( post_category )===========================")
         for i in range(len(payload["categoryEn"])):
             response = post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
             )
-            print("\nterm : ", response)
             if not response["status"]:
                 if "term_conflict" in response:
                     error = response["term_conflict"]
@@ -103,34 +106,29 @@ def add_by_file(input_file: Path):
             category_response = post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i]
             )
-            print("categories: ", category_response)
             if not category_response["status"]:
                 error = category_response["error"]
                 log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
                 log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 return False
 
-        print(
-            "============================( post_index )================================"
-        )
+        # print(
+        #     "============================( post_index )================================"
+        # )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        # serialized_schema = serialize_schema(schema)
-        # j = json.dumps(schema, indent=4, ensure_ascii=False)
-        # print(j)
         index_response = post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0]
         )
-        print("index : ", index_response)
         if not index_response["status"]:
             error = index_response["error"]
             log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
             log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
             return False
 
-        print(
-            "===============================( post_text )=================================="
-        )
+        # print(
+        #     "===============================( post_text )=================================="
+        # )
         text_index_key = payload["bookKey"]
 
         for book in payload["textEn"]:
@@ -167,14 +165,11 @@ def process_text(book: dict, lang: str, text_index_key: str):
         # Complex text
         if isinstance(book["content"], dict):
             result = generate_chapters(book["content"], book["language"])
-            # j = json.dumps(result, indent=4, ensure_ascii=False
-            # print(j)
             is_succeed = False
             errors = []
             for key, value in result.items():
                 text["text"] = value
                 text_response = post_text(key, text)
-                print("response", text_response)
                 if not text_response["status"]:
                     error = text_response["error"]
                     errors.append(error)
@@ -206,7 +201,7 @@ def add_refs():
     """
     Add all ref files in `/jsondata/links`.
     """
-    print("============ add_refs ============")
+    # print("============ add_refs ============")
     file_list = LINK_JSON_PATH.glob("*.json")
     ref_success_list = LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
     for file in file_list:
@@ -228,7 +223,7 @@ def add_refs():
                         log_error_id(LINK_ERROR_ID_LOG, file)
 
         log_success(LINK_SUCCESS_LOG, file)
-        print(f"=== [Finished] {file} ===")
+        # print(f"=== [Finished] {file} ===")
 
 
 def upload_root(input_file: Path):

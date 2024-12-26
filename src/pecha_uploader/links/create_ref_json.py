@@ -112,10 +112,6 @@ def create_links(json_data: Dict):
             chapters = generate_chapters(
                 bobook, json_data["source"]["books"][0], bobook["language"]
             )
-            # j = json.dumps(chapters, indent=4, ensure_ascii=False)
-
-            # print(j)
-
             for key, value in chapters.items():
                 link_mapper(key, value, book_last_category)
 

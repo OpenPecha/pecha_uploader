@@ -12,8 +12,6 @@ def get_term(term: str):
     url = baseURL + "api/terms/" + urllib.parse.quote(term)
     req = urllib.request.Request(url, headers=headers)
     try:
-        response = urllib.request.urlopen(req)
-        print(response.read().decode("utf-8"))
+        response = urllib.request.urlopen(req)  # noqa
     except HTTPError as e:
         print("Error code: ", e.code)
-        print(e.read().decode("utf-8"))

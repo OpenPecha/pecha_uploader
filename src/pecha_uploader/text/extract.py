@@ -15,8 +15,6 @@ def get_text(text_name: str):
     url = f"{text_url}/{prepare_text_str}?pad=0"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
-        response = urllib.request.urlopen(req)
-        print(response.read().decode("utf-8"))
+        response = urllib.request.urlopen(req)  # noqa
     except HTTPError as e:
         print("Error code: ", e.code)
-        print(e.read().decode("utf-8"))

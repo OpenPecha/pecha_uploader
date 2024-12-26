@@ -1,4 +1,3 @@
-import json
 import urllib
 from urllib.error import HTTPError
 
@@ -15,8 +14,6 @@ def get_index(index: str):
     url = f"{index_url}/{prepare_index_str}?with_content_counts=1"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
-        response = urllib.request.urlopen(req)
-        print(json.loads(response.read().decode("utf-8")))
+        response = urllib.request.urlopen(req)  # noqa
     except HTTPError as e:
         print("Error code: ", e.code)
-        print(e.read().decode("utf-8"))
