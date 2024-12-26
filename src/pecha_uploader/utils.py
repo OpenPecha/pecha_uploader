@@ -1,3 +1,4 @@
+import json
 import re
 from typing import Dict, List, Union
 
@@ -176,3 +177,16 @@ def get_list_depth(lst):
                 max_depth, get_list_depth(item)
             )  # Recurse and update max depth
         return max_depth + 1  # Add one to include the current depth level
+
+
+def read_json(file_path):
+    """read json"""
+    with open(file_path, encoding="utf-8") as f:
+        data = json.load(f)
+    return data
+
+
+def write_json(file_path, data):
+    """write json"""
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)

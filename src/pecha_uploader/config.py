@@ -12,7 +12,15 @@ def _mkdir_if_not(path: Path):
 BASE_PATH = _mkdir_if_not(Path.home() / ".pecha_uploader")
 TEXT_PATH = _mkdir_if_not(BASE_PATH / "texts")
 LINK_PATH = _mkdir_if_not(BASE_PATH / "links")
+LINK_JSON_PATH = _mkdir_if_not(LINK_PATH / "jsons")
 
+TEXT_ERROR_LOG = TEXT_PATH / "errors.txt"
+TEXT_ERROR_ID_LOG = TEXT_PATH / "errors.txt"
+TEXT_SUCCESS_LOG = TEXT_PATH / "success.txt"
+
+LINK_ERROR_LOG = LINK_PATH / "errors.txt"
+LINK_ERROR_ID_LOG = LINK_PATH / "errors.txt"
+LINK_SUCCESS_LOG = LINK_PATH / "success.txt"
 
 PECHA_API_KEY = os.getenv("PECHA_API_KEY")
 if not PECHA_API_KEY:
@@ -25,3 +33,21 @@ BASEPATH = os.path.dirname(os.path.abspath(__file__))  # path to `Pecha.org/tool
 
 # baseURL = "https://staging.pecha.org/"
 baseURL = "http://127.0.0.1:8000/"
+
+
+def log_error(file_name: str, text_name: str, message: str):
+    """Log error to file"""
+    with open(file_name, "a", encoding="utf-8") as log_file:
+        log_file.write(f"{text_name} : {message}\n\n")
+
+
+def log_error_id(file_name: str, text_name: str):
+    """Log error with id to file"""
+    with open(file_name, "a", encoding="utf-8") as log_file:
+        log_file.write(f"{text_name}")
+
+
+def log_success(file_name: str, text_name: str):
+    """Log success to file"""
+    with open(file_name, "a", encoding="utf-8") as log_file:
+        log_file.write(f"{text_name}")

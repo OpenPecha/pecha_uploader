@@ -3,27 +3,37 @@ This module processes text files, parses JSON content,
 and uploads structured data to various APIs for further processing.
 """
 import json
-import os
 from pathlib import Path
 
 from pecha_uploader.category.upload import post_category
-from pecha_uploader.config import BASEPATH
+from pecha_uploader.config import (
+    LINK_ERROR_ID_LOG,
+    LINK_ERROR_LOG,
+    LINK_JSON_PATH,
+    LINK_SUCCESS_LOG,
+    TEXT_ERROR_ID_LOG,
+    TEXT_ERROR_LOG,
+    TEXT_SUCCESS_LOG,
+    log_error,
+    log_error_id,
+    log_success,
+)
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import commentaryToRoot
 from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
-from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
+from pecha_uploader.utils import (
+    generate_chapters,
+    generate_schema,
+    parse_annotation,
+    read_json,
+)
 
 
 def add_texts(input_file: Path):
 
-    try:  # Added text save to `success.txt`
-        with open(f"{BASEPATH}/jsondata/texts/success.txt", encoding="utf-8") as f:
-            uploaded_text_list = f.read().split("\n")
-    except Exception as e:
-        print("read text error :", e)
-        uploaded_text_list = []
+    uploaded_text_list = TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
 
     if input_file.name not in uploaded_text_list:
         text_upload_succeed = add_by_file(input_file)
@@ -43,7 +53,7 @@ def add_by_file(input_file: Path):
         with open(input_file, encoding="utf-8") as f:
             data = json.load(f)
     except Exception as e:
-        log_error("file", input_file.name, f"Error opening file: {e}")
+        print("Error : ", e)
         return False
 
     payload = {
@@ -69,7 +79,7 @@ def add_by_file(input_file: Path):
                 for book in data[lang]["books"]:
                     payload["textHe"].append(book)
     except Exception as e:
-        log_error("Payload", input_file.name, f"Error parsing data: {e}")
+        print(f"Error parsing data: {e}")
         return False
 
     try:
@@ -83,9 +93,11 @@ def add_by_file(input_file: Path):
             if not response["status"]:
                 if "term_conflict" in response:
                     error = response["term_conflict"]
-                    log_error("Term", input_file.name, f"{error}")
+                    log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+                    log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 else:
-                    log_error("Term", input_file.name, f"{response}")
+                    log_error(TEXT_ERROR_LOG, input_file.name, f"{response}")
+                    log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 return False
 
             category_response = post_category(
@@ -94,7 +106,8 @@ def add_by_file(input_file: Path):
             print("categories: ", category_response)
             if not category_response["status"]:
                 error = category_response["error"]
-                log_error("Category", input_file.name, f"{error}")
+                log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+                log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 return False
 
         print(
@@ -111,7 +124,8 @@ def add_by_file(input_file: Path):
         print("index : ", index_response)
         if not index_response["status"]:
             error = index_response["error"]
-            log_error("Index", input_file.name, f"{error}")
+            log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+            log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
             return False
 
         print(
@@ -131,10 +145,7 @@ def add_by_file(input_file: Path):
         print("Error : ", e)
         return False
 
-    with open(
-        f"{BASEPATH}/jsondata/texts/success.txt", mode="a", encoding="utf-8"
-    ) as f:
-        f.write(f"{input_file.name}\n")
+    log_success(TEXT_SUCCESS_LOG, input_file.name)
 
     return True
 
@@ -167,13 +178,13 @@ def process_text(book: dict, lang: str, text_index_key: str):
                 if not text_response["status"]:
                     error = text_response["error"]
                     errors.append(error)
-                    log_error("Text", key, f"{error}")
                     is_succeed = False
                 else:
                     is_succeed = True
 
             if is_succeed:
-                log_error("Text", text_index_key, f"{errors}")
+                log_error(TEXT_ERROR_LOG, text_index_key, f"{error}")
+                log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
 
             return is_succeed
 
@@ -184,29 +195,11 @@ def process_text(book: dict, lang: str, text_index_key: str):
             print("response", text_response)
             if not text_response["status"]:
                 error = text_response["error"]
-                log_error("Text", text_index_key, f"{error}")
+                log_error(TEXT_ERROR_LOG, text_index_key, f"{error}")
+                log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
                 return False
             else:
                 return True
-
-
-def log_error(api_name: str, text_name: str, message: str):
-    """
-    Logs error details to a designated error file.
-
-    Args:
-        api_name (str): The name of the API where the error occurred.
-        text_name (str): The name of the text file being processed.
-        message (str): A descriptive error message.
-
-    Writes:
-        The error details into an `errors.txt` file located at
-        `{BASEPATH}/pecha_uploader/texts/`.
-    """
-    with open(
-        f"{BASEPATH}/jsondata/texts/errors.txt", mode="a", encoding="utf-8"
-    ) as error_file:  # noqa
-        error_file.write(f"({api_name})--->{text_name}: {message}\n\n")
 
 
 def add_refs():
@@ -214,32 +207,14 @@ def add_refs():
     Add all ref files in `/jsondata/links`.
     """
     print("============ add_refs ============")
-    file_list = os.listdir(f"{BASEPATH}/jsondata/links")
-    try:  # Added refs save to `success.txt`
-        with open(f"{BASEPATH}/jsondata/links/success.txt", encoding="utf-8") as f:
-            ref_success_list = f.read().split("\n")
-    except Exception as e:
-        print("Ref error : ", e)
-        ref_success_list = []
-    failed_list = []
-    print(ref_success_list)
+    file_list = LINK_JSON_PATH.glob("*.json")
+    ref_success_list = LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
     for file in file_list:
         if file in ref_success_list:
             continue
-        elif file == "success.txt":
-            continue
-        elif file == "errors.txt":
-            continue
 
-        with open(f"{BASEPATH}/jsondata/links/{file}", encoding="utf-8") as f:
-            content = f.read().strip()
-            if not content:
-                raise ValueError("File is empty")
-            try:
-                ref_list = json.loads(content)
-            except Exception as e:
-                raise ValueError(f"Invalid JSON: {e}")
-            # remove_links(ref_list[0]["refs"][1])
+        ref_list = read_json(file)
+
         for ref in ref_list:
             # Separate refs since the API only support adding 2 refs at the same time.
             for i in range(0, len(ref["refs"]) - 1):
@@ -247,19 +222,13 @@ def add_refs():
                     link_response = post_link(
                         [ref["refs"][i], ref["refs"][j]], ref["type"]
                     )
-
                     # Failed
                     if not link_response["status"]:
-                        failed_list.append(link_response["res"])
-        with open(
-            f"{BASEPATH}/jsondata/links/success.txt", mode="a", encoding="utf-8"
-        ) as f:
-            f.write(file + "\n")
+                        log_error(LINK_ERROR_LOG, file, link_response["res"])
+                        log_error_id(LINK_ERROR_ID_LOG, file)
+
+        log_success(LINK_SUCCESS_LOG, file)
         print(f"=== [Finished] {file} ===")
-    with open(
-        f"{BASEPATH}/jsondata/links/errors.txt", mode="w+", encoding="utf-8"
-    ) as f:
-        json.dump(failed_list, f, indent=4, ensure_ascii=False)
 
 
 def upload_root(input_file: Path):
