@@ -11,7 +11,7 @@ def commentaryToRoot(commentary_file: Path):
     """
     Create link for commentary json file based on its mapped root json file.
     """
-    assert commentary_file.endswith(".json"), "File must be a json file"
+    assert str(commentary_file).endswith(".json"), "File must be a json file"
     with open(commentary_file, encoding="utf-8") as f:
         data = json.load(f)
         create_links(data)
@@ -62,7 +62,7 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                                 refs = {}
     if links:
         commentary_title = title.strip()
-        with open(LINK_PATH / commentary_title, "w", encoding="utf-8") as file:
+        with open(LINK_PATH / commentary_title[-30:], "w", encoding="utf-8") as file:
             json.dump(links, file, indent=4, ensure_ascii=False)
 
 

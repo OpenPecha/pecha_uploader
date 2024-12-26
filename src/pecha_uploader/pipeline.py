@@ -43,10 +43,10 @@ def add_texts(input_file: Path):
         text_upload_succeed = add_by_file(input_file)
 
         if not text_upload_succeed:
-            log_error(TEXT_ERROR_LOG, input_file.name, "file not uploaded")
+            log_error(
+                TEXT_ERROR_LOG, f"{input_file.name}[json file]", "file not uploaded"
+            )
             log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
-        else:
-            log_success(TEXT_SUCCESS_LOG, input_file.name)
 
 
 def add_by_file(input_file: Path):
@@ -54,13 +54,8 @@ def add_by_file(input_file: Path):
     Read a text file and add.
     """
 
-    try:
-        with open(input_file, encoding="utf-8") as f:
-            data = json.load(f)
-    except Exception as e:
-        log_error(TEXT_ERROR_LOG, input_file.name, f"{e}")
-        log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
-        return False
+    with open(input_file, encoding="utf-8") as f:
+        data = json.load(f)
 
     payload = {
         "bookKey": "",
@@ -70,7 +65,6 @@ def add_by_file(input_file: Path):
         "textHe": [],
         "bookDepth": 0,
     }
-
     for lang in data:
         if lang == "source":
             for i in range(len(data[lang]["categories"])):
@@ -93,11 +87,14 @@ def add_by_file(input_file: Path):
             )
             if not response["status"]:
                 if "term_conflict" in response:
-                    error = response["term_conflict"]
-                    log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+                    log_error(
+                        TEXT_ERROR_LOG,
+                        f"{input_file.name}[term]",
+                        f"{response['term_conflict']}",
+                    )
                     log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 else:
-                    log_error(TEXT_ERROR_LOG, input_file.name, f"{response}")
+                    log_error(TEXT_ERROR_LOG, f"{input_file.name}[term]", f"{response}")
                     log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 return False
 
@@ -105,8 +102,11 @@ def add_by_file(input_file: Path):
                 payload["categoryEn"][i], payload["categoryHe"][i]
             )
             if not category_response["status"]:
-                error = category_response["error"]
-                log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+                log_error(
+                    TEXT_ERROR_LOG,
+                    f"{input_file.name}[category]",
+                    f"{category_response['error']}",
+                )
                 log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
                 return False
 
@@ -119,8 +119,11 @@ def add_by_file(input_file: Path):
             payload["bookKey"], payload["categoryEn"][-1], schema[0]
         )
         if not index_response["status"]:
-            error = index_response["error"]
-            log_error(TEXT_ERROR_LOG, input_file.name, f"{error}")
+            log_error(
+                TEXT_ERROR_LOG,
+                f"{input_file.name}[index]",
+                f"{index_response['error']}",
+            )
             log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
             return False
 
@@ -138,8 +141,7 @@ def add_by_file(input_file: Path):
                 return False
 
     except Exception as e:
-        log_error(TEXT_ERROR_LOG, input_file.name, f"{e}")
-        log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+        print("exception : ", e)
         return False
 
     log_success(TEXT_SUCCESS_LOG, input_file.name)
@@ -177,7 +179,7 @@ def process_text(book: dict, lang: str, text_index_key: str):
                     is_succeed = True
 
             if is_succeed:
-                log_error(TEXT_ERROR_LOG, text_index_key, f"{error}")
+                log_error(TEXT_ERROR_LOG, f"{text_index_key}[text]", f"{error}")
                 log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
 
             return is_succeed
@@ -188,7 +190,11 @@ def process_text(book: dict, lang: str, text_index_key: str):
             text_response = post_text(text_index_key, text)
             if not text_response["status"]:
                 error = text_response["error"]
-                log_error(TEXT_ERROR_LOG, text_index_key, f"{error}")
+                log_error(
+                    TEXT_ERROR_LOG,
+                    f"{text_index_key}[text]",
+                    f"{text_response['error']}",
+                )
                 log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
                 return False
             else:
@@ -217,7 +223,7 @@ def add_refs():
                     )
                     # Failed
                     if not link_response["status"]:
-                        log_error(LINK_ERROR_LOG, file, link_response["res"])
+                        log_error(LINK_ERROR_LOG, f"{file}[link]", link_response["res"])
                         log_error_id(LINK_ERROR_ID_LOG, file)
 
         log_success(LINK_SUCCESS_LOG, file)

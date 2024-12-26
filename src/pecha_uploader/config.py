@@ -15,11 +15,11 @@ LINK_PATH = _mkdir_if_not(BASE_PATH / "links")
 LINK_JSON_PATH = _mkdir_if_not(LINK_PATH / "jsons")
 
 TEXT_ERROR_LOG = TEXT_PATH / "errors.txt"
-TEXT_ERROR_ID_LOG = TEXT_PATH / "errors.txt"
+TEXT_ERROR_ID_LOG = TEXT_PATH / "errors_text_id.txt"
 TEXT_SUCCESS_LOG = TEXT_PATH / "success.txt"
 
 LINK_ERROR_LOG = LINK_PATH / "errors.txt"
-LINK_ERROR_ID_LOG = LINK_PATH / "errors.txt"
+LINK_ERROR_ID_LOG = LINK_PATH / "errors_link_id.txt"
 LINK_SUCCESS_LOG = LINK_PATH / "success.txt"
 
 PECHA_API_KEY = os.getenv("PECHA_API_KEY")
