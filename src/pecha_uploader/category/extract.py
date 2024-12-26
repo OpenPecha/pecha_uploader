@@ -15,13 +15,10 @@ def get_category(category_name: str):
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        print(res)
         if "error" not in res:
             return {"status": True}
         elif "already exists" in res["error"]:
             return {"status": True}
         return {"status": False, "error": res}
     except HTTPError as e:
-        print("[categories] Error code: ", e.code)
-        print(e.read())
-        return {"status": False, "error": res}
+        return {"status": False, "error": e}

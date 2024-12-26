@@ -24,8 +24,6 @@ def get_link(link_name: str, with_text=1):
     url = baseURL + f"api/links/{link_url}?with_text={with_text}"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
-        response = urllib.request.urlopen(req)
-        print(response.read().decode("utf-8"))
+        response = urllib.request.urlopen(req)  # noqa
     except (HTTPError) as e:
         print("Error code: ", e.code)
-        print(e.read())

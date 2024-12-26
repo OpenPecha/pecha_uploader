@@ -1,29 +1,20 @@
 import json
-import os
 import re
 from collections import defaultdict
+from pathlib import Path
 from typing import Any, Dict, List
 
-from pecha_uploader.config import BASEPATH
-
-# -----------------------------------commentary link from jsonfile----------------------------------------
+from pecha_uploader.config import LINK_PATH
 
 
-def commentaryToRoot(text_type: str):
-    for root, dirs, files in os.walk(f"{BASEPATH}/jsondata/texts/{text_type}"):
-        for file in files:
-            if file.endswith(".json"):
-                try:
-                    if file.endswith(".json"):
-                        with open(
-                            f"{BASEPATH}/jsondata/texts/{text_type}/{file}",
-                            encoding="utf-8",
-                        ) as f:
-                            data = json.load(f)
-                            create_links(data)
-                except Exception as e:
-                    print("[Error] opening file: ", e)
-                    return
+def commentaryToRoot(commentary_file: Path):
+    """
+    Create link for commentary json file based on its mapped root json file.
+    """
+    assert commentary_file.endswith(".json"), "File must be a json file"
+    with open(commentary_file, encoding="utf-8") as f:
+        data = json.load(f)
+        create_links(data)
 
 
 def link_mapper(title: str, contents: List, root_detail: Dict):
@@ -70,15 +61,8 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                                 links.append(refs)
                                 refs = {}
     if links:
-        # j = json.dumps(links, indent=4, ensure_ascii=False)
-        # print(j)
-        # create json
         commentary_title = title.strip()
-        with open(
-            f"{BASEPATH}/jsondata/links/{commentary_title[-30:]}.json",
-            "w",
-            encoding="utf-8",
-        ) as file:
+        with open(LINK_PATH / commentary_title, "w", encoding="utf-8") as file:
             json.dump(links, file, indent=4, ensure_ascii=False)
 
 
@@ -128,10 +112,6 @@ def create_links(json_data: Dict):
             chapters = generate_chapters(
                 bobook, json_data["source"]["books"][0], bobook["language"]
             )
-            # j = json.dumps(chapters, indent=4, ensure_ascii=False)
-
-            # print(j)
-
             for key, value in chapters.items():
                 link_mapper(key, value, book_last_category)
 

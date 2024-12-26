@@ -42,5 +42,4 @@ def post_term(term_en: str, term_bo: str):
             return {"status": True, "term_conflict": res}
         return {"status": True}
     except HTTPError as e:
-        print("[term] Error code: ", e.code)
         return {"status": False, "error": e.read()}

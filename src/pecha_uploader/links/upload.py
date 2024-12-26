@@ -34,13 +34,10 @@ def post_link(ref_list: List[str], type_str: str):
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        print(res)
         if "error" not in res:
             return {"status": True, "res": res}
         elif "Link already exists" in res:
             return {"status": False, "res": res}
         return {"status": True, "res": res}
     except (HTTPError) as e:
-        print("Error code: ", e.code)
-        print(e.read())
         return {"status": False, "res": e.read()}

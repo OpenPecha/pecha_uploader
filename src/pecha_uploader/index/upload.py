@@ -58,5 +58,4 @@ def post_index(index_str: str, category_list: List[str], nodes: Dict):
             return {"status": False, "error": res}
         return {"status": True}
     except HTTPError as e:
-        print("Error code: ", e.code, e.read())
         return {"status": False, "error": e.read()}

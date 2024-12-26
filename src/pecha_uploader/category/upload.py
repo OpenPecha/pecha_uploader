@@ -42,5 +42,4 @@ def post_category(en_category_list: List[str], bo_category_list: List[str]):
             return {"status": True}
         return {"status": True, "error": res}
     except HTTPError as e:
-        print("Error code: ", e, list(map(lambda x: x["name"], en_category_list))[-1])
         return {"status": False, "error": e}
