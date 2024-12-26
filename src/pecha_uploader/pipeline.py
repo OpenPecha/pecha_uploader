@@ -179,7 +179,7 @@ def process_text(book: dict, lang: str, text_index_key: str):
                     is_succeed = True
 
             if is_succeed:
-                log_error(TEXT_ERROR_LOG, f"{text_index_key}[text]", f"{error}")
+                log_error(TEXT_ERROR_LOG, f"{text_index_key}[text]", f"{errors}")
                 log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
 
             return is_succeed
@@ -207,7 +207,11 @@ def add_refs():
     """
     # print("============ add_refs ============")
     file_list = LINK_JSON_PATH.glob("*.json")
-    ref_success_list = LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+    ref_success_list = (
+        LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+        if LINK_SUCCESS_LOG.exists()
+        else []
+    )
     for file in file_list:
         if file in ref_success_list:
             continue
@@ -241,5 +245,10 @@ def upload_commentary(input_file: Path):
     """
     Upload commentary text to the API.
     """
+
+    # create link json
     commentaryToRoot(input_file)
+    # upload commentary json
     add_texts(input_file)
+    # upload link json for commentary
+    add_refs()

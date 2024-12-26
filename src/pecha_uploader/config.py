@@ -31,8 +31,8 @@ headers = {
 }
 BASEPATH = os.path.dirname(os.path.abspath(__file__))  # path to `Pecha.org/tools`
 
-# baseURL = "https://staging.pecha.org/"
-baseURL = "http://127.0.0.1:8000/"
+baseURL = "https://staging.pecha.org/"
+# baseURL = "http://127.0.0.1:8000/"
 
 
 def log_error(file_name: Path, text_name: str, message: str):
