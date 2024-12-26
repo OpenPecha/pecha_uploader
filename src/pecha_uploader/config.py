@@ -41,7 +41,7 @@ def log_error(file_name: Path, text_name: str, message: str):
         make_empty_file(file_name)
 
     with open(file_name, "a", encoding="utf-8") as log_file:
-        log_file.write(f"{text_name} : {message}\n\n")
+        log_file.write(f"{text_name} : {message}\n")
 
 
 def log_error_id(file_name: Path, text_name: str):
@@ -49,7 +49,7 @@ def log_error_id(file_name: Path, text_name: str):
     if not file_name.exists():
         make_empty_file(file_name)
     with open(file_name, "a", encoding="utf-8") as log_file:
-        log_file.write(f"{text_name}")
+        log_file.write(f"{text_name}\n")
 
 
 def log_success(file_name: Path, text_name: str):
@@ -57,7 +57,7 @@ def log_success(file_name: Path, text_name: str):
     if not file_name.exists():
         make_empty_file(file_name)
     with open(file_name, "a", encoding="utf-8") as log_file:
-        log_file.write(f"{text_name}")
+        log_file.write(f"{text_name}\n")
 
 
 def make_empty_file(file_name: Path):

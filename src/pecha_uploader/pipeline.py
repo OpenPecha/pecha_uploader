@@ -186,7 +186,6 @@ def process_text(book: dict, lang: str, text_index_key: str):
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
             text_response = post_text(text_index_key, text)
-            print("response", text_response)
             if not text_response["status"]:
                 error = text_response["error"]
                 log_error(TEXT_ERROR_LOG, text_index_key, f"{error}")
