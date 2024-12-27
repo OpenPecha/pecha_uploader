@@ -8,12 +8,9 @@
   <br>
 </h1>
 
-## _Project Name_
-_Pecha Uploader_
+## _Pecha Uploader_
 
 ## Owner(s)
-
-_Change to the owner(s) of the new repo. (This template's owners are:)_
 - [@sandup](https://github.com/lobsam)
 
 
@@ -31,96 +28,61 @@ _Change to the owner(s) of the new repo. (This template's owners are:)_
 <hr>
 
 ## Project description
-_Use one of these:_
-
-With _Project Name_ you can _verb_ _noun_...
-
-_Project Name_ helps you _verb_ _noun_...
-
+_This package is used for uploading Pechas(JSON format) to pecha.org via Sefaria platform._
 
 ## Who this project is for
-This project is intended for _target user_ who wants to _user objective_.
-
+This project is intended for _Data Engineers_ who wants  to _upload pechas to our pecha.org website_.
 
 ## Project dependencies
 Before using _Project Name_, ensure you have:
-* python _version_
-* _Prerequisite 2_
-* _Prerequisite 3..._
+* python _version 3.8 >=_
+* _Network Connection_
+* _PECHA_API_KEY(ask from owner)_
 
 
 ## Instructions for use
-Get started with _Project Name_ by _(write the first step a user needs to start using the project. Use a verb to start.)_.
 
 
-### Install _Project Name_
-1. _Write the step here._
+### _Install_
+```python
+pip install git+https://github.com/OpenPecha/pecha_uploader.git
+```
 
-    _Explanatory text here_
+### _Run_
+```python
+from pathlib import Path
+from pecha_uploader.pipeline import upload_root, upload_commentary
 
-    _(Optional: Include a code sample or screenshot that helps your users complete this step.)_
-
-2. _Write the step here._
-
-    a. _Substep 1_
-
-    b. _Substep 2_
-
-
-### Configure _Project Name_
-1. _Write the step here._
-2. _Write the step here._
+root_pecha_path = Path("path/to/root/pecha")
+upload_root(root_pecha_path)
 
 
-### Run _Project Name_
-1. _Write the step here._
-2. _Write the step here._
+commentary_pecha_path = Path("path/to/commentary/pecha")
+upload_commentary(commentary_pecha_path)
+```
+
+### _Overwrite Run_
+
+```python
+from pathlib import Path
+from pecha_uploader.pipeline import upload_root, upload_commentary
+
+root_pecha_path = Path("path/to/root/pecha")
+upload_root(root_pecha_path, overwrite=True)
 
 
-### Troubleshoot _Project Name_
-1. _Write the step here._
-2. _Write the step here._
-
-<table>
-  <tr>
-   <td>
-    Issue
-   </td>
-   <td>
-    Solution
-   </td>
-  </tr>
-  <tr>
-   <td>
-    _Describe the issue here_
-   </td>
-   <td>
-    _Write solution here_
-   </td>
-  </tr>
-  <tr>
-   <td>
-    _Describe the issue here_
-   </td>
-   <td>
-    _Write solution here_
-   </td>
-  </tr>
-  <tr>
-   <td>
-    _Describe the issue here_
-   </td>
-   <td>
-    _Write solution here_
-   </td>
-  </tr>
-</table>
+commentary_pecha_path = Path("path/to/commentary/pecha")
+upload_commentary(commentary_pecha_path, overwrite=True)
+```
 
 
-Other troubleshooting supports:
-* _Link to FAQs_
-* _Link to runbooks_
-* _Link to other relevant support information_
+### _Troubleshoot_
+_In your home directory, there would be a folder named `.pecha_uploader`.And regarding when uploading
+the pechas.If you go inside inner folder called `texts`.There would be three .txt files._
+
+1. `success.txt` : This file contains the list of pechas that are successfully uploaded.
+2. `errors.txt` : This file contains the list of pechas that are failed to upload with error description.
+3. `error_ids.txt`: This file contains the list of pechas that are failed to upload with pecha id.
 
 
 ## Contributing guidelines
