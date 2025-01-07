@@ -2,17 +2,17 @@ import json
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_term(term_en: str, term_bo: str):
+def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
     """
     Post term for category in different language.
     You MUST post term before posting any category.
         `term_en`: str, primary `en` term (chinese),
         `term_bo`: str, primary `he` term (བོད་ཡིག)
     """
-    url = baseURL + "api/terms/" + urllib.parse.quote(term_en)
+    url = destination_url.value + "api/terms/" + urllib.parse.quote(term_en)
     input_json = json.dumps(
         {
             "name": term_en,

@@ -14,6 +14,7 @@ from pecha_uploader.config import (
     TEXT_ERROR_ID_LOG,
     TEXT_ERROR_LOG,
     TEXT_SUCCESS_LOG,
+    Destination_url,
     log_error,
     log_error_id,
     log_success,
@@ -31,7 +32,7 @@ from pecha_uploader.utils import (
 )
 
 
-def add_texts(input_file: Path):
+def add_texts(input_file: Path, destination_url: Destination_url):
 
     uploaded_text_list = (
         TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
@@ -40,7 +41,7 @@ def add_texts(input_file: Path):
     )
 
     if input_file.name not in uploaded_text_list:
-        text_upload_succeed = add_by_file(input_file)
+        text_upload_succeed = add_by_file(input_file, destination_url)
 
         if not text_upload_succeed:
             log_error(
@@ -49,7 +50,7 @@ def add_texts(input_file: Path):
             log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
 
 
-def add_by_file(input_file: Path):
+def add_by_file(input_file: Path, destination_url: Destination_url):
     """
     Read a text file and add.
     """
@@ -84,6 +85,7 @@ def add_by_file(input_file: Path):
             response = post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
+                destination_url,
             )
             if not response["status"]:
                 if "term_conflict" in response:
@@ -99,7 +101,7 @@ def add_by_file(input_file: Path):
                 return False
 
             category_response = post_category(
-                payload["categoryEn"][i], payload["categoryHe"][i]
+                payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
             if not category_response["status"]:
                 log_error(
@@ -116,7 +118,7 @@ def add_by_file(input_file: Path):
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
         index_response = post_index(
-            payload["bookKey"], payload["categoryEn"][-1], schema[0]
+            payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
         if not index_response["status"]:
             log_error(
@@ -133,11 +135,11 @@ def add_by_file(input_file: Path):
         text_index_key = payload["bookKey"]
 
         for book in payload["textEn"]:
-            if not process_text(book, "en", text_index_key):
+            if not process_text(book, "en", text_index_key, destination_url):
                 return False
 
         for book in payload["textHe"]:
-            if not process_text(book, "he", text_index_key):
+            if not process_text(book, "he", text_index_key, destination_url):
                 return False
 
     except Exception as e:
@@ -149,7 +151,9 @@ def add_by_file(input_file: Path):
     return True
 
 
-def process_text(book: dict, lang: str, text_index_key: str):
+def process_text(
+    book: dict, lang: str, text_index_key: str, destination_url: Destination_url
+):
     """
     Process text for a given language and post it.
     """
@@ -170,7 +174,7 @@ def process_text(book: dict, lang: str, text_index_key: str):
             errors = []
             for key, value in result.items():
                 text["text"] = value
-                text_response = post_text(key, text)
+                text_response = post_text(key, text, destination_url)
                 if not text_response["status"]:
                     error = text_response["error"]
                     errors.append(error)
@@ -187,7 +191,7 @@ def process_text(book: dict, lang: str, text_index_key: str):
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            text_response = post_text(text_index_key, text)
+            text_response = post_text(text_index_key, text, destination_url)
             if not text_response["status"]:
                 error = text_response["error"]
                 log_error(
@@ -201,7 +205,7 @@ def process_text(book: dict, lang: str, text_index_key: str):
                 return True
 
 
-def add_refs():
+def add_refs(destination_url: Destination_url):
     """
     Add all ref files in `/jsondata/links`.
     """
@@ -223,7 +227,7 @@ def add_refs():
             for i in range(0, len(ref["refs"]) - 1):
                 for j in range(i + 1, len(ref["refs"])):
                     link_response = post_link(
-                        [ref["refs"][i], ref["refs"][j]], ref["type"]
+                        [ref["refs"][i], ref["refs"][j]], ref["type"], destination_url
                     )
                     # Failed
                     if not link_response["status"]:
@@ -234,14 +238,14 @@ def add_refs():
         # print(f"=== [Finished] {file} ===")
 
 
-def upload_root(input_file: Path):
+def upload_root(input_file: Path, destination_url: Destination_url):
     """
     Upload root text to the API.
     """
-    add_texts(input_file)
+    add_texts(input_file, destination_url)
 
 
-def upload_commentary(input_file: Path):
+def upload_commentary(input_file: Path, destination_url: Destination_url):
     """
     Upload commentary text to the API.
     """
@@ -249,6 +253,6 @@ def upload_commentary(input_file: Path):
     # create link json
     commentaryToRoot(input_file)
     # upload commentary json
-    add_texts(input_file)
+    add_texts(input_file, destination_url)
     # upload link json for commentary
-    add_refs()
+    add_refs(destination_url)
