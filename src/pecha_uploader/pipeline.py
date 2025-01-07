@@ -32,13 +32,16 @@ from pecha_uploader.utils import (
 )
 
 
-def add_texts(input_file: Path, destination_url: Destination_url):
+def add_texts(input_file: Path, overwrite: bool, destination_url: Destination_url):
 
-    uploaded_text_list = (
-        TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
-        if TEXT_SUCCESS_LOG.exists()
-        else []
-    )
+    if overwrite:
+        uploaded_text_list = []
+    else:
+        uploaded_text_list = (
+            TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+            if TEXT_SUCCESS_LOG.exists()
+            else []
+        )
 
     if input_file.name not in uploaded_text_list:
         text_upload_succeed = add_by_file(input_file, destination_url)
@@ -238,14 +241,22 @@ def add_refs(destination_url: Destination_url):
         # print(f"=== [Finished] {file} ===")
 
 
-def upload_root(input_file: Path, destination_url: Destination_url):
+def upload_root(
+    input_file: Path,
+    destination_url: Destination_url,
+    overwrite: bool = False,
+):
     """
     Upload root text to the API.
     """
-    add_texts(input_file, destination_url)
+    add_texts(input_file, overwrite, destination_url)
 
 
-def upload_commentary(input_file: Path, destination_url: Destination_url):
+def upload_commentary(
+    input_file: Path,
+    destination_url: Destination_url,
+    overwrite: bool = False,
+):
     """
     Upload commentary text to the API.
     """
@@ -253,6 +264,6 @@ def upload_commentary(input_file: Path, destination_url: Destination_url):
     # create link json
     commentaryToRoot(input_file)
     # upload commentary json
-    add_texts(input_file, destination_url)
+    add_texts(input_file, overwrite, destination_url)
     # upload link json for commentary
     add_refs(destination_url)
