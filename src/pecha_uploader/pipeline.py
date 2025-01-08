@@ -241,6 +241,7 @@ def add_refs(destination_url: Destination_url):
         # print(f"=== [Finished] {file} ===")
 
 
+
 def upload_root(
     input_file: Path,
     destination_url: Destination_url,
@@ -257,6 +258,7 @@ def upload_commentary(
     destination_url: Destination_url,
     overwrite: bool = False,
 ):
+
     """
     Upload commentary text to the API.
     """
@@ -265,5 +267,6 @@ def upload_commentary(
     commentaryToRoot(input_file)
     # upload commentary json
     add_texts(input_file, overwrite, destination_url)
+
     # upload link json for commentary
     add_refs(destination_url)
