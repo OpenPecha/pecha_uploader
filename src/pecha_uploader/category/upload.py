@@ -4,10 +4,14 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_category(en_category_list: List[str], bo_category_list: List[str]):
+def post_category(
+    en_category_list: List[str],
+    bo_category_list: List[str],
+    destination_url: Destination_url,
+):
     """
     Post path for article categorizing.
     You MUST use post_term() before using post_category().
@@ -17,7 +21,7 @@ def post_category(en_category_list: List[str], bo_category_list: List[str]):
         => post_category(["Indian Treatises", "Madyamika"])
         => post_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
     """
-    url = baseURL + "api/category"
+    url = destination_url.value + "api/category"
     category = {
         "sharedTitle": list(map(lambda x: x["name"], en_category_list))[-1],
         "path": list(map(lambda x: x["name"], en_category_list)),

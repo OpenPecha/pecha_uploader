@@ -47,11 +47,21 @@ Before using _Project Name_, ensure you have:
 ```python
 pip install git+https://github.com/OpenPecha/pecha_uploader.git
 ```
+### _Destination url/Server url_
+we have three servers:
+```
+* Destination_url.STAGING
+* Destination_url.PRODUCTION
+* Destination_url.LOCAL
+```
+
 
 ### _Run_
 ```python
 from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary
+from pecha_uploader.config import Destination_url
+
 
 root_pecha_path = Path("path/to/root/pecha")
 upload_root(root_pecha_path)
@@ -66,15 +76,15 @@ upload_commentary(commentary_pecha_path)
 ```python
 from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary
+from pecha_uploader.config import Destination_url
 
 root_pecha_path = Path("path/to/root/pecha")
-upload_root(root_pecha_path, overwrite=True)
+upload_root(root_pecha_path, Destination_url.STAGING, overwrite=True)
 
 
 commentary_pecha_path = Path("path/to/commentary/pecha")
-upload_commentary(commentary_pecha_path, overwrite=True)
+upload_commentary(commentary_pecha_path, Destination_url.STAGING, overwrite=True)
 ```
-
 
 ### _Troubleshoot_
 _In your home directory, there would be a folder named `.pecha_uploader`.And regarding when uploading

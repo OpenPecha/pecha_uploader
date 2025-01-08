@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 from pathlib import Path
 
 
@@ -31,8 +32,11 @@ headers = {
 }
 BASEPATH = os.path.dirname(os.path.abspath(__file__))  # path to `Pecha.org/tools`
 
-baseURL = "https://staging.pecha.org/"
-# baseURL = "http://127.0.0.1:8000/"
+
+class Destination_url(Enum):
+    PRODUCTION = "https://pecha.org/"
+    STAGING = "https://staging.pecha.org/"
+    LOCAL = "http://127.0.0.1:8000/"
 
 
 def log_error(file_name: Path, text_name: str, message: str):

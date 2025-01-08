@@ -3,10 +3,10 @@ import urllib
 from typing import Dict
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_text(text_name: str, text_content: Dict):
+def post_text(text_name: str, text_content: Dict, destination_url: Destination_url):
 
     """
     Post text to article `text_name`.
@@ -36,7 +36,7 @@ def post_text(text_name: str, text_content: Dict):
 
     prepare_text = urllib.parse.quote(text_name)
 
-    url = baseURL + f"api/texts/{prepare_text}?count_after=1"
+    url = destination_url.value + f"api/texts/{prepare_text}?count_after=1"
 
     values = {"json": text_input_json, "apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)

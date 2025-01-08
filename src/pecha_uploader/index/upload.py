@@ -3,10 +3,15 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, baseURL, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_index(index_str: str, category_list: List[str], nodes: Dict):
+def post_index(
+    index_str: str,
+    category_list: List[str],
+    nodes: Dict,
+    destination_url: Destination_url,
+):
     """ "
     Post index value for article settings.
         `index`: str, article title,
@@ -19,7 +24,9 @@ def post_index(index_str: str, category_list: List[str], nodes: Dict):
             }
     """
     url = (
-        baseURL + "api/v2/raw/index/" + urllib.parse.quote(index_str.replace(" ", "_"))
+        destination_url.value
+        + "api/v2/raw/index/"
+        + urllib.parse.quote(index_str.replace(" ", "_"))
     )
 
     # "titles" : titleLIST,
