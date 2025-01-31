@@ -192,7 +192,7 @@ def generate_chapters(
     if isinstance(enbook, list):
         if len(enbook) > 0:
             result[entext["title"]] = enbook
-        else:
+        if len(bobook) > 0:
             result[entext["title"]] = bobook
 
     return result
