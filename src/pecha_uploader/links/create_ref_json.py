@@ -194,7 +194,6 @@ def generate_chapters(
             result[entext["title"]] = enbook
         if len(bobook) > 0:
             result[entext["title"]] = bobook
-
     return result
 
 
