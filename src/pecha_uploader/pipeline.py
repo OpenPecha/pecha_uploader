@@ -21,6 +21,7 @@ from pecha_uploader.config import (
 )
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import commentaryToRoot
+from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
@@ -225,6 +226,8 @@ def add_refs(destination_url: Destination_url):
 
         ref_list = read_json(file)
 
+        remove_links(ref_list[0]["refs"][1], destination_url)
+
         for ref in ref_list:
             # Separate refs since the API only support adding 2 refs at the same time.
             for i in range(0, len(ref["refs"]) - 1):
@@ -239,7 +242,6 @@ def add_refs(destination_url: Destination_url):
 
         log_success(LINK_SUCCESS_LOG, file)
         # print(f"=== [Finished] {file} ===")
-
 
 
 def upload_root(
