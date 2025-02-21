@@ -1,20 +1,16 @@
 import json
 import re
 from collections import defaultdict
-from pathlib import Path
 from typing import Any, Dict, List
 
 from pecha_uploader.config import LINK_JSON_PATH
 
 
-def commentaryToRoot(commentary_file: Path):
+def commentaryToRoot(text: Dict):
     """
     Create link for commentary json file based on its mapped root json file.
     """
-    assert str(commentary_file).endswith(".json"), "File must be a json file"
-    with open(commentary_file, encoding="utf-8") as f:
-        data = json.load(f)
-        create_links(data)
+    create_links(text)
 
 
 def link_mapper(title: str, contents: List, root_detail: Dict):
@@ -27,7 +23,7 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
         constent_range = get_range(contents)
         for value in constent_range.values():
             ref = []
-            ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")
+            ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")  # noqa
             ref.append(f"{title} {value[0]}")
             refs["refs"] = ref
             refs["type"] = "commentary"
@@ -41,8 +37,8 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                     constent_range = get_range(content)
                     for value in constent_range.values():
                         ref = []
-                        ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")
-                        ref.append(f"{title} {i+1}:{value[0]}")
+                        ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")  # noqa
+                        ref.append(f"{title} {i+1}:{value[0]}")  # noqa
                         refs["refs"] = ref
                         refs["type"] = "commentary"
                         links.append(refs)
@@ -54,8 +50,10 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                             constent_range = get_range(data)
                             for value in constent_range.values():
                                 ref = []
-                                ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")
-                                ref.append(f"{title} {i+1}:{j+1}:{value[0]}")
+                                ref.append(
+                                    f"{root_title} {value[1][0]}:{value[1][1]}"  # noqa
+                                )
+                                ref.append(f"{title} {i+1}:{j+1}:{value[0]}")  # noqa
                                 refs["refs"] = ref
                                 refs["type"] = "commentary"
                                 links.append(refs)

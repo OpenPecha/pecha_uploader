@@ -2,8 +2,8 @@
 This module processes text files, parses JSON content,
 and uploads structured data to various APIs for further processing.
 """
-import json
-from pathlib import Path
+
+from typing import Dict
 
 from pecha_uploader.category.upload import post_category
 from pecha_uploader.config import (
@@ -33,7 +33,22 @@ from pecha_uploader.utils import (
 )
 
 
-def add_texts(input_file: Path, overwrite: bool, destination_url: Destination_url):
+def get_book_title(text: Dict):
+    """
+    If text source has content, return source book title
+    else return target book title
+    """
+    src_book_title = text["source"]["books"][0]["title"]
+    tgt_book_title = text["target"]["books"][0]["title"]
+
+    src_book_content = text["source"]["books"][0]["content"]
+    if src_book_content:
+        return src_book_title
+
+    return tgt_book_title
+
+
+def add_texts(text: Dict, overwrite: bool, destination_url: Destination_url):
 
     if overwrite:
         uploaded_text_list = []
@@ -44,23 +59,22 @@ def add_texts(input_file: Path, overwrite: bool, destination_url: Destination_ur
             else []
         )
 
-    if input_file.name not in uploaded_text_list:
-        text_upload_succeed = add_by_file(input_file, destination_url)
+    book_title = get_book_title(text)
+
+    if book_title not in uploaded_text_list:
+        text_upload_succeed = add_by_file(text, destination_url)
 
         if not text_upload_succeed:
-            log_error(
-                TEXT_ERROR_LOG, f"{input_file.name}[json file]", "file not uploaded"
-            )
-            log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+            log_error(TEXT_ERROR_LOG, f"{book_title}[json file]", "file not uploaded")
+            log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
 
 
-def add_by_file(input_file: Path, destination_url: Destination_url):
+def add_by_file(text: Dict, destination_url: Destination_url):
     """
     Read a text file and add.
     """
 
-    with open(input_file, encoding="utf-8") as f:
-        data = json.load(f)
+    book_title = get_book_title(text)
 
     payload = {
         "bookKey": "",
@@ -70,17 +84,17 @@ def add_by_file(input_file: Path, destination_url: Destination_url):
         "textHe": [],
         "bookDepth": 0,
     }
-    for lang in data:
+    for lang in text:
         if lang == "source":
-            for i in range(len(data[lang]["categories"])):
-                payload["categoryEn"].append(data[lang]["categories"][: i + 1])
-            for book in data[lang]["books"]:
+            for i in range(len(text[lang]["categories"])):
+                payload["categoryEn"].append(text[lang]["categories"][: i + 1])
+            for book in text[lang]["books"]:
                 payload["bookKey"] = payload["categoryEn"][-1][-1]["name"]
                 payload["textEn"].append(book)
         elif lang == "target":
-            for i in range(len(data[lang]["categories"])):
-                payload["categoryHe"].append(data[lang]["categories"][: i + 1])
-            for book in data[lang]["books"]:
+            for i in range(len(text[lang]["categories"])):
+                payload["categoryHe"].append(text[lang]["categories"][: i + 1])
+            for book in text[lang]["books"]:
                 payload["textHe"].append(book)
 
     try:
@@ -95,13 +109,13 @@ def add_by_file(input_file: Path, destination_url: Destination_url):
                 if "term_conflict" in response:
                     log_error(
                         TEXT_ERROR_LOG,
-                        f"{input_file.name}[term]",
+                        f"{book_title}[term]",
                         f"{response['term_conflict']}",
                     )
-                    log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+                    log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
                 else:
-                    log_error(TEXT_ERROR_LOG, f"{input_file.name}[term]", f"{response}")
-                    log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+                    log_error(TEXT_ERROR_LOG, f"{book_title.name}[term]", f"{response}")
+                    log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
                 return False
 
             category_response = post_category(
@@ -110,10 +124,10 @@ def add_by_file(input_file: Path, destination_url: Destination_url):
             if not category_response["status"]:
                 log_error(
                     TEXT_ERROR_LOG,
-                    f"{input_file.name}[category]",
+                    f"{book_title}[category]",
                     f"{category_response['error']}",
                 )
-                log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+                log_error_id(TEXT_ERROR_ID_LOG, book_title)
                 return False
 
         # print(
@@ -127,10 +141,10 @@ def add_by_file(input_file: Path, destination_url: Destination_url):
         if not index_response["status"]:
             log_error(
                 TEXT_ERROR_LOG,
-                f"{input_file.name}[index]",
+                f"{book_title}[index]",
                 f"{index_response['error']}",
             )
-            log_error_id(TEXT_ERROR_ID_LOG, input_file.name)
+            log_error_id(TEXT_ERROR_ID_LOG, book_title)
             return False
 
         # print(
@@ -150,7 +164,7 @@ def add_by_file(input_file: Path, destination_url: Destination_url):
         print("exception : ", e)
         return False
 
-    log_success(TEXT_SUCCESS_LOG, input_file.name)
+    log_success(TEXT_SUCCESS_LOG, book_title)
 
     return True
 
@@ -245,18 +259,18 @@ def add_refs(destination_url: Destination_url):
 
 
 def upload_root(
-    input_file: Path,
+    text: Dict,
     destination_url: Destination_url,
     overwrite: bool = False,
 ):
     """
     Upload root text to the API.
     """
-    add_texts(input_file, overwrite, destination_url)
+    add_texts(text, overwrite, destination_url)
 
 
 def upload_commentary(
-    input_file: Path,
+    text: Dict,
     destination_url: Destination_url,
     overwrite: bool = False,
 ):
@@ -266,23 +280,22 @@ def upload_commentary(
     """
 
     # create link json
-    commentaryToRoot(input_file)
+    commentaryToRoot(text)
     # upload commentary json
-    add_texts(input_file, overwrite, destination_url)
+    add_texts(text, overwrite, destination_url)
 
     # upload link json for commentary
     add_refs(destination_url)
 
 
-def is_commentary(input_file: Path):
+def is_commentary(text: Dict):
     """
     Return
         True, if text is a Commentary
         False, if text is a Root
     """
-    pecha_content = read_json(input_file)
-    src_last_category = pecha_content["source"]["categories"][-1]
-    tgt_last_category = pecha_content["target"]["categories"][-1]
+    src_last_category = text["source"]["categories"][-1]
+    tgt_last_category = text["target"]["categories"][-1]
 
     if (
         "base_text_titles" in src_last_category
@@ -291,10 +304,10 @@ def is_commentary(input_file: Path):
         return True
 
 
-def upload(input_file: Path, destination_url: Destination_url, overwrite: bool = False):
-    if is_commentary(input_file):
-        upload_commentary(input_file, destination_url, overwrite)
+def upload(text: Dict, destination_url: Destination_url, overwrite: bool = False):
+    if is_commentary(text):
+        upload_commentary(text, destination_url, overwrite)
         print("[SUCCESS]Commentary text successfully Uploaded.")
     else:
-        upload_root(input_file, destination_url, overwrite)
+        upload_root(text, destination_url, overwrite)
         print("[SUCCESS]Root text successfully Uploaded.")
