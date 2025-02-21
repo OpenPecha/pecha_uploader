@@ -281,11 +281,14 @@ def is_commentary(input_file: Path):
         False, if text is a Root
     """
     pecha_content = read_json(input_file)
-    categories = pecha_content["source"].get("categories", []) + pecha_content[
-        "target"
-    ].get("categories", [])
+    src_last_category = pecha_content["source"]["categories"][-1]
+    tgt_last_category = pecha_content["target"]["categories"][-1]
 
-    return any("base_text_titles" in category for category in categories)
+    if (
+        "base_text_titles" in src_last_category
+        or "base_text_titles" in tgt_last_category
+    ):
+        return True
 
 
 def upload(input_file: Path, destination_url: Destination_url, overwrite: bool = False):
