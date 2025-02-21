@@ -35,7 +35,7 @@ This project is intended for _Data Engineers_ who wants  to _upload pechas to ou
 
 ## Project dependencies
 Before using _Project Name_, ensure you have:
-* python _version 3.8 >=_
+* python _version 3.7 >=_
 * _Network Connection_
 * _PECHA_API_KEY(ask from owner)_
 
@@ -59,16 +59,20 @@ we have three servers:
 ### _Run_
 ```python
 from pathlib import Path
-from pecha_uploader.pipeline import upload_root, upload_commentary
+from pecha_uploader.pipeline import upload_root, upload_commentary, upload
 from pecha_uploader.config import Destination_url
 
 
-root_pecha_path = Path("path/to/root/pecha")
-upload_root(root_pecha_path)
+root_pecha_json: Dict = {"root pecha json content"}
+upload_root(root_pecha_json)
 
 
-commentary_pecha_path = Path("path/to/commentary/pecha")
-upload_commentary(commentary_pecha_path)
+commentary_pecha_json:Dict = {"commentary pecha json content"}
+upload_commentary(commentary_pecha_json)
+
+
+pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
+upload(pecha_json)
 ```
 
 ### _Overwrite Run_
@@ -78,12 +82,18 @@ from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary
 from pecha_uploader.config import Destination_url
 
-root_pecha_path = Path("path/to/root/pecha")
-upload_root(root_pecha_path, Destination_url.STAGING, overwrite=True)
+root_pecha_json: Dict = {"root pecha json content"}
+upload_root(root_pecha_json, Destination_url.STAGING, overwrite=True)
 
 
-commentary_pecha_path = Path("path/to/commentary/pecha")
-upload_commentary(commentary_pecha_path, Destination_url.STAGING, overwrite=True)
+
+commentary_pecha_json:Dict = {"commentary pecha json content"}
+upload_commentary(commentary_pecha_json, Destination_url.STAGING, overwrite=True)
+
+
+pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
+upload(pecha_json, Destination_url.STAGING, overwrite=True)
+
 ```
 
 ### _Troubleshoot_
