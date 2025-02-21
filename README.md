@@ -63,16 +63,16 @@ from pecha_uploader.pipeline import upload_root, upload_commentary, upload
 from pecha_uploader.config import Destination_url
 
 
-root_pecha_path = Path("path/to/root/pecha")
-upload_root(root_pecha_path)
+root_pecha_json: Dict = {"root pecha json content"}
+upload_root(root_pecha_json)
 
 
-commentary_pecha_path = Path("path/to/commentary/pecha")
-upload_commentary(commentary_pecha_path)
+commentary_pecha_json:Dict = {"commentary pecha json content"}
+upload_commentary(commentary_pecha_json)
 
 
-pecha_path = Path("path/to/pecha") # Root or Commentary Pecha
-upload(pecha_path)
+pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
+upload(pecha_json)
 ```
 
 ### _Overwrite Run_
@@ -82,16 +82,17 @@ from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary
 from pecha_uploader.config import Destination_url
 
-root_pecha_path = Path("path/to/root/pecha")
-upload_root(root_pecha_path, Destination_url.STAGING, overwrite=True)
+root_pecha_json: Dict = {"root pecha json content"}
+upload_root(root_pecha_json, Destination_url.STAGING, overwrite=True)
 
 
-commentary_pecha_path = Path("path/to/commentary/pecha")
-upload_commentary(commentary_pecha_path, Destination_url.STAGING, overwrite=True)
+
+commentary_pecha_json:Dict = {"commentary pecha json content"}
+upload_commentary(commentary_pecha_json, Destination_url.STAGING, overwrite=True)
 
 
-pecha_path = Path("path/to/pecha") # Root or Commentary Pecha
-upload(pecha_path, Destination_url.STAGING, overwrite=True)
+pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
+upload(pecha_json, Destination_url.STAGING, overwrite=True)
 
 ```
 
