@@ -273,21 +273,25 @@ def upload_commentary(
     # upload link json for commentary
     add_refs(destination_url)
 
+
 def is_commentary(input_file: Path):
     """
-    Return 
+    Return
         True, if text is a Commentary
         False, if text is a Root
     """
     pecha_content = read_json(input_file)
-    categories = pecha_content["source"].get("categories", []) + pecha_content["target"].get("categories", [])
-    
+    categories = pecha_content["source"].get("categories", []) + pecha_content[
+        "target"
+    ].get("categories", [])
+
     return any("base_text_titles" in category for category in categories)
 
 
 def upload(input_file: Path, destination_url: Destination_url, overwrite: bool = False):
     if is_commentary(input_file):
         upload_commentary(input_file, destination_url, overwrite)
+        print("[SUCCESS]Commentary text successfully Uploaded.")
     else:
         upload_root(input_file, destination_url, overwrite)
-        
+        print("[SUCCESS]Root text successfully Uploaded.")
