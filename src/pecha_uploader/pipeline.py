@@ -66,7 +66,7 @@ def add_texts(text: Dict, overwrite: bool, destination_url: Destination_url):
 
         if not text_upload_succeed:
             log_error(TEXT_ERROR_LOG, f"{book_title}[json file]", "file not uploaded")
-            log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
+            log_error_id(TEXT_ERROR_ID_LOG, book_title)
 
 
 def add_by_file(text: Dict, destination_url: Destination_url):
@@ -307,7 +307,5 @@ def is_commentary(text: Dict):
 def upload(text: Dict, destination_url: Destination_url, overwrite: bool = False):
     if is_commentary(text):
         upload_commentary(text, destination_url, overwrite)
-        print("[SUCCESS]Commentary text successfully Uploaded.")
     else:
         upload_root(text, destination_url, overwrite)
-        print("[SUCCESS]Root text successfully Uploaded.")
