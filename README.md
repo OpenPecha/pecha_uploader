@@ -59,7 +59,7 @@ we have three servers:
 ### _Run_
 ```python
 from pathlib import Path
-from pecha_uploader.pipeline import upload_root, upload_commentary
+from pecha_uploader.pipeline import upload_root, upload_commentary, upload
 from pecha_uploader.config import Destination_url
 
 
@@ -69,6 +69,10 @@ upload_root(root_pecha_path)
 
 commentary_pecha_path = Path("path/to/commentary/pecha")
 upload_commentary(commentary_pecha_path)
+
+
+pecha_path = Path("path/to/pecha") # Root or Commentary Pecha
+upload(pecha_path)
 ```
 
 ### _Overwrite Run_
@@ -84,6 +88,11 @@ upload_root(root_pecha_path, Destination_url.STAGING, overwrite=True)
 
 commentary_pecha_path = Path("path/to/commentary/pecha")
 upload_commentary(commentary_pecha_path, Destination_url.STAGING, overwrite=True)
+
+
+pecha_path = Path("path/to/pecha") # Root or Commentary Pecha
+upload(pecha_path, Destination_url.STAGING, overwrite=True)
+
 ```
 
 ### _Troubleshoot_
