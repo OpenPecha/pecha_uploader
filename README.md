@@ -35,7 +35,7 @@ This project is intended for _Data Engineers_ who wants  to _upload pechas to ou
 
 ## Project dependencies
 Before using _Project Name_, ensure you have:
-* python _version 3.8 >=_
+* python _version 3.7 >=_
 * _Network Connection_
 * _PECHA_API_KEY(ask from owner)_
 
