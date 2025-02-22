@@ -1,7 +1,6 @@
 import os
 from enum import Enum
 from pathlib import Path
-from typing import Union
 
 
 def _mkdir_if_not(path: Path):
@@ -66,6 +65,8 @@ def make_empty_file(file_name: Path):
     file_name.write_text("", encoding="utf-8")
 
 
-def set_api_key(api_key: Union[str, None] = None):
-    if api_key:
-        os.environ["PECHA_API_KEY"] = api_key
+def set_api_key(api_key: str):
+    if not api_key:
+        raise ValueError("PECHA API KEY is not given properly.")
+
+    os.environ["PECHA_API_KEY"] = api_key
