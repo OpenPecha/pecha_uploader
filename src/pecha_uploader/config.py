@@ -1,6 +1,7 @@
 import os
 from enum import Enum
 from pathlib import Path
+from typing import Union
 
 
 def _mkdir_if_not(path: Path):
@@ -23,9 +24,6 @@ LINK_ERROR_LOG = LINK_PATH / "errors.txt"
 LINK_ERROR_ID_LOG = LINK_PATH / "errors_link_id.txt"
 LINK_SUCCESS_LOG = LINK_PATH / "success.txt"
 
-PECHA_API_KEY = os.getenv("PECHA_API_KEY")
-if not PECHA_API_KEY:
-    raise ValueError("Please set PECHA_API_KEY environment variable")
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"  # noqa
@@ -45,7 +43,7 @@ def log_error(file_name: Path, text_name: str, message: str):
         make_empty_file(file_name)
 
     with open(file_name, "a", encoding="utf-8") as log_file:
-        log_file.write(f"{text_name} : {message}\n")
+        log_file.write(f"{text_name} : {message}\n")  # noqa
 
 
 def log_error_id(file_name: Path, text_name: str):
@@ -66,3 +64,8 @@ def log_success(file_name: Path, text_name: str):
 
 def make_empty_file(file_name: Path):
     file_name.write_text("", encoding="utf-8")
+
+
+def set_api_key(api_key: Union[str, None] = None):
+    if api_key:
+        os.environ["PECHA_API_KEY"] = api_key
