@@ -2,6 +2,8 @@ import os
 from enum import Enum
 from pathlib import Path
 
+PECHA_API_KEY = os.environ.get("PECHA_API_KEY")
+
 
 def _mkdir_if_not(path: Path):
     """Create a directory if it does not exist"""
