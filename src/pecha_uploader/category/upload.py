@@ -4,7 +4,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import get_api_key, Destination_url, headers
 
 
 def post_category(
@@ -31,7 +31,7 @@ def post_category(
         "heShortDesc": list(map(lambda x: x["heShortDesc"], bo_category_list))[-1],
     }
     input_json = json.dumps(category)
-    values = {"json": input_json, "apikey": PECHA_API_KEY}
+    values = {"json": input_json, "apikey": get_api_key()}
 
     data = urlencode(values)
     binary_data = data.encode("ascii")

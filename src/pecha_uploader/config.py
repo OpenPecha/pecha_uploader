@@ -70,3 +70,7 @@ def set_api_key(api_key: str):
         raise ValueError("PECHA API KEY is not given properly.")
 
     os.environ["PECHA_API_KEY"] = api_key
+
+
+def get_api_key() -> str:
+    return os.getenv("PECHA_API_KEY")

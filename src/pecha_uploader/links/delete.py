@@ -2,7 +2,7 @@ import re
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import get_api_key, Destination_url, headers
 
 
 def remove_links(text_title: str, destination_url: Destination_url):
@@ -15,7 +15,7 @@ def remove_links(text_title: str, destination_url: Destination_url):
 
     ref = clean_title.replace(" ", "_")
     url = destination_url.value + f"api/links/{ref}"
-    values = {"apikey": PECHA_API_KEY}
+    values = {"apikey": get_api_key()}
     data = urllib.parse.urlencode(values)
     binary_key = data.encode("ascii")
     req = urllib.request.Request(url, binary_key, method="DELETE", headers=headers)

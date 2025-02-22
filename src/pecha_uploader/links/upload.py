@@ -3,7 +3,7 @@ import urllib
 from typing import List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import get_api_key, Destination_url, headers
 
 
 def post_link(ref_list: List[str], type_str: str, destination_url: Destination_url):
@@ -27,7 +27,7 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
     link = {"refs": ref_list, "type": type_str}
     input_json_link = json.dumps(link)
 
-    values = {"json": input_json_link, "apikey": PECHA_API_KEY}
+    values = {"json": input_json_link, "apikey": get_api_key()}
     data = urllib.parse.urlencode(values)
     binary_data = data.encode("ascii")
     req = urllib.request.Request(url, binary_data, headers=headers)
