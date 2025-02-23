@@ -63,11 +63,10 @@ def create_data_node(
 
     if len(envalue) > 0:
         text_depth = get_list_depth(envalue)
-    else:
-        text_depth = 1
 
-    if len(bovalue) > 0:
+    elif len(bovalue) > 0:
         text_depth = get_list_depth(bovalue)
+
     else:
         text_depth = 1
 
