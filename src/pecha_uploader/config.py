@@ -1,3 +1,4 @@
+import logging
 import os
 from enum import Enum
 from pathlib import Path
@@ -24,6 +25,44 @@ TEXT_SUCCESS_LOG = TEXT_PATH / "success.txt"
 LINK_ERROR_LOG = LINK_PATH / "errors.txt"
 LINK_ERROR_ID_LOG = LINK_PATH / "errors_link_id.txt"
 LINK_SUCCESS_LOG = LINK_PATH / "success.txt"
+
+
+# Create a logger
+logger = logging.getLogger("pecha_uploader")
+logger.setLevel(logging.DEBUG)
+
+# Formatter
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+
+# File Handlers
+text_error_handler = logging.FileHandler(TEXT_ERROR_LOG)
+text_error_handler.setLevel(logging.ERROR)
+text_error_handler.setFormatter(formatter)
+
+text_success_handler = logging.FileHandler(TEXT_SUCCESS_LOG)
+text_success_handler.setLevel(logging.WARNING)
+text_success_handler.setFormatter(formatter)
+
+link_error_handler = logging.FileHandler(LINK_ERROR_LOG)
+link_error_handler.setLevel(logging.ERROR)
+link_error_handler.setFormatter(formatter)
+
+link_success_handler = logging.FileHandler(LINK_SUCCESS_LOG)
+link_success_handler.setLevel(logging.WARNING)
+link_success_handler.setFormatter(formatter)
+
+# Console Handler (for debugging)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.WARNING)
+console_handler.setFormatter(formatter)
+
+# Avoid duplicate handlers
+if not logger.hasHandlers():
+    logger.addHandler(text_error_handler)
+    logger.addHandler(text_success_handler)
+    logger.addHandler(link_error_handler)
+    logger.addHandler(link_success_handler)
+    logger.addHandler(console_handler)
 
 
 headers = {

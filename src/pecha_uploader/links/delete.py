@@ -2,7 +2,7 @@ import re
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
 def remove_links(text_title: str, destination_url: Destination_url):
@@ -21,7 +21,16 @@ def remove_links(text_title: str, destination_url: Destination_url):
     req = urllib.request.Request(url, binary_key, method="DELETE", headers=headers)
     try:
         urllib.request.urlopen(req)
+        logger.info(f"Successfully removed link for: {text_title}")
 
-    except (HTTPError) as e:
-        print("Error code: ", e.code)
-        print("error", e.read())
+    except HTTPError as e:
+        # Handle HTTP errors
+        logger.error(
+            f"HTTP Error {e.code} occurred while removing link: {e.read().decode('utf-8')}"
+        )
+        raise HTTPError(f"HTTP Error occurred while removing link: {e.code}")
+
+    except Exception as e:
+        # Handle other exceptions
+        logger.error(f"Unexpected error occurred: {e}", exc_info=True)
+        raise Exception(f"An unexpected error occurred while removing link: {e}")

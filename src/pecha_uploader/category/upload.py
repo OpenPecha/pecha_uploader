@@ -4,7 +4,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
 def post_category(
@@ -44,6 +44,14 @@ def post_category(
             return {"status": True}
         elif "already exists" in res:
             return {"status": True}
-        return {"status": True, "error": res}
+        return {"status": True}
     except HTTPError as e:
-        return {"status": False, "error": e}
+        error_message = e.read().decode("utf-8")
+        logger.error(
+            f"HTTPError while posting category: {error_message}", exc_info=True
+        )
+        return {"status": False}
+
+    except Exception as e:
+        logger.exception(f"Unexpected error while posting category: {str(e)}")
+        return {"status": False}

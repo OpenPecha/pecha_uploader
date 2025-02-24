@@ -25,5 +25,12 @@ def get_link(link_name: str, with_text=1):
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
         response = urllib.request.urlopen(req)  # noqa
-    except (HTTPError) as e:
-        print("Error code: ", e.code)
+    except HTTPError as e:
+        # Handle HTTP errors (e.g., 404, 500, etc.)
+        print(f"HTTP Error occurred. Status code: {e.code}")
+        print(
+            f"Error details: {e.read().decode('utf-8')}"
+        )  # Decode and print the error response
+    except Exception as e:
+        # Handle other unexpected errors (e.g., network issues, invalid URLs, etc.)
+        print(f"An unexpected error occurred: {e}")
