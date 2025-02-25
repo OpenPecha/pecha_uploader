@@ -1,7 +1,7 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers
+from pecha_uploader.config import baseURL, headers, link_error_logger, log_error
 
 
 def get_link(link_name: str, with_text=1):
@@ -25,12 +25,13 @@ def get_link(link_name: str, with_text=1):
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
         response = urllib.request.urlopen(req)  # noqa
+        return {"status": True, "data": response}
     except HTTPError as e:
         # Handle HTTP errors (e.g., 404, 500, etc.)
-        print(f"HTTP Error occurred. Status code: {e.code}")
-        print(
-            f"Error details: {e.read().decode('utf-8')}"
-        )  # Decode and print the error response
+        log_error(link_error_logger, f"HTTP Error occurred. Status code: {e.code}")
+        return {"status": False}
+
     except Exception as e:
         # Handle other unexpected errors (e.g., network issues, invalid URLs, etc.)
-        print(f"An unexpected error occurred: {e}")
+        log_error(link_error_logger, f"An unexpected error occurred: {e}")
+        return {"status": False}

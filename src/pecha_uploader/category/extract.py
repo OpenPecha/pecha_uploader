@@ -1,7 +1,14 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers, logger
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    baseURL,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def get_category(category_name: str):
@@ -16,20 +23,24 @@ def get_category(category_name: str):
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"Category found: {category_name}")
+            log_info(text_info_logger, f"{res}")
             return {"status": True}
         elif "already exists" in res["error"]:
-            logger.info(f"Category already exists: {category_name}")
+            log_info(text_info_logger, f"Category already exists : {category_name}")
             return {"status": True}
-        logger.error(f"Category check failed: {res}")
+        log_error(text_error_logger, f"Category check failed: {res}")
         return {"status": False}
     except HTTPError as e:
         error_message = e.read().decode("utf-8")
-        logger.error(
-            f"HTTPError while fetching category: {error_message}", exc_info=True
+        log_error(
+            text_error_logger,
+            f"HTTPError while fetching category {{category_name}}: {error_message}",
         )
-        return {"status": False, "error": error_message}
+        return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while fetching category: {str(e)}")
+        log_error(
+            text_error_logger,
+            f"Unexpected error while fetching category {category_name}: {str(e)}",
+        )
         return {"status": False}

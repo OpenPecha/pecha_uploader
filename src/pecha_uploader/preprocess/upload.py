@@ -2,7 +2,15 @@ import json
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    PECHA_API_KEY,
+    Destination_url,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
@@ -34,24 +42,25 @@ def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         # term conflict
-        if (
-            "error" in res
-            and "A Term with the title" in res
-            and "in it already exists" in res
-        ):
-            logger.warning(f"Term conflict for '{term_en}': {res}")
-            return {"status": True}
-
-        logger.info(f"Term '{term_en}' successfully posted")
+        if "error" in res:
+            if "Term already exists" in res:
+                return {"status": True}
+            else:
+                log_error(text_error_logger, f"[TERM] {term_en} : {res}")
+                return {"status": False}
+        log_info(text_info_logger, f"[TERM] {term_en} successfully posted")
         return {"status": True}
 
     except HTTPError as e:
-        error_message = e.read().decode("utf-8")
-        logger.error(
-            f"HTTPError while posting term '{term_en}': {error_message}", exc_info=True
+        # error_message = e.read().decode("utf-8")
+        log_error(
+            text_error_logger, f"HTTPError while posting term '{term_en}': {e.code}"
         )
         return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while posting term '{term_en}': {str(e)}")
+        log_error(
+            text_error_logger,
+            f"Unexpected error while posting term '{term_en}': {str(e)}",
+        )
         return {"status": False}

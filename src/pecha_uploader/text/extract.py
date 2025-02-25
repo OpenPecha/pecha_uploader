@@ -1,7 +1,7 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers
+from pecha_uploader.config import baseURL, headers, log_error, text_error_logger
 
 
 def get_text(text_name: str):
@@ -17,4 +17,16 @@ def get_text(text_name: str):
     try:
         response = urllib.request.urlopen(req)  # noqa
     except HTTPError as e:
-        print("Error code: ", e.code)
+        error_message = e.read().decode("utf-8")
+        log_error(
+            text_error_logger,
+            f"HTTPError while fetching text '{text_name}': {error_message}",
+        )
+        return {"status": False}
+
+    except Exception as e:
+        log_error(
+            text_error_logger,
+            f"Unexpected error while fetching text '{text_name}': {str(e)}",
+        )
+        return {"status": False}

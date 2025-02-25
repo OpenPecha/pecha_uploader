@@ -3,7 +3,15 @@ import urllib
 from typing import Dict
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    PECHA_API_KEY,
+    Destination_url,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def post_text(text_name: str, text_content: Dict, destination_url: Destination_url):
@@ -38,7 +46,7 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
 
     url = destination_url.value + f"api/texts/{prepare_text}?count_after=1"
 
-    values = {"json": text_input_json, "apikey": PECHA_API_KEY}
+    values = {"json": text_input_json, "apikey": f"{PECHA_API_KEY}"}
     data = urllib.parse.urlencode(values)
     binary_data = data.encode("ascii")
     req = urllib.request.Request(url, binary_data, headers=headers)
@@ -48,10 +56,22 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
         if "error" in res:
             if "Failed to parse sections for ref" in res:
                 return {"status": True}
-            return {"status": False, "error": res}
-        else:
-            return {"status": True}
 
-        return {"status": False, "error": res}
+            log_error(text_error_logger, f" '{text_name}': {res}")
+            return {"status": False}
+        else:
+            log_info(text_info_logger, f"Uploaded:  '{text_name}'")
+            return {"status": True}
     except HTTPError as e:
-        return {"status": False, "error": e}
+        # error_message = e.read().decode("utf-8")
+        log_error(
+            text_error_logger, f"HTTPError while posting text '{text_name}': {e.code}"
+        )
+        return {"status": False}
+
+    except Exception as e:
+        log_error(
+            text_error_logger,
+            f"Unexpected error while posting text '{text_name}': {str(e)}",
+        )
+        return {"status": False}

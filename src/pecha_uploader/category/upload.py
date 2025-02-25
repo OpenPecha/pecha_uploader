@@ -4,7 +4,15 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    PECHA_API_KEY,
+    Destination_url,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def post_category(
@@ -36,22 +44,25 @@ def post_category(
     data = urlencode(values)
     binary_data = data.encode("ascii")
     req = Request(url, binary_data, headers=headers)
-
+    category_name = list(map(lambda x: x["name"], en_category_list))[-1]
     try:
         response = urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
+            log_info(text_info_logger, f"Uploaded: {category_name}")
             return {"status": True}
         elif "already exists" in res:
+            log_info(text_info_logger, f"Category already exists: {category_name}")
             return {"status": True}
         return {"status": True}
     except HTTPError as e:
-        error_message = e.read().decode("utf-8")
-        logger.error(
-            f"HTTPError while posting category: {error_message}", exc_info=True
-        )
+        # error_message = e.read().decode("utf-8")
+        log_error(text_error_logger, f"HTTPError while posting category: {e.code}")
+
         return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while posting category: {str(e)}")
+        log_error(
+            text_error_logger, f"Unexpected error while posting category: {str(e)}"
+        )
         return {"status": False}

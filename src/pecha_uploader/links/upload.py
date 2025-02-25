@@ -3,7 +3,15 @@ import urllib
 from typing import List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import link_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    PECHA_API_KEY,
+    Destination_url,
+    headers,
+    link_error_logger,
+    log_error,
+    log_info,
+)
 
 
 def post_link(ref_list: List[str], type_str: str, destination_url: Destination_url):
@@ -35,18 +43,22 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"Link successfully created: {ref_list['refs']}")
+            log_info(link_info_logger, f"Link successfully created: {ref_list['refs']}")
             return {"status": True}
         elif "Link already exists" in res:
-            logger.warning(f"Link already exists: {ref_list['refs']}")
+            log_info(link_info_logger, f"Link already exists: {ref_list['refs']}")
             return {"status": False}
-        logger.warning(f"Link creation failed: {res}")
+        log_info(link_info_logger, f"Link creation failed: {res}")
         return {"status": False}
     except HTTPError as e:
         error_message = e.read().decode("utf-8")
-        logger.error(f"HTTPError while posting link: {error_message}", exc_info=True)
+        log_error(
+            link_error_logger,
+            f"HTTPError while posting link: {error_message}",
+            exc_info=True,
+        )
         return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while posting link: {str(e)}")
+        log_error(link_error_logger, f"Unexpected error while posting link: {str(e)}")
         return {"status": False}

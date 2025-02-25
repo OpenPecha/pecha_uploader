@@ -1,7 +1,14 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers, logger
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    baseURL,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def get_term(term: str):
@@ -14,15 +21,16 @@ def get_term(term: str):
     try:
         response = urllib.request.urlopen(req)  # noqa
         res = response.read().decode("utf-8")
-        logger.info(f"term: {res}")
+        log_info(text_info_logger, f"term: {res}")
         return {"status": True}
     except HTTPError as e:
-        error_message = e.read().decode("utf-8")
-        logger.error(
-            f"HTTPError while fetching term '{term}': {error_message}", exc_info=True
-        )
+        # error_message = e.read().decode("utf-8")
+        log_error(text_error_logger, f"HTTPError while fetching term '{term} {e}'")
         return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while fetching term '{term}': {str(e)}")
+        log_error(
+            text_error_logger,
+            f"Unexpected error while fetching term '{term}': {str(e)}",
+        )
         return {"status": False}

@@ -3,7 +3,15 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
+from pecha_uploader.config import (
+    PECHA_API_KEY,
+    Destination_url,
+    headers,
+    log_error,
+    log_info,
+    text_error_logger,
+)
 
 
 def post_index(
@@ -62,16 +70,17 @@ def post_index(
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" in res and "already exists." not in res:
-            logger.info(f"API error response: {res}")
+            log_error(text_error_logger, f"API error response: {res}")
             return {"status": False}
-        logger.info(f"index uploaded: {res}")
+
+        log_info(text_info_logger, f"Index uploaded: {index_str}")
         return {"status": True}
 
     except HTTPError as e:
         error_message = e.read().decode("utf-8")
-        logger.error(f"HTTPError while posting index: {error_message}", exc_info=True)
+        log_error(text_error_logger, f"HTTPError while posting index: {error_message}")
         return {"status": False}
 
     except Exception as e:
-        logger.exception(f"Unexpected error while posting index: {str(e)}")
+        log_error(text_error_logger, f"Unexpected error while posting index: {str(e)}")
         return {"status": False}
