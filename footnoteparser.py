@@ -22,7 +22,7 @@ def remove_superscript(text):
 
     # Replace "། །" with "།།<br>", but not if it's at the end of the string
     if "། །" in text:
-        # Step 2: If [number] is after "། །" or "ག །", move it before
+        # If [number] is after "། །" or "ག །", move it before
         pattern = re.compile(r"(། །|ག །)(\s*\[\d+\])")
 
         def reorder(match):
