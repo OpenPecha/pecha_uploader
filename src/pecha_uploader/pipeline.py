@@ -7,17 +7,12 @@ from typing import Dict
 
 from pecha_uploader.category.upload import post_category
 from pecha_uploader.config import (
-    LINK_ERROR_ID_LOG,
-    LINK_ERROR_LOG,
     LINK_JSON_PATH,
     LINK_SUCCESS_LOG,
-    TEXT_ERROR_ID_LOG,
-    TEXT_ERROR_LOG,
     TEXT_SUCCESS_LOG,
     Destination_url,
-    log_error,
-    log_error_id,
-    log_success,
+    log_link_success,
+    logger,
 )
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import commentaryToRoot
@@ -62,20 +57,16 @@ def add_texts(text: Dict, overwrite: bool, destination_url: Destination_url):
     book_title = get_book_title(text)
 
     if book_title not in uploaded_text_list:
-        text_upload_succeed = add_by_file(text, destination_url)
+        add_by_file(text, destination_url)
 
-        if not text_upload_succeed:
-            log_error(TEXT_ERROR_LOG, f"{book_title}[json file]", "file not uploaded")
-            log_error_id(TEXT_ERROR_ID_LOG, book_title)
+        # if not text_upload_succeed:
+        #     log_error(TEXT_ERROR_LOG, f"{book_title}[json file]", "file not uploaded")
 
 
 def add_by_file(text: Dict, destination_url: Destination_url):
     """
     Read a text file and add.
     """
-
-    book_title = get_book_title(text)
-
     payload = {
         "bookKey": "",
         "categoryEn": [],
@@ -100,52 +91,24 @@ def add_by_file(text: Dict, destination_url: Destination_url):
     try:
         # print("===========================( post_category )===========================")
         for i in range(len(payload["categoryEn"])):
-            response = post_term(
+            post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
             )
-            if not response["status"]:
-                if "term_conflict" in response:
-                    log_error(
-                        TEXT_ERROR_LOG,
-                        f"{book_title}[term]",
-                        f"{response['term_conflict']}",
-                    )
-                    log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
-                else:
-                    log_error(TEXT_ERROR_LOG, f"{book_title.name}[term]", f"{response}")
-                    log_error_id(TEXT_ERROR_ID_LOG, book_title.name)
-                return False
 
-            category_response = post_category(
+            post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
-            if not category_response["status"]:
-                log_error(
-                    TEXT_ERROR_LOG,
-                    f"{book_title}[category]",
-                    f"{category_response['error']}",
-                )
-                log_error_id(TEXT_ERROR_ID_LOG, book_title)
-                return False
 
         # print(
         #     "============================( post_index )================================"
         # )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        index_response = post_index(
+        post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
-        if not index_response["status"]:
-            log_error(
-                TEXT_ERROR_LOG,
-                f"{book_title}[index]",
-                f"{index_response['error']}",
-            )
-            log_error_id(TEXT_ERROR_ID_LOG, book_title)
-            return False
 
         # print(
         #     "===============================( post_text )=================================="
@@ -153,20 +116,14 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         text_index_key = payload["bookKey"]
 
         for book in payload["textEn"]:
-            if not process_text(book, "en", text_index_key, destination_url):
-                return False
+            process_text(book, "en", text_index_key, destination_url)
 
         for book in payload["textHe"]:
-            if not process_text(book, "he", text_index_key, destination_url):
-                return False
+            process_text(book, "he", text_index_key, destination_url)
 
     except Exception as e:
-        print("exception : ", e)
-        return False
-
-    log_success(TEXT_SUCCESS_LOG, book_title)
-
-    return True
+        logger.error(f"{e}")
+        raise Exception(f"{e}")
 
 
 def process_text(
@@ -181,6 +138,9 @@ def process_text(
         "language": lang,
         "actualLanguage": book["language"],
         "completestatus": book["completestatus"],
+        "versionLongNotes": "",
+        "versionNotesInTibetan": "",
+        "versionNotes": "",
         "text": [],
     }
 
@@ -188,39 +148,15 @@ def process_text(
         # Complex text
         if isinstance(book["content"], dict):
             result = generate_chapters(book["content"], book["language"])
-            is_succeed = False
-            errors = []
+
             for key, value in result.items():
                 text["text"] = value
-                text_response = post_text(key, text, destination_url)
-                if not text_response["status"]:
-                    error = text_response["error"]
-                    errors.append(error)
-                    is_succeed = False
-                else:
-                    is_succeed = True
-
-            if is_succeed:
-                log_error(TEXT_ERROR_LOG, f"{text_index_key}[text]", f"{errors}")
-                log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
-
-            return is_succeed
+                post_text(key, text, destination_url)
 
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            text_response = post_text(text_index_key, text, destination_url)
-            if not text_response["status"]:
-                error = text_response["error"]
-                log_error(
-                    TEXT_ERROR_LOG,
-                    f"{text_index_key}[text]",
-                    f"{text_response['error']}",
-                )
-                log_error_id(TEXT_ERROR_ID_LOG, text_index_key)
-                return False
-            else:
-                return True
+            post_text(text_index_key, text, destination_url)
 
 
 def add_refs(destination_url: Destination_url):
@@ -246,16 +182,11 @@ def add_refs(destination_url: Destination_url):
             # Separate refs since the API only support adding 2 refs at the same time.
             for i in range(0, len(ref["refs"]) - 1):
                 for j in range(i + 1, len(ref["refs"])):
-                    link_response = post_link(
+                    post_link(
                         [ref["refs"][i], ref["refs"][j]], ref["type"], destination_url
                     )
-                    # Failed
-                    if not link_response["status"]:
-                        log_error(LINK_ERROR_LOG, f"{file}[link]", link_response["res"])
-                        log_error_id(LINK_ERROR_ID_LOG, file)
-
-        log_success(LINK_SUCCESS_LOG, file)
-        # print(f"=== [Finished] {file} ===")
+        # store link success
+        log_link_success(f"{file}")
 
 
 def upload_root(

@@ -4,7 +4,8 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.exceptions import APIError
 
 
 def post_category(
@@ -36,14 +37,25 @@ def post_category(
     data = urlencode(values)
     binary_data = data.encode("ascii")
     req = Request(url, binary_data, headers=headers)
+    category_name = list(map(lambda x: x["name"], en_category_list))[-1]
 
     try:
         response = urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            return {"status": True}
+            logger.info(f"UPLOADED: Category '{category_name}'")
         elif "already exists" in res:
-            return {"status": True}
-        return {"status": True, "error": res}
+            logger.warning(f"Category already exists: '{category_name}'")
+        else:
+            logger.error(f"Error : Category:{res}")
+            raise APIError(f"{res}")
+
     except HTTPError as e:
-        return {"status": False, "error": e}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(f"category : {error_message}")
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
+
+    except Exception as e:
+        error_message = f"{e}"
+        logger.error(f"category : {error_message}")
+        raise Exception(error_message)

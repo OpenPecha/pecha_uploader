@@ -3,7 +3,8 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
 def post_index(
@@ -62,7 +63,17 @@ def post_index(
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" in res and "already exists." not in res:
-            return {"status": False, "error": res}
-        return {"status": True}
+            logger.error(f"{res}")
+            raise APIError(f"{res}")
+
+        logger.info(f"UPLOADED: Index '{index_str}'")
+
     except HTTPError as e:
-        return {"status": False, "error": e.read()}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(f"index : {error_message}")
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
+
+    except Exception as e:
+        error_message = f"{e}"
+        logger.error(f"index : {error_message}")
+        raise Exception(error_message)

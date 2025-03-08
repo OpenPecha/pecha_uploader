@@ -3,7 +3,7 @@ import urllib
 from typing import List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
 def post_link(ref_list: List[str], type_str: str, destination_url: Destination_url):
@@ -31,13 +31,21 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
     data = urllib.parse.urlencode(values)
     binary_data = data.encode("ascii")
     req = urllib.request.Request(url, binary_data, headers=headers)
+
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            return {"status": True, "res": res}
+            logger.info(f"UPLOADED: Link {ref_list}")
         elif "Link already exists" in res:
-            return {"status": False, "res": res}
-        return {"status": True, "res": res}
-    except (HTTPError) as e:
-        return {"status": False, "res": e.read()}
+            logger.warning(f"Link already exists: {ref_list}")
+
+    except HTTPError as e:
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(error_message)
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
+
+    except Exception as e:
+        error_message = f"{e}"
+        logger.error(error_message)
+        raise Exception(error_message)
