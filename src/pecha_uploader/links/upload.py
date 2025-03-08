@@ -6,7 +6,7 @@ from urllib.error import HTTPError
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
-def post_link(ref_list: List[str], type_str: str, destination_url: Destination_url):
+def post_link(ref_list: List, destination_url: Destination_url):
     """
     Post references for articles.
         `ref_list`: list of str, articles to reference
@@ -24,8 +24,7 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
                 - related
     """
     url = destination_url.value + "api/links/"
-    link = {"refs": ref_list, "type": type_str}
-    input_json_link = json.dumps(link)
+    input_json_link = json.dumps(ref_list)
 
     values = {"json": input_json_link, "apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)
@@ -36,9 +35,7 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"UPLOADED: Link {ref_list}")
-        elif "Link already exists" in res:
-            logger.warning(f"Link already exists: {ref_list}")
+            logger.info(f"UPLOADED: Link {res}")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

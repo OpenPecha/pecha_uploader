@@ -178,13 +178,7 @@ def add_refs(destination_url: Destination_url):
 
         remove_links(ref_list[0]["refs"][1], destination_url)
 
-        for ref in ref_list:
-            # Separate refs since the API only support adding 2 refs at the same time.
-            for i in range(0, len(ref["refs"]) - 1):
-                for j in range(i + 1, len(ref["refs"])):
-                    post_link(
-                        [ref["refs"][i], ref["refs"][j]], ref["type"], destination_url
-                    )
+        post_link(ref_list, destination_url)
         # store link success
         log_link_success(f"{file}")
 
