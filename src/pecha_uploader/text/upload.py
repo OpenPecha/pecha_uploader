@@ -48,12 +48,12 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
         res = response.read().decode("utf-8")
         if "error" in res:
             if "Failed to parse sections for ref" in res:
-                logger.info(f"{res}")
+                logger.warning(f"Text: Failed to parse sections for ref {text_name}")
 
             logger.error(f"error uploading text : '{text_name}'")
             raise APIError(f"error uploading text : '{text_name}'")
         else:
-            logger.info(f"Uploaded:  '{text_name}': {res}")
+            logger.info(f"UPLOADED: Text '{text_content['versionTitle']}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

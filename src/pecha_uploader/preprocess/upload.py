@@ -14,15 +14,14 @@ def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
         `term_bo`: str, primary `he` term (བོད་ཡིག)
     """
     url = destination_url.value + "api/terms/" + urllib.parse.quote(term_en)
-    input_json = json.dumps(
-        {
-            "name": term_en,
-            "titles": [
-                {"text": term_en, "lang": "en", "primary": True},
-                {"text": term_bo, "lang": "he", "primary": True},
-            ],
-        }
-    )
+    payload = {
+        "name": term_en,
+        "titles": [
+            {"text": term_en, "lang": "en", "primary": True},
+            {"text": term_bo, "lang": "he", "primary": True},
+        ],
+    }
+    input_json = json.dumps(payload)
     values = {
         "json": input_json,
         "apikey": PECHA_API_KEY,
@@ -37,16 +36,16 @@ def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
         # term conflict
         if "error" in res:
             if "Term already exists" in res:
-                logger.warning(f"{res}")
+                logger.warning(f"Term : '{term_en}' already exists")
             else:
                 logger.error(f"{res}")
                 raise APIError(res)
         else:
-            logger.info(f"{term_en}")
+            logger.info(f"UPLOADED: Term '{term_en}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"index : {error_message}")
+        logger.error(f"Term : {error_message}")
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:

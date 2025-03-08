@@ -43,11 +43,11 @@ def post_category(
         response = urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"Uploaded: {category_name}")
+            logger.info(f"UPLOADED: Category '{category_name}'")
         elif "already exists" in res:
-            logger.warning(f"Category already exists: {category_name}")
+            logger.warning(f"Category already exists: '{category_name}'")
         else:
-            logger.error(f"{res}")
+            logger.error(f"Error : Category:{res}")
             raise APIError(f"{res}")
 
     except HTTPError as e:

@@ -138,9 +138,9 @@ def process_text(
         "language": lang,
         "actualLanguage": book["language"],
         "completestatus": book["completestatus"],
-        "versionLongNotes": book["versionLongNotes"],
-        "versionNotesInTibetan": book["versionNotesInTibetan"],
-        "versionNotes": book["versionNotes"],
+        "versionLongNotes": "",
+        "versionNotesInTibetan": "",
+        "versionNotes": "",
         "text": [],
     }
 

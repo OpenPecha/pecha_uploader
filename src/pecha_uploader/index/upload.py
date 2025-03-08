@@ -66,7 +66,7 @@ def post_index(
             logger.error(f"{res}")
             raise APIError(f"{res}")
 
-        logger.info(f"{index_str}")
+        logger.info(f"UPLOADED: Index '{index_str}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

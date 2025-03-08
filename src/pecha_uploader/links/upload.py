@@ -36,7 +36,7 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"Link successfully created: {ref_list}")
+            logger.info(f"UPLOADED: Link {ref_list}")
         elif "Link already exists" in res:
             logger.warning(f"Link already exists: {ref_list}")
 

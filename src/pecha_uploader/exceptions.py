@@ -12,3 +12,9 @@ class APIError(Exception):
     def __init__(self, message="An API error occurred"):
         self.message = message
         super().__init__(self.message)
+
+
+class TextParseError(Exception):
+    """Custom exception for parsing errors."""
+
+    pass
