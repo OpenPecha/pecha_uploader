@@ -3,6 +3,7 @@ This module processes text files, parses JSON content,
 and uploads structured data to various APIs for further processing.
 """
 
+import os
 from typing import Dict
 
 from pecha_uploader.category.upload import post_category
@@ -170,17 +171,18 @@ def add_refs(destination_url: Destination_url):
         if LINK_SUCCESS_LOG.exists()
         else []
     )
-    for file in file_list:
-        if file in ref_success_list:
-            continue
 
-        ref_list = read_json(file)
+    for file_path in file_list:
+        file_name = os.path.basename(file_path)
+        if file_name in ref_success_list:
+            continue
+        ref_list = read_json(file_path)
 
         remove_links(ref_list[0]["refs"][1], destination_url)
 
         post_link(ref_list, destination_url)
-        # store link success
-        log_link_success(f"{file}")
+        # # store link success
+        log_link_success(os.path.basename(file_name))
 
 
 def upload_root(
