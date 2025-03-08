@@ -4,7 +4,6 @@ from typing import List
 from urllib.error import HTTPError
 
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
-from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
 def post_link(ref_list: List[str], type_str: str, destination_url: Destination_url):
@@ -37,11 +36,9 @@ def post_link(ref_list: List[str], type_str: str, destination_url: Destination_u
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"Link successfully created: {ref_list['refs']}")
+            logger.info(f"Link successfully created: {ref_list}")
         elif "Link already exists" in res:
-            logger.warning(f"Link already exists: {ref_list['refs']}")
-        logger.error(f"Link creation failed: {res}")
-        raise APIError(f"{res}")
+            logger.warning(f"Link already exists: {ref_list}")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

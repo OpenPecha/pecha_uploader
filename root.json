@@ -13,6 +13,9 @@
                 "language": "en",
                 "versionSource": " ",
                 "completestatus": "in_progress",
+                "versionLongNotes": "",
+                "versionNotesInTibetan": "",
+                "versionNotes": "",
                 "content": [[
                     "Lorem ipsum dolor sit amet.",
                     "The quick brown fox jumps over the lazy dog.",
@@ -43,6 +46,9 @@
                 "language": "bo",
                 "versionSource": " ",
                 "completestatus": "in_progress",
+                "versionLongNotes": "",
+                "versionNotesInTibetan": "",
+                "versionNotes": "",
                 "content": [],
                 "direction": "ltr"
             }
