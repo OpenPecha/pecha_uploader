@@ -3,15 +3,8 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
-from pecha_uploader.config import (
-    PECHA_API_KEY,
-    Destination_url,
-    headers,
-    log_error,
-    log_info,
-    text_error_logger,
-)
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
 def post_index(
@@ -70,17 +63,17 @@ def post_index(
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" in res and "already exists." not in res:
-            log_error(text_error_logger, f"API error response: {res}")
-            return {"status": False}
+            logger.error(f"{res}")
+            raise APIError(f"{res}")
 
-        log_info(text_info_logger, f"Index uploaded: {index_str}")
-        return {"status": True}
+        logger.info(f"{index_str}")
 
     except HTTPError as e:
-        error_message = e.read().decode("utf-8")
-        log_error(text_error_logger, f"HTTPError while posting index: {error_message}")
-        return {"status": False}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(f"index : {error_message}")
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        log_error(text_error_logger, f"Unexpected error while posting index: {str(e)}")
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(f"index : {error_message}")
+        raise Exception(error_message)

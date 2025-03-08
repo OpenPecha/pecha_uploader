@@ -1,30 +1,28 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers, log_error, text_error_logger
+from pecha_uploader.config import Destination_url, headers, logger
 
 
-def get_index(index: str):
+def get_index(index: str, destination_url: Destination_url):
     """
     Get Index information for article name `index`.
         `index`: str, article en name
     """
-    index_url = baseURL + "api/v2/raw/index"
+    index_url = destination_url.value + "api/v2/raw/index"
     prepare_index_str = index.replace(" ", "_")
     url = f"{index_url}/{prepare_index_str}?with_content_counts=1"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
-        response = urllib.request.urlopen(req)  # noqa]
-        return {"status": True}
+        response = urllib.request.urlopen(req)  # noqa
+        res = response.read().decode("utf-8")
+        return res
     except HTTPError as e:
-        # Handle HTTP errors
-        log_error(
-            text_error_logger,
-            f"HTTP Error {e.code} occurred extracting index: {e.read().decode('utf-8')}",
-        )
-        return {"status": False}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(error_message)
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        # Handle other exceptions
-        log_error(text_error_logger, f"Unexpected error occurred: {e}")
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(error_message)
+        raise Exception(error_message)

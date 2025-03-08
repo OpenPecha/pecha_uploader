@@ -1,10 +1,10 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import baseURL, headers, link_error_logger, log_error
+from pecha_uploader.config import Destination_url, headers, logger
 
 
-def get_link(link_name: str, with_text=1):
+def get_link(link_name: str, destination_url: Destination_url, with_text=1):
     """
     Get links for article/section/row `link_name`
         `link_name`: str, article/section/row name
@@ -21,17 +21,19 @@ def get_link(link_name: str, with_text=1):
             link_url += urllib.parse.quote(c)
         else:
             link_url += c
-    url = baseURL + f"api/links/{link_url}?with_text={with_text}"
+    url = destination_url.value + f"api/links/{link_url}?with_text={with_text}"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
         response = urllib.request.urlopen(req)  # noqa
-        return {"status": True, "data": response}
+        res = response.read().decode("utf-8")
+        return res
+
     except HTTPError as e:
-        # Handle HTTP errors (e.g., 404, 500, etc.)
-        log_error(link_error_logger, f"HTTP Error occurred. Status code: {e.code}")
-        return {"status": False}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(error_message)
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        # Handle other unexpected errors (e.g., network issues, invalid URLs, etc.)
-        log_error(link_error_logger, f"An unexpected error occurred: {e}")
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(error_message)
+        raise Exception(error_message)

@@ -3,15 +3,8 @@ import urllib
 from typing import Dict
 from urllib.error import HTTPError
 
-from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
-from pecha_uploader.config import (
-    PECHA_API_KEY,
-    Destination_url,
-    headers,
-    log_error,
-    log_info,
-    text_error_logger,
-)
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.exceptions import APIError
 
 
 def post_text(text_name: str, text_content: Dict, destination_url: Destination_url):
@@ -55,23 +48,19 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
         res = response.read().decode("utf-8")
         if "error" in res:
             if "Failed to parse sections for ref" in res:
-                return {"status": True}
+                logger.info(f"{res}")
 
-            log_error(text_error_logger, f" '{text_name}': {res}")
-            return {"status": False}
+            logger.error(f"error uploading text : '{text_name}'")
+            raise APIError(f"error uploading text : '{text_name}'")
         else:
-            log_info(text_info_logger, f"Uploaded:  '{text_name}'")
-            return {"status": True}
+            logger.info(f"Uploaded:  '{text_name}': {res}")
+
     except HTTPError as e:
-        # error_message = e.read().decode("utf-8")
-        log_error(
-            text_error_logger, f"HTTPError while posting text '{text_name}': {e.code}"
-        )
-        return {"status": False}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(f"text : {error_message}")
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        log_error(
-            text_error_logger,
-            f"Unexpected error while posting text '{text_name}': {str(e)}",
-        )
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(f"text : {error_message}")
+        raise Exception(error_message)

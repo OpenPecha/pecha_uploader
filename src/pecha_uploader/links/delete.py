@@ -2,15 +2,7 @@ import re
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import (
-    PECHA_API_KEY,
-    Destination_url,
-    headers,
-    log_error,
-    log_info,
-    text_error_logger,
-    text_info_logger,
-)
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
 def remove_links(text_title: str, destination_url: Destination_url):
@@ -29,17 +21,15 @@ def remove_links(text_title: str, destination_url: Destination_url):
     req = urllib.request.Request(url, binary_key, method="DELETE", headers=headers)
     try:
         urllib.request.urlopen(req)
-        log_info(text_info_logger, f"Successfully removed link for: {text_title}")
+        # response = urllib.request.urlopen(req)
+        logger.info(f"Successfully removed link for: {text_title}")
 
     except HTTPError as e:
-        # Handle HTTP errors
-        log_error(
-            text_error_logger,
-            f"HTTP Error {e.code} occurred while removing link: {e.read().decode('utf-8')}",
-        )
-        raise HTTPError(f"HTTP Error occurred while removing link: {e.code}")
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(error_message)
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        # Handle other exceptions
-        log_error(text_error_logger, f"Unexpected error occurred: {e}")
-        raise Exception(f"An unexpected error occurred while removing link: {e}")
+        error_message = f"{e}"
+        logger.error(error_message)
+        raise Exception(error_message)

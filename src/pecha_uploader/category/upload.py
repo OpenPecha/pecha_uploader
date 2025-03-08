@@ -4,15 +4,8 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
-from pecha_uploader.config import (
-    PECHA_API_KEY,
-    Destination_url,
-    headers,
-    log_error,
-    log_info,
-    text_error_logger,
-)
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.exceptions import APIError
 
 
 def post_category(
@@ -45,24 +38,24 @@ def post_category(
     binary_data = data.encode("ascii")
     req = Request(url, binary_data, headers=headers)
     category_name = list(map(lambda x: x["name"], en_category_list))[-1]
+
     try:
         response = urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            log_info(text_info_logger, f"Uploaded: {category_name}")
-            return {"status": True}
+            logger.info(f"Uploaded: {category_name}")
         elif "already exists" in res:
-            log_info(text_info_logger, f"Category already exists: {category_name}")
-            return {"status": True}
-        return {"status": True}
-    except HTTPError as e:
-        # error_message = e.read().decode("utf-8")
-        log_error(text_error_logger, f"HTTPError while posting category: {e.code}")
+            logger.warning(f"Category already exists: {category_name}")
+        else:
+            logger.error(f"{res}")
+            raise APIError(f"{res}")
 
-        return {"status": False}
+    except HTTPError as e:
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(f"category : {error_message}")
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        log_error(
-            text_error_logger, f"Unexpected error while posting category: {str(e)}"
-        )
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(f"category : {error_message}")
+        raise Exception(error_message)

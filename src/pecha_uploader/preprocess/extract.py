@@ -1,36 +1,27 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import text_info_logger  # <--- Import the Info Logger
-from pecha_uploader.config import (
-    baseURL,
-    headers,
-    log_error,
-    log_info,
-    text_error_logger,
-)
+from pecha_uploader.config import Destination_url, headers, logger
 
 
-def get_term(term: str):
+def get_term(term: str, destination_url: Destination_url):
     """
     Get term values for variable `term_str`.
         `term`: str, term name
     """
-    url = baseURL + "api/terms/" + urllib.parse.quote(term)
+    url = destination_url.value + "api/terms/" + urllib.parse.quote(term)
     req = urllib.request.Request(url, headers=headers)
     try:
         response = urllib.request.urlopen(req)  # noqa
         res = response.read().decode("utf-8")
-        log_info(text_info_logger, f"term: {res}")
-        return {"status": True}
+        return res
+
     except HTTPError as e:
-        # error_message = e.read().decode("utf-8")
-        log_error(text_error_logger, f"HTTPError while fetching term '{term} {e}'")
-        return {"status": False}
+        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        logger.error(error_message)
+        raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        log_error(
-            text_error_logger,
-            f"Unexpected error while fetching term '{term}': {str(e)}",
-        )
-        return {"status": False}
+        error_message = f"{e}"
+        logger.error(error_message)
+        raise Exception(error_message)
