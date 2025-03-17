@@ -1,13 +1,20 @@
 import json
 import urllib
-from typing import Dict
+from typing import Dict, List
 from urllib.error import HTTPError
 
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 from pecha_uploader.exceptions import APIError
 
+# from pecha_uploader.clear_unfinished_text import remove_texts_meta
 
-def post_text(text_name: str, text_content: Dict, destination_url: Destination_url):
+
+def post_text(
+    text_name: str,
+    text_content: Dict,
+    category_path: List,
+    destination_url: Destination_url,
+):
 
     """
     Post text to article `text_name`.
@@ -50,8 +57,9 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
             if "Failed to parse sections for ref" in res:
                 logger.warning(f"Text: Failed to parse sections for ref {text_name}")
 
-            logger.error(f"error uploading text : '{text_name}'")
-            raise APIError(f"error uploading text : '{text_name}'")
+            logger.error(f"error uploading text : '{res}'")
+            # remove_texts_meta({"term": text_name, "category": category_path, "index": text_name}, destination_url)
+            raise APIError(f"error uploading text : '{res}'")
         else:
             logger.info(f"UPLOADED: Text '{text_content['versionTitle']}'")
 

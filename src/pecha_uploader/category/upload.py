@@ -23,9 +23,10 @@ def post_category(
         => post_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
     """
     url = destination_url.value + "api/category"
+    category_path = list(map(lambda x: x["name"], en_category_list))
     category = {
-        "sharedTitle": list(map(lambda x: x["name"], en_category_list))[-1],
-        "path": list(map(lambda x: x["name"], en_category_list)),
+        "sharedTitle": category_path[-1],
+        "path": category_path,
         "enDesc": list(map(lambda x: x["enDesc"], en_category_list))[-1],
         "heDesc": list(map(lambda x: x["heDesc"], bo_category_list))[-1],
         "enShortDesc": list(map(lambda x: x["enShortDesc"], en_category_list))[-1],
@@ -37,7 +38,7 @@ def post_category(
     data = urlencode(values)
     binary_data = data.encode("ascii")
     req = Request(url, binary_data, headers=headers)
-    category_name = list(map(lambda x: x["name"], en_category_list))[-1]
+    category_name = category_path[-1]
 
     try:
         response = urlopen(req)

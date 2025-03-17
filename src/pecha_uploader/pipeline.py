@@ -4,21 +4,24 @@ and uploads structured data to various APIs for further processing.
 """
 
 import os
-from typing import Dict
+import re
+from typing import Dict, List
 
 from pecha_uploader.category.upload import post_category
+from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import (
     LINK_JSON_PATH,
-    LINK_SUCCESS_LOG,
     TEXT_SUCCESS_LOG,
     Destination_url,
     log_link_success,
     logger,
 )
+from pecha_uploader.exceptions import APIError
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import commentaryToRoot
 from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
+from pecha_uploader.preprocess.extract import get_term
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
 from pecha_uploader.utils import (
@@ -90,14 +93,44 @@ def add_by_file(text: Dict, destination_url: Destination_url):
                 payload["textHe"].append(book)
 
     try:
-        # print("===========================( post_category )===========================")
+        # print("===========================( post_term )===========================")
+        category_path = list(map(lambda x: x["name"], payload["categoryEn"][i]))
         for i in range(len(payload["categoryEn"])):
-            post_term(
+            term_response = post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
             )
+            if "error" in term_response:
+                if "already exists" in term_response["error"]:
+                    match = re.search(
+                        r"A Term with the title (.*?) in it already exists",
+                        term_response["error"],
+                    )
+                    if match:
+                        match_term = match.group(1)
+                        res_data = get_term(match_term, destination_url)
+                        if "error" not in res_data:
+                            term_title = res_data["name"]
+                            category_path = category_path[:-1] + [term_title]
+                            remove_texts_meta(
+                                {
+                                    "term": term_title,
+                                    "index": term_title,
+                                    "category": category_path,
+                                },
+                                destination_url,
+                            )
+                        # Retry post_term after deletion
+                        term_response = term_response = post_term(
+                            payload["categoryEn"][i][-1]["name"],
+                            payload["categoryHe"][i][-1]["name"],
+                            destination_url,
+                        )
+                        if "error" in term_response:
+                            raise APIError(term_response)
 
+            # print("===========================( post_category )===========================")
             post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
@@ -107,9 +140,28 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         # )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        post_index(
+        index_response = post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
+        if "error" in index_response:
+            match_str = re.search(
+                r"A text called (.+?)\s*-\s*(.+?) already exists\.",
+                index_response["error"],
+            )
+            if match_str:
+                parts = [match_str.group(1).strip(), match_str.group(2).strip()]
+                if parts[0]:
+                    remove_texts_meta({"index": parts[0]}, destination_url)
+
+                    # Retry post_index after deletion
+                    index_response = post_index(
+                        payload["bookKey"],
+                        payload["categoryEn"][-1],
+                        schema[0],
+                        destination_url,
+                    )
+                    if "error" in index_response:
+                        raise APIError(index_response)
 
         # print(
         #     "===============================( post_text )=================================="
@@ -117,10 +169,10 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         text_index_key = payload["bookKey"]
 
         for book in payload["textEn"]:
-            process_text(book, "en", text_index_key, destination_url)
+            process_text(book, "en", text_index_key, category_path, destination_url)
 
         for book in payload["textHe"]:
-            process_text(book, "he", text_index_key, destination_url)
+            process_text(book, "he", text_index_key, category_path, destination_url)
 
     except Exception as e:
         logger.error(f"{e}")
@@ -128,7 +180,11 @@ def add_by_file(text: Dict, destination_url: Destination_url):
 
 
 def process_text(
-    book: dict, lang: str, text_index_key: str, destination_url: Destination_url
+    book: dict,
+    lang: str,
+    text_index_key: str,
+    category_path: List,
+    destination_url: Destination_url,
 ):
     """
     Process text for a given language and post it.
@@ -152,12 +208,12 @@ def process_text(
 
             for key, value in result.items():
                 text["text"] = value
-                post_text(key, text, destination_url)
+                post_text(key, text, category_path, destination_url)
 
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            post_text(text_index_key, text, destination_url)
+            post_text(text_index_key, text, category_path, destination_url)
 
 
 def add_refs(destination_url: Destination_url):
@@ -166,22 +222,26 @@ def add_refs(destination_url: Destination_url):
     """
     # print("============ add_refs ============")
     file_list = LINK_JSON_PATH.glob("*.json")
-    ref_success_list = (
-        LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
-        if LINK_SUCCESS_LOG.exists()
-        else []
-    )
+    # ref_success_list = (
+    #     LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
+    #     if LINK_SUCCESS_LOG.exists()
+    #     else []
+    # )
 
     for file_path in file_list:
         file_name = os.path.basename(file_path)
-        if file_name in ref_success_list:
-            continue
+        # if file_name in ref_success_list:
+        #     continue
         ref_list = read_json(file_path)
 
         remove_links(ref_list[0]["refs"][1], destination_url)
 
-        post_link(ref_list, destination_url)
-        # # store link success
+        batch_size = 150
+        for i in range(0, len(ref_list), batch_size):
+            batch = ref_list[i : i + batch_size]  # noqa
+            post_link(batch, len(batch), destination_url)
+
+        # store link success
         log_link_success(os.path.basename(file_name))
 
 

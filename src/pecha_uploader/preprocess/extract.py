@@ -1,3 +1,4 @@
+import json
 import urllib
 from urllib.error import HTTPError
 
@@ -14,7 +15,7 @@ def get_term(term: str, destination_url: Destination_url):
     try:
         response = urllib.request.urlopen(req)  # noqa
         res = response.read().decode("utf-8")
-        return res
+        return json.loads(res)
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

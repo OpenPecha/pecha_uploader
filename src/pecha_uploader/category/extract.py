@@ -16,7 +16,6 @@ def get_category(category_name: str, destination_url: Destination_url):
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         return res
-
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
         logger.error(error_message)
