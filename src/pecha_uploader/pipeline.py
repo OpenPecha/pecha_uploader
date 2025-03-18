@@ -4,11 +4,9 @@ and uploads structured data to various APIs for further processing.
 """
 
 import os
-import re
 from typing import Dict, List
 
 from pecha_uploader.category.upload import post_category
-from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import (
     LINK_JSON_PATH,
     TEXT_SUCCESS_LOG,
@@ -16,12 +14,10 @@ from pecha_uploader.config import (
     log_link_success,
     logger,
 )
-from pecha_uploader.exceptions import APIError
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import commentaryToRoot
 from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
-from pecha_uploader.preprocess.extract import get_term
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
 from pecha_uploader.utils import (
@@ -96,40 +92,11 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         # print("===========================( post_term )===========================")
         category_path = list(map(lambda x: x["name"], payload["categoryEn"][i]))
         for i in range(len(payload["categoryEn"])):
-            term_response = post_term(
+            post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
             )
-            if "error" in term_response:
-                if "already exists" in term_response["error"]:
-                    match = re.search(
-                        r"A Term with the title (.*?) in it already exists",
-                        term_response["error"],
-                    )
-                    if match:
-                        match_term = match.group(1)
-                        res_data = get_term(match_term, destination_url)
-                        if "error" not in res_data:
-                            term_title = res_data["name"]
-                            category_path = category_path[:-1] + [term_title]
-                            remove_texts_meta(
-                                {
-                                    "term": term_title,
-                                    "index": term_title,
-                                    "category": category_path,
-                                },
-                                destination_url,
-                            )
-                        # Retry post_term after deletion
-                        term_response = term_response = post_term(
-                            payload["categoryEn"][i][-1]["name"],
-                            payload["categoryHe"][i][-1]["name"],
-                            destination_url,
-                        )
-                        if "error" in term_response:
-                            raise APIError(term_response)
-
             # print("===========================( post_category )===========================")
             post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
@@ -140,28 +107,9 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         # )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        index_response = post_index(
+        post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
-        if "error" in index_response:
-            match_str = re.search(
-                r"A text called (.+?)\s*-\s*(.+?) already exists\.",
-                index_response["error"],
-            )
-            if match_str:
-                parts = [match_str.group(1).strip(), match_str.group(2).strip()]
-                if parts[0]:
-                    remove_texts_meta({"index": parts[0]}, destination_url)
-
-                    # Retry post_index after deletion
-                    index_response = post_index(
-                        payload["bookKey"],
-                        payload["categoryEn"][-1],
-                        schema[0],
-                        destination_url,
-                    )
-                    if "error" in index_response:
-                        raise APIError(index_response)
 
         # print(
         #     "===============================( post_text )=================================="
@@ -213,7 +161,9 @@ def process_text(
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            post_text(text_index_key, text, category_path, destination_url)
+            post_text(
+                text_index_key, text, category_path, destination_url, text_index_key
+            )
 
 
 def add_refs(destination_url: Destination_url):

@@ -25,6 +25,8 @@ def post_index(
                 "primary": True (You must have a primary title for each language)
             }
     """
+
+    print("index_str>>>>>>>>>>>>>>>>>>>>", index_str)
     url = (
         destination_url.value
         + "api/v2/raw/index/"

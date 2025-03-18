@@ -1,4 +1,4 @@
-import urllib
+import urllib.request
 from urllib.error import HTTPError
 
 from pecha_uploader.config import Destination_url, headers, logger
@@ -28,3 +28,6 @@ def get_text(text_name: str, destination_url: Destination_url):
         error_message = f"{e}"
         logger.error(error_message)
         raise Exception(error_message)
+
+
+get_text("Test level 2", Destination_url.LOCAL)

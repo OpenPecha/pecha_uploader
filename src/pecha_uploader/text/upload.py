@@ -7,7 +7,14 @@ from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 from pecha_uploader.exceptions import APIError
 
-# from pecha_uploader.clear_unfinished_text import remove_texts_meta
+# from pecha_uploader.text.extract import get_text
+
+
+def can_remove_index(text_index: str, text_title: str):
+    """check if index can be removed"""
+    if text_index != text_title:
+        return False
+    # elif text_index = text_title
 
 
 def post_text(
@@ -15,7 +22,7 @@ def post_text(
     text_content: Dict,
     category_path: List,
     destination_url: Destination_url,
-    text_index_key: str = None,
+    text_index_key: str,
 ):
 
     """
@@ -59,22 +66,24 @@ def post_text(
             if "Failed to parse sections for ref" in res:
                 logger.warning(f"Text: Failed to parse sections for ref {text_name}")
 
-            logger.error(f"error uploading text : '{res}'")
+            if can_remove_index(text_index_key, text_content["versionTitle"]):
+                pass
 
             remove_texts_meta(
                 {"term": text_name, "category": category_path, "index": text_name},
                 destination_url,
             )
-            raise APIError(f"error uploading text : '{res}'")
+            logger.error(f"Text: '{res}'")
+            raise APIError(f"Text : '{res}'")
         else:
             logger.info(f"UPLOADED: Text '{text_content['versionTitle']}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"text : {error_message}")
+        logger.error(f"Text : {error_message}")
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
         error_message = f"{e}"
-        logger.error(f"text : {error_message}")
+        logger.error(f"Text : {error_message}")
         raise Exception(error_message)
