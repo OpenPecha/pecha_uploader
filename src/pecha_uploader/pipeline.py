@@ -180,7 +180,11 @@ def add_refs(destination_url: Destination_url):
 
         remove_links(ref_list[0]["refs"][1], destination_url)
 
-        post_link(ref_list, destination_url)
+        batch_size = 150
+        for i in range(0, len(ref_list), batch_size):
+            batch = ref_list[i : i + batch_size]  # noqa
+            post_link(batch, destination_url, len(batch))
+
         # # store link success
         log_link_success(os.path.basename(file_name))
 

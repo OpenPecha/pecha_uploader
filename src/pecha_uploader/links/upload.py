@@ -8,7 +8,11 @@ from urllib.error import HTTPError
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 
 
-def post_link(ref_list: Union[Dict, List], destination_url: Destination_url):
+def post_link(
+    ref_list: Union[List, Dict],
+    destination_url: Destination_url,
+    ref_list_size: int = 1,
+):
     """
     Post references for articles.
         `ref_list`: list of str, articles to reference
@@ -37,9 +41,9 @@ def post_link(ref_list: Union[Dict, List], destination_url: Destination_url):
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
-            logger.info(f"UPLOADED: Link {res}")
+            logger.info(f"UPLOADED: {ref_list_size} Links ")
         else:
-            logger.info(f"Error: Link {res}")
+            logger.error(f"Link {res}")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

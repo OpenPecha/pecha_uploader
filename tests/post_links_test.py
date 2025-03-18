@@ -9,7 +9,7 @@ def test_bulk_upload_link(ref_lists: Union[List, Dict], url: Destination_url):
     """this is test function for bulk upload link"""
     # Measure time for bulk upload
     start_bulk = time.time()
-    post_link(ref_lists, url)
+    post_link(ref_lists, url, len(ref_lists))
     end_bulk = time.time()
     bulk_time = end_bulk - start_bulk
 
