@@ -50,7 +50,7 @@ class Destination_url(Enum):
 
 
 def log_link_success(text_name: str):
-    with open(f"{TEXT_SUCCESS_LOG}", mode="a", encoding="utf-8") as f:
+    with open(LINK_SUCCESS_LOG, "w") as f:
         f.write(text_name + "\n")
 
 
