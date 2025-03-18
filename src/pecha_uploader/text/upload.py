@@ -3,6 +3,7 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
+from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 from pecha_uploader.exceptions import APIError
 
@@ -14,6 +15,7 @@ def post_text(
     text_content: Dict,
     category_path: List,
     destination_url: Destination_url,
+    text_index_key: str = None,
 ):
 
     """
@@ -58,7 +60,11 @@ def post_text(
                 logger.warning(f"Text: Failed to parse sections for ref {text_name}")
 
             logger.error(f"error uploading text : '{res}'")
-            # remove_texts_meta({"term": text_name, "category": category_path, "index": text_name}, destination_url)
+
+            remove_texts_meta(
+                {"term": text_name, "category": category_path, "index": text_name},
+                destination_url,
+            )
             raise APIError(f"error uploading text : '{res}'")
         else:
             logger.info(f"UPLOADED: Text '{text_content['versionTitle']}'")

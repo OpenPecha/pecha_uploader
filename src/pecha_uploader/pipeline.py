@@ -208,7 +208,7 @@ def process_text(
 
             for key, value in result.items():
                 text["text"] = value
-                post_text(key, text, category_path, destination_url)
+                post_text(key, text, category_path, destination_url, text_index_key)
 
         # Simple text
         elif isinstance(book["content"], list):

@@ -4,6 +4,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 from pecha_uploader.exceptions import APIError
 
@@ -49,6 +50,7 @@ def post_category(
             logger.warning(f"Category already exists: '{category_name}'")
         else:
             logger.error(f"Error : Category:{res}")
+            remove_texts_meta({"term": category_name}, destination_url)
             raise APIError(f"{res}")
 
     except HTTPError as e:
