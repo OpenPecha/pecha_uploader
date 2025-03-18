@@ -96,13 +96,14 @@ def get_range(data: List):
 def create_links(json_data: Dict):
     """map link for echa language"""
     book_last_category = json_data["source"]["categories"][-1]
+    index_key = book_last_category["name"]
 
     # check if json_data is commentary text or not
     if "link" in book_last_category:
 
         # English version
         for enbook in json_data["source"]["books"]:
-            chapters = generate_chapters({}, enbook, enbook["language"])
+            chapters = generate_chapters({}, enbook, enbook["language"], index_key)
 
             for key, value in chapters.items():
                 link_mapper(key, value, book_last_category)
@@ -110,7 +111,7 @@ def create_links(json_data: Dict):
         # Tibetan version
         for bobook in json_data["target"]["books"]:
             chapters = generate_chapters(
-                bobook, json_data["source"]["books"][0], bobook["language"]
+                bobook, json_data["source"]["books"][0], bobook["language"], index_key
             )
             for key, value in chapters.items():
                 link_mapper(key, value, book_last_category)
@@ -120,6 +121,7 @@ def generate_chapters(
     botext: Dict,
     entext: Dict,
     language: str,
+    index_key: str,
     current_key: str = "",
     parent_keys: Any = [],
 ):
@@ -189,9 +191,9 @@ def generate_chapters(
 
     if isinstance(enbook, list):
         if len(enbook) > 0:
-            result[entext["title"]] = enbook
+            result[index_key] = enbook
         if len(bobook) > 0:
-            result[entext["title"]] = bobook
+            result[index_key] = bobook
     return result
 
 
