@@ -47,20 +47,19 @@ def post_text(text_name: str, text_content: Dict, destination_url: Destination_u
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" in res:
-            if "Failed to parse sections for ref" in res:
-                logger.warning(f"Text: Failed to parse sections for ref {text_name}")
-
-            logger.error(f"error uploading text : '{text_name}'")
-            raise APIError(f"error uploading text : '{text_name}'")
+            # if "Failed to parse sections for ref" in res:
+            #     logger.warning(f"Text: Failed to parse sections for ref {text_name}")
+            logger.error(f"Text : '{text_name}'")
+            raise APIError(f"Text : '{text_name}'")
         else:
             logger.info(f"UPLOADED: Text '{text_content['versionTitle']}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"text : {error_message}")
+        logger.error(f"Text : {error_message}")
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
         error_message = f"{e}"
-        logger.error(f"text : {error_message}")
+        logger.error(f"Text : {error_message}")
         raise Exception(error_message)

@@ -35,20 +35,16 @@ def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
         res = response.read().decode("utf-8")
         # term conflict
         if "error" in res:
-            if "Term already exists" in res:
-                logger.warning(f"Term : '{term_en}' already exists")
-            else:
-                logger.error(f"{res}")
+            if "Term already exists" not in res:
+                logger.error(f"Term: {res}")
                 raise APIError(res)
-        else:
-            logger.info(f"UPLOADED: Term '{term_en}'")
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"Term : {error_message}")
+        logger.error(f"Term: {error_message}")
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
         error_message = f"{e}"
-        logger.error(f"term : {error_message}")
+        logger.error(f"Term: {error_message}")
         raise Exception(error_message)

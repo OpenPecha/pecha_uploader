@@ -21,15 +21,17 @@ def remove_links(text_title: str, destination_url: Destination_url):
     req = urllib.request.Request(url, binary_key, method="DELETE", headers=headers)
     try:
         urllib.request.urlopen(req)
-        # response = urllib.request.urlopen(req)
-        logger.info(f"Successfully removed link for: {text_title}")
+        # # response = urllib.request.urlopen(req)
+        # logger.info(f"Successfully removed link for: {text_title}")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        error_message = (
+            f"LINK: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         logger.error(error_message)
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
+        error_message = f"LINK: {e}"
         logger.error(error_message)
         raise Exception(error_message)
