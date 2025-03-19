@@ -39,9 +39,9 @@ def post_link(
 
     try:
         response = urllib.request.urlopen(req)
-        res = response.read().decode("utf-8")
-        if "error" in res:
-            logger.error(f"Link {res}")
+        response.read().decode("utf-8")
+        # if "error" in res:
+        #     logger.error(f"Link {res}")
 
     except HTTPError as e:
         error_message = (
