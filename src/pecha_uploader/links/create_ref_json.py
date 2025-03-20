@@ -103,7 +103,7 @@ def create_links(json_text: Dict):
         for key, value in chapters.items():
             links = link_mapper(key, value, book_last_category)
 
-    return {"links": links}
+    return links
 
 
 def generate_chapters(
