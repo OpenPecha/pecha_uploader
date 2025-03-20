@@ -1,7 +1,7 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
 def remove_index(index_key: str, destination_url: Destination_url):
@@ -18,14 +18,13 @@ def remove_index(index_key: str, destination_url: Destination_url):
     try:
         urllib.request.urlopen(req)
         # res = urllib.request.urlopen(req)
-        logger.info("Deleted existing index")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(error_message)
+        error_message = (
+            f"Index delete:HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(error_message)
+        error_message = f"Index delete {e}"
         raise Exception(error_message)

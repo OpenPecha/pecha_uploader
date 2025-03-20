@@ -49,16 +49,15 @@ def post_category(
         elif "already exists" in res:
             logger.warning(f"Category already exists: '{category_name}'")
         else:
-            logger.error(f"Error : Category:{res}")
             remove_texts_meta({"term": category_name}, destination_url)
-            raise APIError(f"{res}")
+            raise APIError(f"Category: {res}")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"category : {error_message}")
+        error_message = (
+            f"Category: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(f"category : {error_message}")
+        error_message = f"Category : {e}"
         raise Exception(error_message)

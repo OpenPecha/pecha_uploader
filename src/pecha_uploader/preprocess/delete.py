@@ -1,9 +1,8 @@
-import json
 import urllib.parse
 import urllib.request
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
 def remove_term(term_title: str, destination_url: Destination_url):
@@ -23,16 +22,14 @@ def remove_term(term_title: str, destination_url: Destination_url):
 
     try:
         response = urllib.request.urlopen(req)
-        response_data = response.read().decode("utf-8")
-        logger.info(f"Response: {response_data}")
-        return json.loads(response_data)
-
+        response.read().decode("utf-8")
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(error_message)
+        error_message = (
+            f"Term delete: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = str(e)
-        logger.error(error_message)
+        error_message = f"Term delete: {e}"
+
         raise Exception(error_message)

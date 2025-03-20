@@ -25,8 +25,6 @@ def post_index(
                 "primary": True (You must have a primary title for each language)
             }
     """
-
-    print("index_str>>>>>>>>>>>>>>>>>>>>", index_str)
     url = (
         destination_url.value
         + "api/v2/raw/index/"
@@ -65,21 +63,20 @@ def post_index(
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        if "error" in res and "already exists." not in res:
-            logger.error(f"{res}")
+        if "error" in res:
             remove_texts_meta(
                 {"term": index_str, "category": category_path}, destination_url
             )
-            raise APIError(f"{res}")
+            raise APIError(f"Index: {res}")
 
         logger.info(f"UPLOADED: Index '{index_str}'")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"index : {error_message}")
+        error_message = (
+            f"Index: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(f"index : {error_message}")
+        error_message = f" Index: {e}"
         raise Exception(error_message)

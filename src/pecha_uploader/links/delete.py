@@ -25,11 +25,11 @@ def remove_links(text_title: str, destination_url: Destination_url):
         logger.info(f"Successfully removed link for: {text_title}")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(error_message)
+        error_message = (
+            f"Link delete: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(error_message)
+        error_message = f"Link delete: {e}"
         raise Exception(error_message)
