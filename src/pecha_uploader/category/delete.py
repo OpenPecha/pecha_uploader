@@ -16,9 +16,9 @@ def remove_category(category_list: str, destination_url: Destination_url):
     req = urllib.request.Request(url, binary_key, method="DELETE", headers=headers)
     try:
         urllib.request.urlopen(req)
-        res = urllib.request.urlopen(req)
-        res.read().decode("utf-8")
-
+        response = urllib.request.urlopen(req)
+        res_data = response.read().decode("utf-8")
+        return res_data
     except HTTPError as e:
         error_message = (
             f"Category: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"

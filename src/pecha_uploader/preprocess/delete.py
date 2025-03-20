@@ -19,7 +19,6 @@ def remove_term(term_title: str, destination_url: Destination_url):
     )  # Convert to form-encoded bytes
     headers["apiKey"] = PECHA_API_KEY
     req = urllib.request.Request(url, data=data, method="DELETE", headers=headers)
-
     try:
         response = urllib.request.urlopen(req)
         response.read().decode("utf-8")
