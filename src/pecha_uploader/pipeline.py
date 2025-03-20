@@ -3,29 +3,17 @@ This module processes text files, parses JSON content,
 and uploads structured data to various APIs for further processing.
 """
 
-import os
 from typing import Dict, List
 
 from pecha_uploader.category.upload import post_category
-from pecha_uploader.config import (
-    LINK_JSON_PATH,
-    TEXT_SUCCESS_LOG,
-    Destination_url,
-    log_link_success,
-    logger,
-)
+from pecha_uploader.config import Destination_url, logger
 from pecha_uploader.index.upload import post_index
-from pecha_uploader.links.create_ref_json import commentaryToRoot
+from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text.upload import post_text
-from pecha_uploader.utils import (
-    generate_chapters,
-    generate_schema,
-    parse_annotation,
-    read_json,
-)
+from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
 
 
 def get_book_title(text: Dict):
@@ -43,27 +31,7 @@ def get_book_title(text: Dict):
     return tgt_book_title
 
 
-def add_texts(text: Dict, overwrite: bool, destination_url: Destination_url):
-
-    if overwrite:
-        uploaded_text_list = []
-    else:
-        uploaded_text_list = (
-            TEXT_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
-            if TEXT_SUCCESS_LOG.exists()
-            else []
-        )
-
-    book_title = get_book_title(text)
-
-    if book_title not in uploaded_text_list:
-        add_by_file(text, destination_url)
-
-        # if not text_upload_succeed:
-        #     log_error(TEXT_ERROR_LOG, f"{book_title}[json file]", "file not uploaded")
-
-
-def add_by_file(text: Dict, destination_url: Destination_url):
+def add_texts(text: Dict, destination_url: Destination_url):
     """
     Read a text file and add.
     """
@@ -122,6 +90,10 @@ def add_by_file(text: Dict, destination_url: Destination_url):
         for book in payload["textHe"]:
             process_text(book, "he", text_index_key, category_path, destination_url)
 
+        if is_commentary(text):
+            links_data = create_links(text)
+            add_links(links_data, destination_url)
+
     except Exception as e:
         logger.error(f"{e}")
         raise Exception(f"{e}")
@@ -166,63 +138,17 @@ def process_text(
             )
 
 
-def add_refs(destination_url: Destination_url):
+def add_links(links: List[Dict], destination_url: Destination_url):
     """
-    Add all ref files in `/jsondata/links`.
+    Post root and commentary links
     """
-    # print("============ add_refs ============")
-    file_list = LINK_JSON_PATH.glob("*.json")
-    # ref_success_list = (
-    #     LINK_SUCCESS_LOG.read_text(encoding="utf-8").splitlines()
-    #     if LINK_SUCCESS_LOG.exists()
-    #     else []
-    # )
+    # remove is links is available
+    remove_links(links[0]["refs"][1], destination_url)
 
-    for file_path in file_list:
-        file_name = os.path.basename(file_path)
-        # if file_name in ref_success_list:
-        #     continue
-        ref_list = read_json(file_path)
-
-        remove_links(ref_list[0]["refs"][1], destination_url)
-
-        batch_size = 150
-        for i in range(0, len(ref_list), batch_size):
-            batch = ref_list[i : i + batch_size]  # noqa
-            post_link(batch, destination_url)
-
-        # # store link success
-        log_link_success(os.path.basename(file_name))
-
-
-def upload_root(
-    text: Dict,
-    destination_url: Destination_url,
-    overwrite: bool = False,
-):
-    """
-    Upload root text to the API.
-    """
-    add_texts(text, overwrite, destination_url)
-
-
-def upload_commentary(
-    text: Dict,
-    destination_url: Destination_url,
-    overwrite: bool = False,
-):
-
-    """
-    Upload commentary text to the API.
-    """
-
-    # create link json
-    commentaryToRoot(text)
-    # upload commentary json
-    add_texts(text, overwrite, destination_url)
-
-    # upload link json for commentary
-    add_refs(destination_url)
+    batch_size = 150
+    for i in range(0, len(links), batch_size):
+        batch = links[i : i + batch_size]  # noqa
+        post_link(batch, destination_url)
 
 
 def is_commentary(text: Dict):
@@ -240,9 +166,12 @@ def is_commentary(text: Dict):
     ):
         return True
 
-
-def upload(text: Dict, destination_url: Destination_url, overwrite: bool = False):
-    if is_commentary(text):
-        upload_commentary(text, destination_url, overwrite)
     else:
-        upload_root(text, destination_url, overwrite)
+        return False
+
+
+def upload(text: Dict, destination_url: Destination_url):
+    """
+    Upload text to the API.
+    """
+    add_texts(text, destination_url)
