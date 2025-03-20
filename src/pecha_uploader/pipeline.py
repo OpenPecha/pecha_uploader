@@ -189,9 +189,9 @@ def add_refs(destination_url: Destination_url):
         batch_size = 150
         for i in range(0, len(ref_list), batch_size):
             batch = ref_list[i : i + batch_size]  # noqa
-            post_link(batch, len(batch), destination_url)
+            post_link(batch, destination_url)
 
-        # store link success
+        # # store link success
         log_link_success(os.path.basename(file_name))
 
 

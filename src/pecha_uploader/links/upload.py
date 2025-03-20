@@ -1,12 +1,14 @@
 import json
-import urllib
-from typing import List
+import urllib.error
+import urllib.parse
+import urllib.request
+from typing import Dict, List, Union
 from urllib.error import HTTPError
 
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_link(ref_list: List, ref_list_size: int, destination_url: Destination_url):
+def post_link(ref_list: Union[List, Dict], destination_url: Destination_url):
     """
     Post references for articles.
         `ref_list`: list of str, articles to reference
