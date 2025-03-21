@@ -4,7 +4,7 @@ from typing import Dict, List
 from urllib.error import HTTPError
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
@@ -67,9 +67,7 @@ def post_index(
             remove_texts_meta(
                 {"term": index_str, "category": category_path}, destination_url
             )
-            raise APIError(f"Index: {res}")
-
-        logger.info(f"UPLOADED: Index '{index_str}'")
+            raise APIError(f"Index ({index_str}):  {res}")
 
     except HTTPError as e:
         error_message = (

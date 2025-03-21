@@ -2,7 +2,7 @@ import json
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 from pecha_uploader.exceptions import APIError
 
 
@@ -36,9 +36,9 @@ def post_term(term_en: str, term_bo: str, destination_url: Destination_url):
         # term conflict
         if "error" in res:
             if "Term already exists" not in res:
-                raise APIError(res)
-        else:
-            logger.info(f"UPLOADED: Term '{term_en}'")
+                raise APIError(
+                    f"Failed to create category terms:English term: '{term_en}', Tibetan term: '{term_bo}' because {res}"  # noqa
+                )
 
     except HTTPError as e:
         error_message = (
