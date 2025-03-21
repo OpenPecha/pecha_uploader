@@ -3,7 +3,8 @@ import urllib
 from typing import Dict, List
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.clear_unfinished_text import remove_texts_meta
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
@@ -37,10 +38,10 @@ def post_index(
     # "depth" : 2,
     # "sections" : ["Chapter", "Verse"],
     # "addressTypes" : ["Integer", "Integer"],
-
+    category_path = list(map(lambda x: x["name"], category_list))
     index = {"title": "", "categories": [], "schema": {}}
     index["title"] = index_str
-    index["categories"] = list(map(lambda x: x["name"], category_list))
+    index["categories"] = category_path
     index["schema"] = nodes
 
     # if text is commentary
@@ -62,18 +63,18 @@ def post_index(
     try:
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
-        if "error" in res and "already exists." not in res:
-            logger.error(f"{res}")
-            raise APIError(f"{res}")
-
-        logger.info(f"UPLOADED: Index '{index_str}'")
+        if "error" in res:
+            remove_texts_meta(
+                {"term": index_str, "category": category_path}, destination_url
+            )
+            raise APIError(f"Index ({index_str}):  {res}")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"index : {error_message}")
+        error_message = (
+            f"Index: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(f"index : {error_message}")
+        error_message = f" Index: {e}"
         raise Exception(error_message)

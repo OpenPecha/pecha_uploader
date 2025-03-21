@@ -1,4 +1,5 @@
-import urllib
+import json
+import urllib.request
 from urllib.error import HTTPError
 
 from pecha_uploader.config import Destination_url, headers, logger
@@ -17,7 +18,7 @@ def get_text(text_name: str, destination_url: Destination_url):
     try:
         response = urllib.request.urlopen(req)  # noqa
         res = response.read().decode("utf-8")
-        return res
+        return json.loads(res)
 
     except HTTPError as e:
         error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
@@ -28,3 +29,6 @@ def get_text(text_name: str, destination_url: Destination_url):
         error_message = f"{e}"
         logger.error(error_message)
         raise Exception(error_message)
+
+
+get_text("Test level 2", Destination_url.LOCAL)

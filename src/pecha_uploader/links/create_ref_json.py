@@ -1,16 +1,6 @@
-import json
 import re
 from collections import defaultdict
 from typing import Any, Dict, List
-
-from pecha_uploader.config import LINK_JSON_PATH
-
-
-def commentaryToRoot(text: Dict):
-    """
-    Create link for commentary json file based on its mapped root json file.
-    """
-    create_links(text)
 
 
 def link_mapper(title: str, contents: List, root_detail: Dict):
@@ -58,12 +48,13 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                                 refs["type"] = "commentary"
                                 links.append(refs)
                                 refs = {}
-    if links:
-        commentary_title = title.strip()
-        with open(
-            LINK_JSON_PATH / f"{commentary_title[-30:]}.json", "w", encoding="utf-8"
-        ) as file:
-            json.dump(links, file, indent=4, ensure_ascii=False)
+    return links
+    # if links:
+    #     commentary_title = title.strip()
+    #     with open(
+    #         LINK_JSON_PATH / f"{commentary_title[-30:]}.json", "w", encoding="utf-8"
+    #     ) as file:
+    #         json.dump(links, file, indent=4, ensure_ascii=False)
 
 
 def get_range(data: List):
@@ -93,28 +84,26 @@ def get_range(data: List):
     return output
 
 
-def create_links(json_data: Dict):
+def create_links(json_text: Dict):
     """map link for echa language"""
-    book_last_category = json_data["source"]["categories"][-1]
+    book_last_category = json_text["source"]["categories"][-1]
     index_key = book_last_category["name"]
 
-    # check if json_data is commentary text or not
-    if "link" in book_last_category:
+    # English version
+    for enbook in json_text["source"]["books"]:
+        chapters = generate_chapters({}, enbook, enbook["language"], index_key)
+        for key, value in chapters.items():
+            links = link_mapper(key, value, book_last_category)
 
-        # English version
-        for enbook in json_data["source"]["books"]:
-            chapters = generate_chapters({}, enbook, enbook["language"], index_key)
+    # Tibetan version
+    for bobook in json_text["target"]["books"]:
+        chapters = generate_chapters(
+            bobook, json_text["source"]["books"][0], bobook["language"], index_key
+        )
+        for key, value in chapters.items():
+            links = link_mapper(key, value, book_last_category)
 
-            for key, value in chapters.items():
-                link_mapper(key, value, book_last_category)
-
-        # Tibetan version
-        for bobook in json_data["target"]["books"]:
-            chapters = generate_chapters(
-                bobook, json_data["source"]["books"][0], bobook["language"], index_key
-            )
-            for key, value in chapters.items():
-                link_mapper(key, value, book_last_category)
+    return links
 
 
 def generate_chapters(

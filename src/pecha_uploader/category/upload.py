@@ -4,6 +4,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
 from pecha_uploader.exceptions import APIError
 
@@ -23,9 +24,10 @@ def post_category(
         => post_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
     """
     url = destination_url.value + "api/category"
+    category_path = list(map(lambda x: x["name"], en_category_list))
     category = {
-        "sharedTitle": list(map(lambda x: x["name"], en_category_list))[-1],
-        "path": list(map(lambda x: x["name"], en_category_list)),
+        "sharedTitle": category_path[-1],
+        "path": category_path,
         "enDesc": list(map(lambda x: x["enDesc"], en_category_list))[-1],
         "heDesc": list(map(lambda x: x["heDesc"], bo_category_list))[-1],
         "enShortDesc": list(map(lambda x: x["enShortDesc"], en_category_list))[-1],
@@ -37,25 +39,23 @@ def post_category(
     data = urlencode(values)
     binary_data = data.encode("ascii")
     req = Request(url, binary_data, headers=headers)
-    category_name = list(map(lambda x: x["name"], en_category_list))[-1]
+    category_name = category_path[-1]
 
     try:
         response = urlopen(req)
         res = response.read().decode("utf-8")
         if "error" not in res:
             logger.info(f"UPLOADED: Category '{category_name}'")
-        elif "already exists" in res:
-            logger.warning(f"Category already exists: '{category_name}'")
-        else:
-            logger.error(f"Error : Category:{res}")
-            raise APIError(f"{res}")
+        elif "already exists" not in res and "error" in res:
+            remove_texts_meta({"term": category_name}, destination_url)
+            raise APIError(f"Category: {res}")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(f"category : {error_message}")
+        error_message = (
+            f"Category: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(f"category : {error_message}")
+        error_message = f"Category : {e}"
         raise Exception(error_message)

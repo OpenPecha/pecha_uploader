@@ -5,14 +5,10 @@ import urllib.request
 from typing import Dict, List, Union
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
-def post_link(
-    ref_list: Union[List, Dict],
-    destination_url: Destination_url,
-    ref_list_size: int = 1,
-):
+def post_link(ref_list: Union[List, Dict], destination_url: Destination_url):
     """
     Post references for articles.
         `ref_list`: list of str, articles to reference
@@ -39,18 +35,15 @@ def post_link(
 
     try:
         response = urllib.request.urlopen(req)
-        res = response.read().decode("utf-8")
-        if "error" not in res:
-            logger.info(f"UPLOADED: {ref_list_size} Links ")
-        else:
-            logger.error(f"Link {res}")
+        response.read().decode("utf-8")
 
     except HTTPError as e:
-        error_message = f"HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-        logger.error(error_message)
+        error_message = (
+            f"Link: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
+        )
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:
-        error_message = f"{e}"
-        logger.error(error_message)
+        error_message = f"Link: {e}"
+
         raise Exception(error_message)
