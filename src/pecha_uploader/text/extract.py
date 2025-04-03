@@ -29,6 +29,3 @@ def get_text(text_name: str, destination_url: Destination_url):
         error_message = f"{e}"
         logger.error(error_message)
         raise Exception(error_message)
-
-
-get_text("Test level 2", Destination_url.LOCAL)
