@@ -33,6 +33,12 @@ def post_category(
         "enShortDesc": list(map(lambda x: x["enShortDesc"], en_category_list))[-1],
         "heShortDesc": list(map(lambda x: x["heShortDesc"], bo_category_list))[-1],
     }
+    # place root at top of TOC in pecha.org
+    if category_path[-1] == "Root text":
+        category["order"] = 1
+    if category_path[-1] == "Commentaries":
+        category["order"] = 2
+
     input_json = json.dumps(category)
     values = {"json": input_json, "apikey": PECHA_API_KEY}
 
