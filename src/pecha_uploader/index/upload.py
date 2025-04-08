@@ -64,10 +64,11 @@ def post_index(
         response = urllib.request.urlopen(req)
         res = response.read().decode("utf-8")
         if "error" in res:
-            remove_texts_meta(
-                {"term": index_str, "category": category_path}, destination_url
-            )
-            raise APIError(f"Index ({index_str}):  {res}")
+            if "already exists." not in res:
+                remove_texts_meta(
+                    {"term": index_str, "category": category_path}, destination_url
+                )
+                raise APIError(f"Index ({index_str}):  {res}")
 
     except HTTPError as e:
         error_message = (

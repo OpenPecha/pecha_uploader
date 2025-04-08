@@ -58,28 +58,25 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
 
 
 def get_range(data: List):
-    """build json data"""
+    """Build sorted JSON-style dict with ranges for all <x,y> tags."""
     indices = defaultdict(list)
 
     for i, elem in enumerate(data):
-        matches = re.search(r"<\d+><\d+>", elem)
-        if matches:
-            unique_elem = matches.group()
-            indices[unique_elem].append(i)
+        matches = re.findall(r"<\d+,\d+>", elem)
+        for match in matches:
+            indices[match].append(i)
 
     output = {}
-    for key, value in indices.items():
-        output[key] = []
-        initial_index = value[0]
-        final_index = value[-1]
-        if initial_index == final_index:
-            output[key].append(str(initial_index + 1))
-            match = re.findall(r"\d+", key)
-            output[key].append(list(map(int, match)))
-        else:
-            output[key].append(f"{initial_index + 1}-{final_index + 1}")
-            match = re.findall(r"\d+", key)
-            output[key].append(list(map(int, match)))
+    # Sort the keys by their numerical (x, y) values, not as strings
+    for key in sorted(
+        indices.keys(), key=lambda x: list(map(int, re.findall(r"\d+", x)))
+    ):
+        lines = indices[key]
+        start = lines[0] + 1
+        end = lines[-1] + 1
+        range_str = f"{start}" if start == end else f"{start}-{end}"
+        nums = list(map(int, re.findall(r"\d+", key)))
+        output[key] = [range_str, nums]
 
     return output
 
