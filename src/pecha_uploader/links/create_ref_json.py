@@ -1,5 +1,4 @@
 import re
-from collections import defaultdict
 from typing import Any, Dict, List
 
 
@@ -11,10 +10,11 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
     if get_list_depth(contents) == 1:
         # for dept 1
         constent_range = get_range(contents)
-        for value in constent_range.values():
+        for value in constent_range:
+            tag = value[1]
             ref = []
-            ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")  # noqa
-            ref.append(f"{title} {value[0]}")
+            ref.append(f"{root_title} {tag[1][0]}:{tag[1][1]}")  # noqa
+            ref.append(f"{title} {tag[0]}")
             refs["refs"] = ref
             refs["type"] = "commentary"
             links.append(refs)
@@ -25,10 +25,12 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                 if get_list_depth(content) == 1:
                     # for dept 2
                     constent_range = get_range(content)
-                    for value in constent_range.values():
+                    for value in constent_range:
+
+                        tag = value[1]
                         ref = []
-                        ref.append(f"{root_title} {value[1][0]}:{value[1][1]}")  # noqa
-                        ref.append(f"{title} {i+1}:{value[0]}")  # noqa
+                        ref.append(f"{root_title} {tag[1][0]}:{tag[1][1]}")  # noqa
+                        ref.append(f"{title} {i+1}:{tag[0]}")  # noqa
                         refs["refs"] = ref
                         refs["type"] = "commentary"
                         links.append(refs)
@@ -38,47 +40,53 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                         if isinstance(data, list):
                             # for dept 3
                             constent_range = get_range(data)
-                            for value in constent_range.values():
+                            for value in constent_range:
+                                tag = value[1]
                                 ref = []
                                 ref.append(
-                                    f"{root_title} {value[1][0]}:{value[1][1]}"  # noqa
+                                    f"{root_title} {tag[1][0]}:{tag[1][1]}"  # noqa
                                 )
-                                ref.append(f"{title} {i+1}:{j+1}:{value[0]}")  # noqa
+                                ref.append(f"{title} {i+1}:{j+1}:{tag[0]}")  # noqa
                                 refs["refs"] = ref
                                 refs["type"] = "commentary"
                                 links.append(refs)
                                 refs = {}
     return links
-    # if links:
-    #     commentary_title = title.strip()
-    #     with open(
-    #         LINK_JSON_PATH / f"{commentary_title[-30:]}.json", "w", encoding="utf-8"
-    #     ) as file:
-    #         json.dump(links, file, indent=4, ensure_ascii=False)
 
 
-def get_range(data: List):
-    """Build sorted JSON-style dict with ranges for all <x,y> tags."""
-    indices = defaultdict(list)
+def get_range(data: List[str]):
+    """Return list of (tag, [range, nums]) with duplicates allowed."""
+    tag_to_lines = {}
 
-    for i, elem in enumerate(data):
-        matches = re.findall(r"<\d+,\d+>", elem)
-        for match in matches:
-            indices[match].append(i)
+    # Collect line numbers for each tag
+    for i, line in enumerate(data):
+        line_num = i + 1
+        tags = re.findall(r"<\d+,\d+>", line)
+        for tag in tags:
+            tag_to_lines.setdefault(tag, []).append(line_num)
 
-    output = {}
-    # Sort the keys by their numerical (x, y) values, not as strings
-    for key in sorted(
-        indices.keys(), key=lambda x: list(map(int, re.findall(r"\d+", x)))
+    result = []
+
+    # Sort tags by numeric value
+    for tag in sorted(
+        tag_to_lines.keys(), key=lambda x: list(map(int, re.findall(r"\d+", x)))
     ):
-        lines = indices[key]
-        start = lines[0] + 1
-        end = lines[-1] + 1
-        range_str = f"{start}" if start == end else f"{start}-{end}"
-        nums = list(map(int, re.findall(r"\d+", key)))
-        output[key] = [range_str, nums]
+        nums = list(map(int, re.findall(r"\d+", tag)))
+        lines = tag_to_lines[tag]
 
-    return output
+        # Split into contiguous groups
+        group = [lines[0]]
+        for curr, next_one in zip(lines, lines[1:] + [None]):
+            if next_one is None or next_one != curr + 1:
+                if len(group) == 1:
+                    result.append((tag, [str(group[0]), nums]))
+                else:
+                    result.append((tag, [f"{group[0]}-{group[-1]}", nums]))
+                if next_one:
+                    group = [next_one]
+            else:
+                group.append(next_one)
+    return result
 
 
 def create_links(json_text: Dict):
