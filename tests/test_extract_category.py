@@ -11,7 +11,7 @@ from pecha_uploader.config import Destination_url
 class TestCategoryExtract(unittest.TestCase):
     def setUp(self):
         # Setup mock destination URL
-        self.destination_url = Destination_url.STAGING
+        self.destination_url = Destination_url.TEST
         self.category_name = "Madhyamaka"
         self.encoded_category = urllib.parse.quote(self.category_name)
         self.url = self.destination_url.value + "api/category/" + self.encoded_category
@@ -21,16 +21,8 @@ class TestCategoryExtract(unittest.TestCase):
     def test_get_category_success(self, mock_request, mock_urlopen):
         # Setup mock response
         mock_response = MagicMock()
-        mock_response.read.return_value = {
-            "lastPath": "Madhyamaka",
-            "path": ["Madhyamaka"],
-            "depth": 1,
-            "enDesc": "",
-            "heDesc": "",
-            "enShortDesc": "Madhyamaka treatises",
-            "heShortDesc": "དབུ་མའི་གཞུང་སྣ་ཚོགས།",
-            "sharedTitle": "Madhyamaka",
-        }
+        json_data = '{"lastPath": "Madhyamaka", "path": ["Madhyamaka"], "depth": 1, "enDesc": "", "heDesc": "", "enShortDesc": "Madhyamaka treatises", "heShortDesc": "དབུ་མའི་གཞུང་སྣ་ཚོགས།", "sharedTitle": "Madhyamaka"}'  # noqa
+        mock_response.read.return_value = json_data.encode("utf-8")
         mock_urlopen.return_value = mock_response
 
         # Call the function
@@ -38,19 +30,7 @@ class TestCategoryExtract(unittest.TestCase):
 
         # Assertions
         mock_request.assert_called_once()
-        self.assertEqual(
-            result,
-            {
-                "lastPath": "Madhyamaka",
-                "path": ["Madhyamaka"],
-                "depth": 1,
-                "enDesc": "",
-                "heDesc": "",
-                "enShortDesc": "Madhyamaka treatises",
-                "heShortDesc": "དབུ་མའི་གཞུང་སྣ་ཚོགས།",
-                "sharedTitle": "Madhyamaka",
-            },
-        )
+        self.assertEqual(result, json_data)
 
     @patch("urllib.request.urlopen")
     @patch("urllib.request.Request")
