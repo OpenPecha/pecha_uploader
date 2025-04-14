@@ -96,7 +96,7 @@ class TestIndexUpload(unittest.TestCase):
             "enDesc": "",
             "enShortDesc": "The Way of the Bodhisattva treatises",
             "base_text_titles": ["Root Text"],
-            "base_text_mapping": "Exact",
+            "base_text_mapping": "many-to-one",
             "link": "Commentary",
         }
 
