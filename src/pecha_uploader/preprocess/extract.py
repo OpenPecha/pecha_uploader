@@ -2,7 +2,7 @@ import json
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import Destination_url, headers, logger
+from pecha_uploader.config import Destination_url, headers
 
 
 def get_term(term: str, destination_url: Destination_url):
@@ -21,7 +21,6 @@ def get_term(term: str, destination_url: Destination_url):
         error_message = (
             f"Term: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
         )
-        logger.error(error_message)
         raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
 
     except Exception as e:

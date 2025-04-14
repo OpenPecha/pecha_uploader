@@ -114,7 +114,7 @@ def parse_annotation(value: Union[List[str], List[List]]):
             item = item.replace(")", "</span>")
 
         # Remove numbered tags
-        item = re.sub(r"<\d+>", "", item.strip())
+        item = re.sub(r"<\d+\,\d+>", "", item.strip())
 
         return item
 
