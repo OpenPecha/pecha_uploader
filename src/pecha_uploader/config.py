@@ -47,6 +47,7 @@ class Destination_url(Enum):
     PRODUCTION = "https://pecha.org/"
     STAGING = "https://staging.pecha.org/"
     LOCAL = "http://127.0.0.1:8000/"
+    TEST = "http://test.pecha.org/"
 
 
 def log_link_success(text_name: str):
