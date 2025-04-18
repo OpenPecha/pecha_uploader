@@ -7,7 +7,7 @@ from typing import Dict, List
 
 from pecha_uploader.category import PechaCategory
 from pecha_uploader.config import Destination_url, logger
-from pecha_uploader.index.upload import post_index
+from pecha_uploader.index import PechaIndex
 from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
@@ -75,7 +75,7 @@ def add_texts(text: Dict, destination_url: Destination_url):
         # )
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        post_index(
+        PechaIndex().post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
 
