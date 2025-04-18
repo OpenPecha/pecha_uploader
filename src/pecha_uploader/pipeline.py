@@ -10,7 +10,7 @@ from pecha_uploader.config import Destination_url, logger
 from pecha_uploader.index import PechaIndex
 from pecha_uploader.link import PechaLink
 from pecha_uploader.links.create_ref_json import create_links
-from pecha_uploader.preprocess.upload import post_term
+from pecha_uploader.term import PechaTerm
 from pecha_uploader.text import PechaText
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
 
@@ -59,7 +59,7 @@ def add_texts(text: Dict, destination_url: Destination_url):
         # print("===========================( post_term )===========================")
         category_path = list(map(lambda x: x["name"], payload["categoryEn"][i]))
         for i in range(len(payload["categoryEn"])):
-            post_term(
+            PechaTerm().post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
