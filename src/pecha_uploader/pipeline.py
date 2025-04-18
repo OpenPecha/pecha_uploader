@@ -8,9 +8,8 @@ from typing import Dict, List
 from pecha_uploader.category import PechaCategory
 from pecha_uploader.config import Destination_url, logger
 from pecha_uploader.index import PechaIndex
+from pecha_uploader.link import PechaLink
 from pecha_uploader.links.create_ref_json import create_links
-from pecha_uploader.links.delete import remove_links
-from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
 from pecha_uploader.text import PechaText
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
@@ -145,12 +144,12 @@ def add_links(links: List[Dict], destination_url: Destination_url):
     Post root and commentary links
     """
     # remove is links is available
-    remove_links(links[0]["refs"][1], destination_url)
+    PechaLink().remove_links(links[0]["refs"][1], destination_url)
 
     batch_size = 150
     for i in range(0, len(links), batch_size):
         batch = links[i : i + batch_size]  # noqa
-        post_link(batch, destination_url)
+        PechaLink().post_link(batch, destination_url)
 
 
 def is_commentary(text: Dict):
