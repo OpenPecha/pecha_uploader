@@ -1,4 +1,4 @@
-from pecha_uploader.category.delete import remove_category
+from pecha_uploader.category import PechaCategory
 from pecha_uploader.config import Destination_url
 from pecha_uploader.index.delete import remove_index
 from pecha_uploader.preprocess.delete import remove_term
@@ -12,7 +12,7 @@ def remove_texts_meta(meta_list: dict, destination_url: Destination_url):
         remove_index(meta_list["index"], destination_url)
     if "category" in meta_list:
         for cat in transform_category_list(meta_list["category"]):
-            res_cat = remove_category(cat, destination_url)
+            res_cat = PechaCategory().remove_category(cat, destination_url)
 
             # if category doesn't exist, remove term
             if "error" in res_cat and "doesn't exist" in res_cat:

@@ -5,7 +5,7 @@ and uploads structured data to various APIs for further processing.
 
 from typing import Dict, List
 
-from pecha_uploader.category.upload import post_category
+from pecha_uploader.category import PechaCategory
 from pecha_uploader.config import Destination_url, logger
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import create_links
@@ -66,7 +66,7 @@ def add_texts(text: Dict, destination_url: Destination_url):
                 destination_url,
             )
             # print("===========================( post_category )===========================")
-            post_category(
+            PechaCategory().post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
 
