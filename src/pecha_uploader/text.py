@@ -8,7 +8,7 @@ from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logge
 from pecha_uploader.exceptions import APIError
 
 
-class Text:
+class PechaText:
     def remove_text(self, title: str, destination_url: Destination_url):
         """
         title > text title

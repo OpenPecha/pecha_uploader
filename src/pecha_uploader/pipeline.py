@@ -12,7 +12,7 @@ from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.links.delete import remove_links
 from pecha_uploader.links.upload import post_link
 from pecha_uploader.preprocess.upload import post_term
-from pecha_uploader.text.upload import post_text
+from pecha_uploader.text import PechaText
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
 
 
@@ -128,12 +128,14 @@ def process_text(
 
             for key, value in result.items():
                 text["text"] = value
-                post_text(key, text, category_path, destination_url, text_index_key)
+                PechaText().post_text(
+                    key, text, category_path, destination_url, text_index_key
+                )
 
         # Simple text
         elif isinstance(book["content"], list):
             text["text"] = parse_annotation(book["content"])
-            post_text(
+            PechaText().post_text(
                 text_index_key, text, category_path, destination_url, text_index_key
             )
 
