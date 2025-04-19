@@ -32,10 +32,7 @@ def get_book_title(text: Dict):
     return tgt_book_title
 
 
-def upload(text: Dict, destination_url: Destination_url):
-    """
-    Read a text file and add.
-    """
+def extract_payload(text: Dict) -> Dict:
     payload = {
         "bookKey": "",
         "categoryEn": [],
@@ -56,40 +53,40 @@ def upload(text: Dict, destination_url: Destination_url):
                 payload["categoryHe"].append(text[lang]["categories"][: i + 1])
             for book in text[lang]["books"]:
                 payload["textHe"].append(book)
+    return payload
+
+
+def upload(text: Dict, destination_url: Destination_url):
+    """
+    Read a text file and add.
+    """
+    payload = extract_payload(text)
 
     try:
-        # print("===========================( post_term )===========================")
-        category_path = list(map(lambda x: x["name"], payload["categoryEn"][i]))
+        # Upload Term and Category
         for i in range(len(payload["categoryEn"])):
             PechaTerm().post_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
             )
-            # print("===========================( post_category )===========================")
             PechaCategory().post_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
 
-        # print(
-        #     "============================( post_index )================================"
-        # )
+        # Upload Index
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
         PechaIndex().post_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
 
-        # print(
-        #     "===============================( post_text )=================================="
-        # )
-        text_index_key = payload["bookKey"]
-
+        # Upload Text
         for book in payload["textEn"]:
-            process_text(book, "en", text_index_key, category_path, destination_url)
+            process_text(book, "en", payload, destination_url)
 
         for book in payload["textHe"]:
-            process_text(book, "he", text_index_key, category_path, destination_url)
+            process_text(book, "he", payload, destination_url)
 
         if is_commentary(text):
             links_data = create_links(text)
@@ -100,11 +97,14 @@ def upload(text: Dict, destination_url: Destination_url):
         raise Exception(f"{e}")
 
 
+def is_complex_text(text: Dict) -> bool:
+    return isinstance(text["content"], dict)
+
+
 def process_text(
     book: dict,
     lang: str,
-    text_index_key: str,
-    category_path: List,
+    payload: Dict,
     destination_url: Destination_url,
 ):
     """
@@ -121,10 +121,12 @@ def process_text(
         "versionNotes": "",
         "text": [],
     }
+    text_index_key = payload["bookKey"]
+    category_path = list(map(lambda x: x["name"], payload["categoryEn"]))
 
     if "content" in book:
         # Complex text
-        if isinstance(book["content"], dict):
+        if is_complex_text(book):
             result = generate_chapters(book["content"], book["language"])
 
             for key, value in result.items():
@@ -134,7 +136,7 @@ def process_text(
                 )
 
         # Simple text
-        elif isinstance(book["content"], list):
+        else:
             text["text"] = parse_annotation(book["content"])
             PechaText().post_text(
                 text_index_key, text, category_path, destination_url, text_index_key
