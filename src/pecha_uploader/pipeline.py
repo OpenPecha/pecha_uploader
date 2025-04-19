@@ -12,21 +12,6 @@ from pecha_uploader.utils import generate_chapters, parse_annotation
 logger = get_logger(__name__)
 
 
-def get_book_title(text: Dict):
-    """
-    If text source has content, return source book title
-    else return target book title
-    """
-    src_book_title = text["source"]["books"][0]["title"]
-    tgt_book_title = text["target"]["books"][0]["title"]
-
-    src_book_content = text["source"]["books"][0]["content"]
-    if src_book_content:
-        return src_book_title
-
-    return tgt_book_title
-
-
 def extract_payload(text: Dict) -> Dict:
     payload = {
         "bookKey": "",
