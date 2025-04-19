@@ -12,7 +12,7 @@ from pecha_uploader.link import PechaLink
 from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.term import PechaTerm
 from pecha_uploader.text import PechaText
-from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
+from pecha_uploader.utils import generate_chapters, parse_annotation
 
 logger = get_logger(__name__)
 
@@ -63,23 +63,10 @@ def upload(text: Dict, destination_url: Destination_url):
     payload = extract_payload(text)
 
     try:
-        # Upload Term and Category
-        for i in range(len(payload["categoryEn"])):
-            PechaTerm().upload_term(
-                payload["categoryEn"][i][-1]["name"],
-                payload["categoryHe"][i][-1]["name"],
-                destination_url,
-            )
-            PechaCategory().upload_category(
-                payload["categoryEn"][i], payload["categoryHe"][i], destination_url
-            )
+        PechaTerm().upload_terms(payload, destination_url)
+        PechaCategory().upload_categories(payload, destination_url)
 
-        # Upload Index
-        schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
-
-        PechaIndex().upload_index(
-            payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
-        )
+        PechaIndex().upload_index(payload, destination_url)
 
         # Upload Text
         for book in payload["textEn"]:

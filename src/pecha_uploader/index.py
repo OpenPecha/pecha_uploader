@@ -1,11 +1,12 @@
 import json
 import urllib
-from typing import Dict, List
+from typing import Dict
 from urllib.error import HTTPError
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 from pecha_uploader.exceptions import APIError
+from pecha_uploader.utils import generate_schema
 
 
 class PechaIndex:
@@ -34,9 +35,7 @@ class PechaIndex:
 
     def upload_index(
         self,
-        index_str: str,
-        category_list: List[str],
-        nodes: Dict,
+        payload: Dict,
         destination_url: Destination_url,
     ):
         """ "
@@ -50,19 +49,17 @@ class PechaIndex:
                     "primary": True (You must have a primary title for each language)
                 }
         """
+        index_str = payload["bookKey"]
+        category_list = payload["categoryEn"][-1]
+
+        schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
+        nodes = schema[0]
         url = (
             destination_url.value
             + "api/v2/raw/index/"
             + urllib.parse.quote(index_str.replace(" ", "_"))
         )
 
-        # "titles" : titleLIST,
-        # "key" : index,
-        # "nodeType" : "JaggedArrayNode",
-        # # "lengths" : [4, 50],
-        # "depth" : 2,
-        # "sections" : ["Chapter", "Verse"],
-        # "addressTypes" : ["Integer", "Integer"],
         category_path = list(map(lambda x: x["name"], category_list))
         index = {"title": "", "categories": [], "schema": {}}
         index["title"] = index_str

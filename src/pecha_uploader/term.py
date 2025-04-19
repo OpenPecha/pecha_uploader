@@ -1,6 +1,7 @@
 import json
 import urllib.parse
 import urllib.request
+from typing import Dict
 from urllib.error import HTTPError
 
 from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
@@ -34,6 +35,14 @@ class PechaTerm:
         except Exception as e:
             error_message = f"Term delete: {e}"
             raise Exception(error_message)
+
+    def upload_terms(self, payload: Dict, destination_url: Destination_url):
+        for i in range(len(payload["categoryEn"])):
+            PechaTerm().upload_term(
+                payload["categoryEn"][i][-1]["name"],
+                payload["categoryHe"][i][-1]["name"],
+                destination_url,
+            )
 
     def upload_term(self, term_en: str, term_bo: str, destination_url: Destination_url):
         """

@@ -1,6 +1,6 @@
 import json
 import urllib
-from typing import List
+from typing import Dict, List
 from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -42,10 +42,18 @@ class PechaCategory:
             logger.error(error_message)
             raise Exception(error_message)
 
+    def upload_categories(self, payload: Dict, destination_url: Destination_url):
+        for i in range(len(payload["categoryEn"])):
+            PechaCategory().upload_category(
+                payload["categoryEn"][i],
+                payload["categoryHe"][i],
+                destination_url,
+            )
+
     def upload_category(
         self,
-        en_category_list: List[str],
-        bo_category_list: List[str],
+        en_category_list: List[Dict],
+        bo_category_list: List[Dict],
         destination_url: Destination_url,
     ):
         """
