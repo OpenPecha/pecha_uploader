@@ -49,12 +49,6 @@ def link_mapper(title: str, contents: List, root_detail: Dict):
                                 links.append(refs)
                                 refs = {}
     return links
-    # if links:
-    #     commentary_title = title.strip()
-    #     with open(
-    #         LINK_JSON_PATH / f"{commentary_title[-30:]}.json", "w", encoding="utf-8"
-    #     ) as file:
-    #         json.dump(links, file, indent=4, ensure_ascii=False)
 
 
 def get_range(data: List):
