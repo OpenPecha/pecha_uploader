@@ -41,18 +41,18 @@ def extract_payload(text: Dict) -> Dict:
         "textHe": [],
         "bookDepth": 0,
     }
-    for lang in text:
-        if lang == "source":
-            for i in range(len(text[lang]["categories"])):
-                payload["categoryEn"].append(text[lang]["categories"][: i + 1])
-            for book in text[lang]["books"]:
-                payload["bookKey"] = payload["categoryEn"][-1][-1]["name"]
-                payload["textEn"].append(book)
-        elif lang == "target":
-            for i in range(len(text[lang]["categories"])):
-                payload["categoryHe"].append(text[lang]["categories"][: i + 1])
-            for book in text[lang]["books"]:
-                payload["textHe"].append(book)
+
+    for i in range(len(text["source"]["categories"])):
+        payload["categoryEn"].append(text["source"]["categories"][: i + 1])
+    for book in text["source"]["books"]:
+        payload["bookKey"] = payload["categoryEn"][-1][-1]["name"]
+        payload["textEn"].append(book)
+
+    for i in range(len(text["target"]["categories"])):
+        payload["categoryHe"].append(text["target"]["categories"][: i + 1])
+    for book in text["target"]["books"]:
+        payload["textHe"].append(book)
+
     return payload
 
 
