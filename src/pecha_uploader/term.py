@@ -35,7 +35,7 @@ class PechaTerm:
             error_message = f"Term delete: {e}"
             raise Exception(error_message)
 
-    def post_term(self, term_en: str, term_bo: str, destination_url: Destination_url):
+    def upload_term(self, term_en: str, term_bo: str, destination_url: Destination_url):
         """
         Post term for category in different language.
         You MUST post term before posting any category.

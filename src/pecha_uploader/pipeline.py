@@ -65,19 +65,19 @@ def upload(text: Dict, destination_url: Destination_url):
     try:
         # Upload Term and Category
         for i in range(len(payload["categoryEn"])):
-            PechaTerm().post_term(
+            PechaTerm().upload_term(
                 payload["categoryEn"][i][-1]["name"],
                 payload["categoryHe"][i][-1]["name"],
                 destination_url,
             )
-            PechaCategory().post_category(
+            PechaCategory().upload_category(
                 payload["categoryEn"][i], payload["categoryHe"][i], destination_url
             )
 
         # Upload Index
         schema = generate_schema(payload["textEn"][0], payload["textHe"][0])
 
-        PechaIndex().post_index(
+        PechaIndex().upload_index(
             payload["bookKey"], payload["categoryEn"][-1], schema[0], destination_url
         )
 
@@ -131,14 +131,14 @@ def process_text(
 
             for key, value in result.items():
                 text["text"] = value
-                PechaText().post_text(
+                PechaText().upload_text(
                     key, text, category_path, destination_url, text_index_key
                 )
 
         # Simple text
         else:
             text["text"] = parse_annotation(book["content"])
-            PechaText().post_text(
+            PechaText().upload_text(
                 text_index_key, text, category_path, destination_url, text_index_key
             )
 
@@ -153,7 +153,7 @@ def add_links(links: List[Dict], destination_url: Destination_url):
     batch_size = 150
     for i in range(0, len(links), batch_size):
         batch = links[i : i + batch_size]  # noqa
-        PechaLink().post_link(batch, destination_url)
+        PechaLink().upload_links(batch, destination_url)
 
 
 def is_commentary(text: Dict):

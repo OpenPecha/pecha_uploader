@@ -52,7 +52,7 @@ class PechaText:
         elif text_index == text_title and total_versions == 0:
             return True
 
-    def post_text(
+    def upload_text(
         self,
         text_name: str,
         text_content: Dict,

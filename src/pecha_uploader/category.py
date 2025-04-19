@@ -42,7 +42,7 @@ class PechaCategory:
             logger.error(error_message)
             raise Exception(error_message)
 
-    def post_category(
+    def upload_category(
         self,
         en_category_list: List[str],
         bo_category_list: List[str],
@@ -50,12 +50,12 @@ class PechaCategory:
     ):
         """
         Post path for article categorizing.
-        You MUST use post_term() before using post_category().
+        You MUST use upload_term() before using upload_category().
             `pathLIST`: list of str,
         if you want to post path = "Indian Treatises/Madyamika/The way of the bodhisattvas"
-            => post_category(["Indian Treatises"])
-            => post_category(["Indian Treatises", "Madyamika"])
-            => post_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
+            => upload_category(["Indian Treatises"])
+            => upload_category(["Indian Treatises", "Madyamika"])
+            => upload_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
         """
         url = destination_url.value + "api/category"
         category_path = list(map(lambda x: x["name"], en_category_list))

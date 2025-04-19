@@ -32,7 +32,7 @@ class PechaIndex:
             error_message = f"Index delete {e}"
             raise Exception(error_message)
 
-    def post_index(
+    def upload_index(
         self,
         index_str: str,
         category_list: List[str],
@@ -42,7 +42,7 @@ class PechaIndex:
         """ "
         Post index value for article settings.
             `index`: str, article title,
-            `catLIST`: list of str, category list (see post_category() for example),
+            `catLIST`: list of str, category list (see upload_category() for example),
             `titleLIST`: list of json, title name in different language,
                 titleLIST = {
                     "lang": "en/he",

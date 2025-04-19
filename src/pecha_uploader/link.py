@@ -37,7 +37,9 @@ class PechaLink:
             error_message = f"Link delete: {e}"
             raise Exception(error_message)
 
-    def post_link(self, ref_list: Union[List, Dict], destination_url: Destination_url):
+    def upload_links(
+        self, ref_list: Union[List, Dict], destination_url: Destination_url
+    ):
         """
         Post references for articles.
             `ref_list`: list of str, articles to reference
