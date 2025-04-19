@@ -3,7 +3,7 @@ import urllib.parse
 import urllib.request
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 from pecha_uploader.exceptions import APIError
 
 
@@ -33,29 +33,6 @@ class PechaTerm:
 
         except Exception as e:
             error_message = f"Term delete: {e}"
-            raise Exception(error_message)
-
-    def get_term(self, term: str, destination_url: Destination_url):
-        """
-        Get term values for variable `term_str`.
-            `term`: str, term name
-        """
-        url = destination_url.value + "api/terms/" + urllib.parse.quote(term)
-        req = urllib.request.Request(url, headers=headers)
-        try:
-            response = urllib.request.urlopen(req)  # noqa
-            res = response.read().decode("utf-8")
-            return json.loads(res)
-
-        except HTTPError as e:
-            error_message = (
-                f"Term: HTTP Error {e.code} occurred: {e.read().decode('utf-8')}"
-            )
-            logger.error(error_message)
-            raise HTTPError(e.url, e.code, error_message, e.headers, e.fp)
-
-        except Exception as e:
-            error_message = f"Term: {e}"
             raise Exception(error_message)
 
     def post_term(self, term_en: str, term_bo: str, destination_url: Destination_url):
