@@ -4,8 +4,10 @@ from typing import Dict, List
 from urllib.error import HTTPError
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, Destination_url, get_logger, headers
 from pecha_uploader.exceptions import APIError
+
+logger = get_logger(__name__)
 
 
 class PechaText:

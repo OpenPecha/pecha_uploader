@@ -6,13 +6,15 @@ and uploads structured data to various APIs for further processing.
 from typing import Dict, List
 
 from pecha_uploader.category import PechaCategory
-from pecha_uploader.config import Destination_url, logger
+from pecha_uploader.config import Destination_url, get_logger
 from pecha_uploader.index import PechaIndex
 from pecha_uploader.link import PechaLink
 from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.term import PechaTerm
 from pecha_uploader.text import PechaText
 from pecha_uploader.utils import generate_chapters, generate_schema, parse_annotation
+
+logger = get_logger(__name__)
 
 
 def get_book_title(text: Dict):
