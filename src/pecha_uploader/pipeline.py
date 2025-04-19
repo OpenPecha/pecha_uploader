@@ -1,9 +1,4 @@
-"""
-This module processes text files, parses JSON content,
-and uploads structured data to various APIs for further processing.
-"""
-
-from typing import Dict, List
+from typing import Dict
 
 from pecha_uploader.category import PechaCategory
 from pecha_uploader.config import Destination_url, get_logger
@@ -77,7 +72,7 @@ def upload(text: Dict, destination_url: Destination_url):
 
         if is_commentary(text):
             links_data = create_links(text)
-            add_links(links_data, destination_url)
+            PechaLink().upload_links_in_batches(links_data, destination_url)
 
     except Exception as e:
         logger.error(f"{e}")
@@ -128,19 +123,6 @@ def process_text(
             PechaText().upload_text(
                 text_index_key, text, category_path, destination_url, text_index_key
             )
-
-
-def add_links(links: List[Dict], destination_url: Destination_url):
-    """
-    Post root and commentary links
-    """
-    # remove is links is available
-    PechaLink().remove_links(links[0]["refs"][1], destination_url)
-
-    batch_size = 150
-    for i in range(0, len(links), batch_size):
-        batch = links[i : i + batch_size]  # noqa
-        PechaLink().upload_links(batch, destination_url)
 
 
 def is_commentary(text: Dict):

@@ -9,6 +9,16 @@ from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
 
 
 class PechaLink:
+    def upload_links_in_batches(
+        self, ref_links: List, destination_url: Destination_url
+    ):
+        PechaLink().remove_links(ref_links[0]["refs"][1], destination_url)
+
+        batch_size = 150
+        for i in range(0, len(ref_links), batch_size):
+            batch = ref_links[i : i + batch_size]  # noqa
+            self.upload_links(batch, destination_url)
+
     def remove_links(self, text_title: str, destination_url: Destination_url):
         """
         text_title > Reference link of text. e.g Prayer 1:1 or Prayer 1:1-2
@@ -38,12 +48,12 @@ class PechaLink:
             raise Exception(error_message)
 
     def upload_links(
-        self, ref_list: Union[List, Dict], destination_url: Destination_url
+        self, ref_links: Union[List, Dict], destination_url: Destination_url
     ):
         """
         Post references for articles.
-            `ref_list`: list of str, articles to reference
-                ref_list = [
+            `ref_links`: list of str, articles to reference
+                ref_links = [
                     "Article_1.1:2",    # First article/section/row
                     "Article_2.1:2"     # Second
                 ]
@@ -56,8 +66,9 @@ class PechaLink:
                     - explication
                     - related
         """
+
         url = destination_url.value + "api/links/"
-        input_json_link = json.dumps(ref_list)
+        input_json_link = json.dumps(ref_links)
 
         values = {"json": input_json_link, "apikey": PECHA_API_KEY}
         data = urllib.parse.urlencode(values)
