@@ -32,7 +32,7 @@ def get_book_title(text: Dict):
     return tgt_book_title
 
 
-def add_texts(text: Dict, destination_url: Destination_url):
+def upload(text: Dict, destination_url: Destination_url):
     """
     Read a text file and add.
     """
@@ -171,10 +171,3 @@ def is_commentary(text: Dict):
 
     else:
         return False
-
-
-def upload(text: Dict, destination_url: Destination_url):
-    """
-    Upload text to the API.
-    """
-    add_texts(text, destination_url)
