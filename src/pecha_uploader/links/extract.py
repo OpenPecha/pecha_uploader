@@ -1,10 +1,10 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import Destination_url, headers
+from pecha_uploader.config import headers
 
 
-def get_link(link_name: str, destination_url: Destination_url, with_text=1):
+def get_link(link_name: str, destination_url: str, with_text=1):
     """
     Get links for article/section/row `link_name`
         `link_name`: str, article/section/row name
@@ -21,7 +21,7 @@ def get_link(link_name: str, destination_url: Destination_url, with_text=1):
             link_url += urllib.parse.quote(c)
         else:
             link_url += c
-    url = destination_url.value + f"api/links/{link_url}?with_text={with_text}"
+    url = destination_url + f"api/links/{link_url}?with_text={with_text}"
     req = urllib.request.Request(url, method="GET", headers=headers)
     try:
         response = urllib.request.urlopen(req)  # noqa

@@ -1,15 +1,15 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, headers, logger
 
 
-def remove_category(category_list: str, destination_url: Destination_url):
+def remove_category(category_list: str, destination_url: str):
     """
     category_path > list of category path. e.g ["Liturgy", "Prayer"]
     """
     category_path = "/".join(category_list)
-    url = destination_url.value + f"api/category/{urllib.parse.quote(category_path)}"
+    url = destination_url + f"api/category/{urllib.parse.quote(category_path)}"
     values = {"apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)
     binary_key = data.encode("ascii")

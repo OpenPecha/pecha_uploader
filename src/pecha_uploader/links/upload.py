@@ -5,10 +5,10 @@ import urllib.request
 from typing import Dict, List, Union
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, headers
 
 
-def post_link(ref_list: Union[List, Dict], destination_url: Destination_url):
+def post_link(ref_list: Union[List, Dict], destination_url: str):
     """
     Post references for articles.
         `ref_list`: list of str, articles to reference
@@ -25,7 +25,7 @@ def post_link(ref_list: Union[List, Dict], destination_url: Destination_url):
                 - explication
                 - related
     """
-    url = destination_url.value + "api/links/"
+    url = destination_url + "api/links/"
     input_json_link = json.dumps(ref_list)
 
     values = {"json": input_json_link, "apikey": PECHA_API_KEY}

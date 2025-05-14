@@ -1,15 +1,15 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, headers
 
 
-def remove_index(index_key: str, destination_url: Destination_url):
+def remove_index(index_key: str, destination_url: str):
     """
     index_key > index title
     """
     index_key = index_key.replace(" ", "_")
-    url = destination_url.value + f"api/index/{index_key}"
+    url = destination_url + f"api/index/{index_key}"
     values = {"apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)
     binary_key = data.encode("ascii")

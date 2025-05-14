@@ -60,7 +60,6 @@ we have three servers:
 ```python
 from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary, upload
-from pecha_uploader.config import Destination_url
 
 
 root_pecha_json: Dict = {"root pecha json content"}
@@ -80,19 +79,18 @@ upload(pecha_json)
 ```python
 from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary
-from pecha_uploader.config import Destination_url
 
 root_pecha_json: Dict = {"root pecha json content"}
-upload_root(root_pecha_json, Destination_url.STAGING, overwrite=True)
+upload_root(root_pecha_json, destination_url, overwrite=True)
 
 
 
 commentary_pecha_json:Dict = {"commentary pecha json content"}
-upload_commentary(commentary_pecha_json, Destination_url.STAGING, overwrite=True)
+upload_commentary(commentary_pecha_json, destination_url, overwrite=True)
 
 
 pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
-upload(pecha_json, Destination_url.STAGING, overwrite=True)
+upload(pecha_json, destionation_url, overwrite=True)
 
 ```
 

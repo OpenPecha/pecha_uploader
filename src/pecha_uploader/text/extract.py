@@ -2,15 +2,15 @@ import json
 import urllib.request
 from urllib.error import HTTPError
 
-from pecha_uploader.config import Destination_url, headers, logger
+from pecha_uploader.config import headers, logger
 
 
-def get_text(text_name: str, destination_url: Destination_url):
+def get_text(text_name: str, destination_url: str):
     """
     Get text value for article `text_name`.
         `text_name`: str, article name
     """
-    text_url = destination_url.value + "api/texts"
+    text_url = destination_url + "api/texts"
     prepare_text_str = urllib.parse.quote(text_name)
 
     url = f"{text_url}/{prepare_text_str}?pad=0"

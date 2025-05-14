@@ -4,13 +4,13 @@ from typing import Dict, List
 from urllib.error import HTTPError
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, headers, logger
 from pecha_uploader.exceptions import APIError
 from pecha_uploader.text.extract import get_text
 
 
 def can_remove_index(
-    text_index: str, text_title: str, destination_url: Destination_url
+    text_index: str, text_title: str, destination_url: str
 ):
     """check if index can be removed"""
 
@@ -30,7 +30,7 @@ def post_text(
     text_name: str,
     text_content: Dict,
     category_path: List,
-    destination_url: Destination_url,
+    destination_url: str,
     text_index_key: str,
 ):
 
@@ -61,7 +61,7 @@ def post_text(
     # text_name = text_name.replace(" ", "_")
 
     prepare_text = urllib.parse.quote(text_name)
-    url = destination_url.value + f"api/texts/{prepare_text}?count_after=1"
+    url = destination_url + f"api/texts/{prepare_text}?count_after=1"
 
     values = {"json": text_input_json, "apikey": f"{PECHA_API_KEY}"}
     data = urllib.parse.urlencode(values)

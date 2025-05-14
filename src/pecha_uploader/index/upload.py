@@ -4,7 +4,7 @@ from typing import Dict, List
 from urllib.error import HTTPError
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, headers
 from pecha_uploader.exceptions import APIError  # Import the custom exception
 
 
@@ -12,7 +12,7 @@ def post_index(
     index_str: str,
     category_list: List[str],
     nodes: Dict,
-    destination_url: Destination_url,
+    destination_url: str,
 ):
     """ "
     Post index value for article settings.
@@ -26,7 +26,7 @@ def post_index(
             }
     """
     url = (
-        destination_url.value
+        destination_url
         + "api/v2/raw/index/"
         + urllib.parse.quote(index_str.replace(" ", "_"))
     )

@@ -43,12 +43,11 @@ headers = {
 BASEPATH = os.path.dirname(os.path.abspath(__file__))  # Path to `Pecha.org/tools`
 
 
-class Destination_url(Enum):
-    PECHA_PRODUCTION = "https://pecha.org/"
-    PECHA_STAGING = "https://staging.pecha.org/"
-    LOCAL = "http://127.0.0.1:8000/"
-    FODIAN_PRODUCTION = "https://fodian.org/"
-    FODIAN_STAGING = "https://staging.fodian.org/"
+# PECHA_PRODUCTION = "https://pecha.org/"
+# PECHA_STAGING = "https://staging.pecha.org/"
+# LOCAL = "http://127.0.0.1:8000/"
+# FODIAN_PRODUCTION = "https://fodian.org/"
+# FODIAN_STAGING = "https://staging.fodian.org/"
 
 
 

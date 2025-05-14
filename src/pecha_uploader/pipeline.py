@@ -6,7 +6,7 @@ and uploads structured data to various APIs for further processing.
 from typing import Dict, List
 
 from pecha_uploader.category.upload import post_category
-from pecha_uploader.config import Destination_url, logger
+from pecha_uploader.config import logger
 from pecha_uploader.index.upload import post_index
 from pecha_uploader.links.create_ref_json import create_links
 from pecha_uploader.links.delete import remove_links
@@ -31,7 +31,7 @@ def get_book_title(text: Dict):
     return tgt_book_title
 
 
-def add_texts(text: Dict, destination_url: Destination_url):
+def add_texts(text: Dict, destination_url: str):
     """
     Read a text file and add.
     """
@@ -104,7 +104,7 @@ def process_text(
     lang: str,
     text_index_key: str,
     category_path: List,
-    destination_url: Destination_url,
+    destination_url: str,
 ):
     """
     Process text for a given language and post it.
@@ -138,7 +138,7 @@ def process_text(
             )
 
 
-def add_links(links: List[Dict], destination_url: Destination_url):
+def add_links(links: List[Dict], destination_url: str):
     """
     Post root and commentary links
     """
@@ -170,7 +170,7 @@ def is_commentary(text: Dict):
         return False
 
 
-def upload(text: Dict, destination_url: Destination_url):
+def upload(text: Dict, destination_url: str):
     """
     Upload text to the API.
     """

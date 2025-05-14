@@ -2,16 +2,16 @@ import urllib.parse
 import urllib.request
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, headers
 
 
-def remove_term(term_title: str, destination_url: Destination_url):
+def remove_term(term_title: str, destination_url: str):
     """
     Remove a term from the API.
     `term_title`: The title of the term to remove.
     """
     encode_title = urllib.parse.quote(term_title)
-    url = destination_url.value + f"api/terms/{encode_title}"
+    url = destination_url + f"api/terms/{encode_title}"
 
     values = {"apikey": PECHA_API_KEY}  # Must be sent as form data
     data = urllib.parse.urlencode(values).encode(

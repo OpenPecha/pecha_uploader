@@ -1,14 +1,14 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, str, headers, logger
 
 
-def remove_text(title: str, destination_url: Destination_url):
+def remove_text(title: str, destination_url: str):
     """
     title > text title
     """
-    url = destination_url.value + f"api/texts/{title}"
+    url = destination_url + f"api/texts/{title}"
     values = {"apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)
     binary_key = data.encode("ascii")

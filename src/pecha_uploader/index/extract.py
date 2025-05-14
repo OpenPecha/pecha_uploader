@@ -1,15 +1,15 @@
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import Destination_url, headers
+from pecha_uploader.config import headers
 
 
-def get_index(index: str, destination_url: Destination_url):
+def get_index(index: str, destination_url: str):
     """
     Get Index information for article name `index`.
         `index`: str, article en name
     """
-    index_url = destination_url.value + "api/v2/raw/index"
+    index_url = destination_url + "api/v2/raw/index"
     prepare_index_str = index.replace(" ", "_")
     url = f"{index_url}/{prepare_index_str}?with_content_counts=1"
     req = urllib.request.Request(url, method="GET", headers=headers)
