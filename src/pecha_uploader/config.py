@@ -44,9 +44,12 @@ BASEPATH = os.path.dirname(os.path.abspath(__file__))  # Path to `Pecha.org/tool
 
 
 class Destination_url(Enum):
-    PRODUCTION = "https://pecha.org/"
-    STAGING = "https://staging.pecha.org/"
+    PECHA_PRODUCTION = "https://pecha.org/"
+    PECHA_STAGING = "https://staging.pecha.org/"
     LOCAL = "http://127.0.0.1:8000/"
+    FODIAN_PRODUCTION = "https://fodian.org/"
+    PECHA_STAGING = "https://staging.fodian.org/"
+
 
 
 def log_link_success(text_name: str):
