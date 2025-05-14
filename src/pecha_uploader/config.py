@@ -48,7 +48,7 @@ class Destination_url(Enum):
     PECHA_STAGING = "https://staging.pecha.org/"
     LOCAL = "http://127.0.0.1:8000/"
     FODIAN_PRODUCTION = "https://fodian.org/"
-    PECHA_STAGING = "https://staging.fodian.org/"
+    FODIAN_STAGING = "https://staging.fodian.org/"
 
 
 
