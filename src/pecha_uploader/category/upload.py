@@ -5,14 +5,14 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from pecha_uploader.clear_unfinished_text import remove_texts_meta
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers, logger
+from pecha_uploader.config import PECHA_API_KEY, headers, logger
 from pecha_uploader.exceptions import APIError
 
 
 def post_category(
     en_category_list: List[str],
     bo_category_list: List[str],
-    destination_url: Destination_url,
+    destination_url: str,
 ):
     """
     Post path for article categorizing.
@@ -23,7 +23,7 @@ def post_category(
         => post_category(["Indian Treatises", "Madyamika"])
         => post_category(["Indian Treatises", "Madyamika", "The way of the bodhisattvas"])
     """
-    url = destination_url.value + "api/category"
+    url = destination_url + "api/category"
     category_path = list(map(lambda x: x["name"], en_category_list))
     category = {
         "sharedTitle": category_path[-1],

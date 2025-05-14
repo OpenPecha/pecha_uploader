@@ -61,17 +61,18 @@ we have three servers:
 from pathlib import Path
 from pecha_uploader.pipeline import upload_root, upload_commentary, upload
 
+destination_url = "https://staging.pecha.org/"
 
 root_pecha_json: Dict = {"root pecha json content"}
-upload_root(root_pecha_json)
-
+upload_root(root_pecha_json, destination_url)
+  
 
 commentary_pecha_json:Dict = {"commentary pecha json content"}
-upload_commentary(commentary_pecha_json)
+upload_commentary(commentary_pecha_json, destination_url)
 
 
 pecha_json:Dict = {"pecha json content"} # Root or Commentary Pecha
-upload(pecha_json)
+upload(pecha_json, destination_url)
 ```
 
 ### _Overwrite Run_

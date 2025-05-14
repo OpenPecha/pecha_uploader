@@ -2,10 +2,10 @@ import re
 import urllib
 from urllib.error import HTTPError
 
-from pecha_uploader.config import PECHA_API_KEY, Destination_url, headers
+from pecha_uploader.config import PECHA_API_KEY, headers
 
 
-def remove_links(text_title: str, destination_url: Destination_url):
+def remove_links(text_title: str, destination_url: str):
     """
     text_title > Reference link of text. e.g Prayer 1:1 or Prayer 1:1-2
     """
@@ -14,7 +14,7 @@ def remove_links(text_title: str, destination_url: Destination_url):
     clean_title = re.sub(pattern, "", text_title)
 
     ref = clean_title.replace(" ", "_")
-    url = destination_url.value + f"api/links/{ref}"
+    url = destination_url + f"api/links/{ref}"
     values = {"apikey": PECHA_API_KEY}
     data = urllib.parse.urlencode(values)
     binary_key = data.encode("ascii")
